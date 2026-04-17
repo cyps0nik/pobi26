@@ -1,3 +1,19 @@
-/build
+# Global path to single directory.
+/workshop/build
+build/
+
+# All cmake-build-debug directories.
 cmake-build-debug
+
+# All Windows executable files.
+*.exe
+
+# All Windows object files.
+*.o
+*.obj
+
+# CLion's hidden folder
 .idea
+
+# Others
+*Zone.Identifier
