@@ -1,0 +1,46 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+abstract class Car{
+- carModel:string
+- plateNumber:string
+- fixing:bool
+}
+class Client{
+- firstName:string
+- lastName:string
+
+}
+class CombustionCar{
+
+}
+class ElectricCar{
+- accumulator:string
+
+}
+class Parts{
+- suspension:string
+- gearBox:string
+- wheel:string
+}
+class Engine{
+- engineType:string
+- engineDisplacement:unsigned int
+}
+class Repair{
+-beginTime:ptime
+-endTime:ptime
++getRepairCost():unsigned int
++endRepair():void
+}
+CombustionCar *-- Engine
+Car <|-- CombustionCar
+Car <|-- ElectricCar
+CombustionCar *-- Parts
+ElectricCar *-- Parts
+
+}
+
+
+
+@enduml
