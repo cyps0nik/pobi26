@@ -1,46 +1,98 @@
 @startuml
 'https://plantuml.com/class-diagram
 skinparam classAttributeIconSize 0
-abstract class Car{
+ class Car{
+- carBrand:string
 - carModel:string
-- plateNumber:string
-- fixing:bool
+- VIN:string
 }
+
 class Client{
 - firstName:string
 - lastName:string
-
+- phoneNumber:string
+- email:string
 }
-class CombustionCar{
-
+class Workshop{
++isAvaiable():bool
 }
-class ElectricCar{
-- accumulator:string
-
+note left of Workshop
+Gdy isAvailable() == true,
+możemy przyjąć kolejny pojazd.
+end note
+abstract Service {
+-name:string
+-repaired:bool
+-PartHourlyPrice:int
++getInfo():string
 }
-class Parts{
-- suspension:string
-- gearBox:string
-- wheel:string
+note right of Service
+getInfo() zwraca wyraz skladajacy sie z
+wszystkich atrybutow i jest wirtualny
+end note
+class PartRegeneration{
++getInfo():string
 }
-class Engine{
-- engineType:string
-- engineDisplacement:unsigned int
+class NewPartReplacement{
+-NewPartPrice:int
++getInfo():string
 }
+note bottom of NewPartReplacement
+NewPartPrice jest atrybutem odpowiedzialnym
+za cene kupna nowej czesci
+end note
 class Repair{
+-id:int
 -beginTime:ptime
 -endTime:ptime
-+getRepairCost():unsigned int
+-repairCost:int
 +endRepair():void
++getHours():int
++getHourCost():int
++calculateTotal():int
++getServicesAmount():int
 }
-CombustionCar *-- Engine
-Car <|-- CombustionCar
-Car <|-- ElectricCar
-CombustionCar *-- Parts
-ElectricCar *-- Parts
-
+note right of Repair
+    getHourCost() zwraca PartHourlyPrice pomnożony
+przez mnożnik pozyskany z getMultiplier
+    calculateTotal() oblicza cenę, którą ma zapłacić klient
+za wykonaną naprawę
+end note
+abstract PoweredBy{
+-PowerType:string
++getMultiplier():double
 }
-
-
-
+note left of PoweredBy
+getMultiplier() jest czysto wirtualny
+zwraca okreslony mnoznik
+- dla benzyny 1.0
+- dla Diesla 1.2
+- dla baterii(samochodu elektrycznego) 1.5
+end note
+class Engine{
+-engineDisplacement:int
++getMultiplier():double
+}
+note bottom of Engine
+getMultiplier() dla klasy Engine jest zalezny rowniez od jego pojemnosci
+- ponizej 1000cm3 wynosi 1.0
+- od 1000cm3 do 2000cm3 rosnie liniowo
+  od 1.0 do 1.5
+- od 2000cm3 do 6000cm3 rowniez rosnie liniowo
+  od 1.5 do 3.0
+getMultiplier() w przypadku Diesla zwraca odpowiedni mnoznik
+dla pojemnosci silnika pomnozony analogicznie przez 1.2
+end note
+class Accumulator{
++getMultiplier():double
+}
+Workshop "1" *-- "*" Repair : zarządza
+Client "1" --> "0..*" Car : posiada
+Repair "0..*" --> "1" Car : dotyczy
+Repair "1" *-- "1..*  " Service : składa się z
+Service <|-- NewPartReplacement
+Service <|-- PartRegeneration
+Car *-- PoweredBy
+PoweredBy <|-- Engine
+PoweredBy <|-- Accumulator
 @enduml
