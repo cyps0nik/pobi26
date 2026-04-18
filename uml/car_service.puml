@@ -17,17 +17,27 @@ class Workshop{
 +isAvaiable():bool
 }
 note left of Workshop
-Gdy isAvailable() == true,
+    Gdy isAvailable() == true,
 możemy przyjąć kolejny pojazd.
+Tzn. repaired dla każdej z usług w klasie Repair
+ musi zwracać true.
 end note
-abstract Service {
+abstract PartService {
 -name:string
 -repaired:bool
 -PartHourlyPrice:int
+-beginTime:ptime
+-endTime:ptime
++endService(endTime:ptime):void
++getServiceCost():int
 +getInfo():string
 }
-note right of Service
-getInfo() zwraca wyraz skladajacy sie z
+note right of PartService
+    getServiceCost() zwraca koszt wykonania pojedynczej
+uslugi poniewaz naprawa moze dotyczec wielu usług
+np. 1h wymiana tarcz hamulcowych oraz
+6h wymiana rozrządu bez mnożnika
+    getInfo() zwraca wyraz skladajacy sie z
 wszystkich atrybutow i jest wirtualny
 end note
 class PartRegeneration{
@@ -38,28 +48,23 @@ class NewPartReplacement{
 +getInfo():string
 }
 note bottom of NewPartReplacement
-NewPartPrice jest atrybutem odpowiedzialnym
-za cene kupna nowej czesci
+    getServiceCost() nadpisuje metodę bazową dodając
+do kosztów robocizny cenę zakupu nowej części (NewPartPrice)
 end note
 class Repair{
 -id:int
--beginTime:ptime
--endTime:ptime
 -repairCost:int
-+endRepair():void
-+getHours():int
-+getHourCost():int
 +calculateTotal():int
 +getServicesAmount():int
++getSingleServiceCost(serwis:PartService):int
 }
 note right of Repair
-    getHourCost() zwraca PartHourlyPrice pomnożony
+    calculateTotal() oblicza repairCost, czyli ile ma zapłacić klient
+za wykonaną naprawę. Sumę wszystkich usług.
+    getSingleServiceCost() zwraca getServiceCost() pomnożony
 przez mnożnik pozyskany z getMultiplier
-    calculateTotal() oblicza cenę, którą ma zapłacić klient
-za wykonaną naprawę
 end note
 abstract PoweredBy{
--PowerType:string
 +getMultiplier():double
 }
 note left of PoweredBy
@@ -69,7 +74,7 @@ zwraca okreslony mnoznik
 - dla Diesla 1.2
 - dla baterii(samochodu elektrycznego) 1.5
 end note
-class Engine{
+abstract Engine{
 -engineDisplacement:int
 +getMultiplier():double
 }
@@ -86,13 +91,22 @@ end note
 class Accumulator{
 +getMultiplier():double
 }
-Workshop "1" *-- "*" Repair : zarządza
+class DieselEngine{
++getMultiplier():double
+
+}
+class PetrolEngine{
++getMultiplier():double
+}
+Workshop "1" *-- "0..* " Repair : zarządza
 Client "1" --> "0..*" Car : posiada
 Repair "0..*" --> "1" Car : dotyczy
-Repair "1" *-- "1..*  " Service : składa się z
-Service <|-- NewPartReplacement
-Service <|-- PartRegeneration
-Car *-- PoweredBy
+Repair "1" *-- "1..*  " PartService : składa się z
+PartService <|-- NewPartReplacement
+PartService <|-- PartRegeneration
+Car"1" *-- "1"PoweredBy
 PoweredBy <|-- Engine
 PoweredBy <|-- Accumulator
+Engine <|-- DieselEngine
+Engine <|-- PetrolEngine
 @enduml
