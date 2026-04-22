@@ -99,8 +99,8 @@ class PetrolEngine{
 +getMultiplier():double
 }
 Workshop "1" *-- "0..* " Repair : zarządza
-Client "1" --> "0..*" Car : posiada
-Repair "0..*" --> "1" Car : dotyczy
+Client "1" -- "0..*" Car : posiada
+Repair "0..*" -- "1" Car : dotyczy
 Repair "1" *-- "1..*  " PartService : składa się z
 PartService <|-- NewPartReplacement
 PartService <|-- PartRegeneration
