@@ -42,10 +42,12 @@ wszystkich atrybutow i jest wirtualny
 end note
 class PartRegeneration{
 +getInfo():string
++getServiceCost():int
 }
 class NewPartReplacement{
 -NewPartPrice:int
 +getInfo():string
++getServiceCost():int
 }
 note bottom of NewPartReplacement
     getServiceCost() nadpisuje metodę bazową dodając
@@ -70,13 +72,17 @@ abstract PoweredBy{
 note left of PoweredBy
 getMultiplier() jest czysto wirtualny
 zwraca okreslony mnoznik
-- dla benzyny 1.0
+- dla benzyny 1.1
 - dla Diesla 1.2
 - dla baterii(samochodu elektrycznego) 1.5
 end note
-abstract Engine{
+class Engine{
 -engineDisplacement:int
 +getMultiplier():double
+}
+enum FuelType{
+Petrol
+Diesel
 }
 note bottom of Engine
 getMultiplier() dla klasy Engine jest zalezny rowniez od jego pojemnosci
@@ -89,15 +95,18 @@ getMultiplier() w przypadku Diesla zwraca odpowiedni mnoznik
 dla pojemnosci silnika pomnozony analogicznie przez 1.2
 end note
 class Accumulator{
+-capacityKWh:int
 +getMultiplier():double
 }
-class DieselEngine{
-+getMultiplier():double
-
-}
-class PetrolEngine{
-+getMultiplier():double
-}
+note right of Accumulator
+getMultiplier() dla klasy Accumulator jest zalezne od pojemnosc akumulatora
+podanej w kWh
+-poniżej 40kWh wynosi 1.0
+-od 40kWh do 100kWh rośnie liniowo
+  od 1.0 do 1.8
+-powyżej 100kWh wynosi 2.5
+Odpowiednio pomnożone przez 1.5
+end note
 Workshop "1" *-- "0..* " Repair : zarządza
 Client "1" -- "0..*" Car : posiada
 Repair "0..*" -- "1" Car : dotyczy
@@ -107,6 +116,5 @@ PartService <|-- PartRegeneration
 Car"1" *-- "1"PoweredBy
 PoweredBy <|-- Engine
 PoweredBy <|-- Accumulator
-Engine <|-- DieselEngine
-Engine <|-- PetrolEngine
+FuelType <-- Engine
 @enduml
