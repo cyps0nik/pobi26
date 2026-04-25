@@ -32,7 +32,7 @@ abstract PartService {
 +getServiceCost():int
 +getInfo():string
 }
-note right of PartService
+note left of PartService
     getServiceCost() zwraca koszt wykonania pojedynczej
 uslugi poniewaz naprawa moze dotyczec wielu usług
 np. 1h wymiana tarcz hamulcowych oraz
@@ -72,7 +72,7 @@ abstract PoweredBy{
 note left of PoweredBy
 getMultiplier() jest czysto wirtualny
 zwraca okreslony mnoznik
-- dla benzyny 1.1
+- dla benzyny 1.0
 - dla Diesla 1.2
 - dla baterii(samochodu elektrycznego) 1.5
 end note
@@ -96,6 +96,7 @@ dla pojemnosci silnika pomnozony analogicznie przez 1.2
 end note
 class Accumulator{
 -capacityKWh:int
+-degradationLevel:int
 +getMultiplier():double
 }
 note right of Accumulator
@@ -106,6 +107,9 @@ podanej w kWh
   od 1.0 do 1.8
 -powyżej 100kWh wynosi 2.5
 Odpowiednio pomnożone przez 1.5
+Dodatkowo, jeśli degradationLevel > 20
+wynik powiększany jest o stałą wartość +0.3 (ryzyko zawodowe).
+degradationLevel nie moze przekroczyc 100.
 end note
 Workshop "1" *-- "0..* " Repair : zarządza
 Client "1" -- "0..*" Car : posiada
@@ -116,5 +120,5 @@ PartService <|-- PartRegeneration
 Car"1" *-- "1"PoweredBy
 PoweredBy <|-- Engine
 PoweredBy <|-- Accumulator
-FuelType <-- Engine
+FuelType"1 typ paliwa" <-- Engine
 @enduml
