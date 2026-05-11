@@ -41,9 +41,17 @@ np. 1h wymiana tarcz hamulcowych oraz
 wszystkich atrybutow i jest wirtualny
 end note
 class PartRegeneration{
+-usage:int
 +getInfo():string
 +getServiceCost():int
 }
+note bottom of PartRegeneration
+    getServiceCost() nadpisuje metodę bazową
+usage jest procentowe:
+od 0 do 25% mnoznik rosnie liniowo od 1.0 do 1.2
+od 25% do 50% mnoznik 1.5
+od 50 do 100% rosnie liniowo od 1.5 do 2.0
+end note
 class NewPartReplacement{
 -NewPartPrice:int
 +getInfo():string
