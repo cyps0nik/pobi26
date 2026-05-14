@@ -7,7 +7,7 @@ class Car {
 - carModel:string
 - VIN:string
 }
-
+'kropeczka
 class Client {
 - firstName:string
 - lastName:string
