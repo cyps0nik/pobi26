@@ -1,46 +1,53 @@
 @startuml
 'https://plantuml.com/class-diagram
 skinparam classAttributeIconSize 0
- class Car{
+
+class Car {
 - carBrand:string
 - carModel:string
 - VIN:string
 }
 
-class Client{
+class Client {
 - firstName:string
 - lastName:string
 - phoneNumber:string
 - email:string
+- PersonalID:string
++ getPersonalID():string
 }
-class Workshop{
-+isAvaiable():bool
+
+abstract class Service {
+  -name:string
+  -repaired:bool
+  +getServiceCost():int
+  +getInfo():string
 }
-note left of Workshop
-    Gdy isAvailable() == true,
-możemy przyjąć kolejny pojazd.
-Tzn. repaired dla każdej z usług w klasie Repair
- musi zwracać true.
-end note
-abstract PartService {
--name:string
--repaired:bool
--PartHourlyPrice:int
--beginTime:ptime
--endTime:ptime
-+endService(endTime:ptime):void
-+getServiceCost():int
-+getInfo():string
-}
-note left of PartService
+note left of Service
     getServiceCost() zwraca koszt wykonania pojedynczej
 uslugi poniewaz naprawa moze dotyczec wielu usług
-np. 1h wymiana tarcz hamulcowych oraz
-6h wymiana rozrządu bez mnożnika
+np. 1h wymiana tarcz hamulcowych, geometria kol badz
+usluga diagnostyczna ze stala cena(przeglad)
     getInfo() zwraca wyraz skladajacy sie z
 wszystkich atrybutow i jest wirtualny
 end note
-class PartRegeneration{
+
+abstract class TimeBasedService {
+  -PartHourlyPrice:int
+  -beginTime:ptime
+  -endTime:ptime
+  +endService(endTime:ptime):void
+}
+
+class DiagnosticService {
+  -fixedPrice:int
+  +getServiceCost():int
+}
+note bottom of DiagnosticService
+    Usługa specjalna która ma stała cenę fixedPrice
+end note
+
+class PartRegeneration {
 -usage:int
 +getInfo():string
 +getServiceCost():int
@@ -52,7 +59,8 @@ od 0 do 25% mnoznik rosnie liniowo od 1.0 do 1.2
 od 25% do 50% mnoznik 1.5
 od 50 do 100% rosnie liniowo od 1.5 do 2.0
 end note
-class NewPartReplacement{
+
+class NewPartReplacement {
 -NewPartPrice:int
 +getInfo():string
 +getServiceCost():int
@@ -61,20 +69,23 @@ note bottom of NewPartReplacement
     getServiceCost() nadpisuje metodę bazową dodając
 do kosztów robocizny cenę zakupu nowej części (NewPartPrice)
 end note
-class Repair{
+
+class Repair {
 -id:int
 -repairCost:int
++getId():int
 +calculateTotal():int
 +getServicesAmount():int
-+getSingleServiceCost(serwis:PartService):int
++getSingleServiceCost(serwis:Service):int
 }
 note right of Repair
-    calculateTotal() oblicza repairCost, czyli ile ma zapłacić klient
+calculateTotal() oblicza repairCost, czyli ile ma zapłacić klient
 za wykonaną naprawę. Sumę wszystkich usług.
-    getSingleServiceCost() zwraca getServiceCost() pomnożony
+getSingleServiceCost() zwraca getServiceCost() pomnożony
 przez mnożnik pozyskany z getMultiplier
 end note
-abstract PoweredBy{
+
+abstract class PoweredBy {
 +getMultiplier():double
 }
 note left of PoweredBy
@@ -84,11 +95,12 @@ zwraca okreslony mnoznik
 - dla Diesla 1.2
 - dla baterii(samochodu elektrycznego) 1.5
 end note
-class Engine{
+
+class Engine {
 -engineDisplacement:int
 +getMultiplier():double
 }
-enum FuelType{
+enum FuelType {
 Petrol
 Diesel
 }
@@ -102,7 +114,8 @@ getMultiplier() dla klasy Engine jest zalezny rowniez od jego pojemnosci
 getMultiplier() w przypadku Diesla zwraca odpowiedni mnoznik
 dla pojemnosci silnika pomnozony analogicznie przez 1.2
 end note
-class Accumulator{
+
+class Accumulator {
 -capacityKWh:int
 -degradationLevel:int
 +getMultiplier():double
@@ -119,14 +132,99 @@ Dodatkowo, jeśli degradationLevel > 20
 wynik powiększany jest o stałą wartość +0.3 (ryzyko zawodowe).
 degradationLevel nie moze przekroczyc 100.
 end note
-Workshop "1" *-- "0..* " Repair : zarządza
+
+interface Resource {
+  +isAvailable(start: ptime, end: ptime): bool
+  +reserve(start: ptime, end: ptime): void
+}
+
+class Mechanic implements Resource {
+  -firstName:string
+  -lastName:string
+  -isBusy:bool
+  -hasEVCertificate:bool
+}
+note bottom of Mechanic
+    Przechowuje dane personalne pracownika.
+    - isBusy: określa, czy mechanik jest aktualnie przypisany do naprawy.
+    - hasEVCertificate: flaga wymagana przy serwisowaniu
+      pojazdów z napędem elektrycznym.
+end note
+
+class Equipment implements Resource {
+  -name: string
+}
+
+class ClientRepository {
+  -clients: vector<ClientPtr>
+  +get(index: int): ClientPtr
+  +add(client: ClientPtr): void
+  +remove(client: ClientPtr): void
+  +report(): string
+  +size(): int
+  +findBy(predicate: ClientPredicate): vector<ClientPtr>
+  +findAll(): vector<ClientPtr>
+  +findByPersonalId(id: string): ClientPtr
+}
+note bottom of ClientRepository
+  Repozytorium przechowuje bazę klientów. Metoda findByPersonalId
+  pozwala na szybki dostęp do danych klienta
+  na podstawie jego numeru PESEL (PersonalID).
+end note
+
+class RepairRepository {
+  -repairs: vector<RepairPtr>
+  +get(index: int): RepairPtr
+  +add(repair: RepairPtr): void
+  +remove(repair: RepairPtr): void
+  +report(): string
+  +size(): int
+  +findBy(predicate: RepairPredicate): vector<RepairPtr>
+  +findAll(): vector<RepairPtr>
+  +findById(id: int): RepairPtr
+}
+note bottom of RepairRepository
+  Przechowuje wszystkie zarejestrowane naprawy.
+  Metoda findById służy do odnalezienia konkretnego
+  zlecenia po jego unikalnym numerze ID.
+end note
+
+class ResourceRepository {
+  -resources: vector<ResourcePtr>
+  +get(index: int): ResourcePtr
+  +add(res: ResourcePtr): void
+  +remove(res: ResourcePtr): void
+  +report(): string
+  +size(): int
+  +findBy(predicate: ResourcePredicate): vector<ResourcePtr>
+}
+note bottom of ResourceRepository
+  Repozytorium przechowujące
+  zasoby warsztatu: Mechaników oraz Sprzęt.
+  Zarządza ich dostępnością (isAvailable).
+end note
+
+' <--- RELACJE --->
+
 Client "1" -- "0..*" Car : posiada
 Repair "0..*" -- "1" Car : dotyczy
-Repair "1" *-- "1..*  " PartService : składa się z
-PartService <|-- NewPartReplacement
-PartService <|-- PartRegeneration
-Car"1" *-- "1"PoweredBy
+Repair "1" *-- "1..*" Service : składa się z
+Car "1" *-- "1" PoweredBy
 PoweredBy <|-- Engine
 PoweredBy <|-- Accumulator
-FuelType"1 typ paliwa" <-- Engine
+FuelType "1 typ paliwa" <-- Engine
+
+Service <|-- DiagnosticService
+TimeBasedService <|-- NewPartReplacement
+TimeBasedService <|-- PartRegeneration
+Service <|-- TimeBasedService
+
+' Relacje z repozytoriami
+ClientRepository o-- Client
+RepairRepository o-- Repair
+ResourceRepository o-- Resource
+
+' Relacja użycia zasobów przez usługi
+Service "0..*" --> "1..*" Resource : wymaga do realizacji
+
 @enduml
