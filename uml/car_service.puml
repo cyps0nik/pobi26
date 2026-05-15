@@ -1,3 +1,4 @@
+
 @startuml
 'https://plantuml.com/class-diagram
 skinparam classAttributeIconSize 0
@@ -7,8 +8,7 @@ class Car {
 - carModel:string
 - VIN:string
 }
-'kropeczka
-'druga kropeczka
+
 class Client {
 - firstName:string
 - lastName:string
@@ -21,22 +21,22 @@ class Client {
 abstract class Service {
   -name:string
   -repaired:bool
+  -beginTime:ptime
+  -endTime:ptime
   +getServiceCost():int
   +getInfo():string
 }
-note left of Service
-    getServiceCost() zwraca koszt wykonania pojedynczej
+note right of Service
+getServiceCost() zwraca koszt wykonania pojedynczej
 uslugi poniewaz naprawa moze dotyczec wielu usług
 np. 1h wymiana tarcz hamulcowych, geometria kol badz
 usluga diagnostyczna ze stala cena(przeglad)
-    getInfo() zwraca wyraz skladajacy sie z
+getInfo() zwraca wyraz skladajacy sie z
 wszystkich atrybutow i jest wirtualny
 end note
 
 abstract class TimeBasedService {
   -PartHourlyPrice:int
-  -beginTime:ptime
-  -endTime:ptime
   +endService(endTime:ptime):void
 }
 
@@ -54,7 +54,7 @@ class PartRegeneration {
 +getServiceCost():int
 }
 note bottom of PartRegeneration
-    getServiceCost() nadpisuje metodę bazową
+getServiceCost() nadpisuje metodę bazową
 usage jest procentowe:
 od 0 do 25% mnoznik rosnie liniowo od 1.0 do 1.2
 od 25% do 50% mnoznik 1.5
@@ -121,7 +121,7 @@ class Accumulator {
 -degradationLevel:int
 +getMultiplier():double
 }
-note right of Accumulator
+note bottom of Accumulator
 getMultiplier() dla klasy Accumulator jest zalezne od pojemnosc akumulatora
 podanej w kWh
 -poniżej 40kWh wynosi 1.0
@@ -134,16 +134,12 @@ wynik powiększany jest o stałą wartość +0.3 (ryzyko zawodowe).
 degradationLevel nie moze przekroczyc 100.
 end note
 
-interface Resource {
-  +isAvailable(start: ptime, end: ptime): bool
-  +reserve(start: ptime, end: ptime): void
-}
-
-class Mechanic implements Resource {
+class Mechanic {
   -firstName:string
   -lastName:string
   -isBusy:bool
   -hasEVCertificate:bool
+  +isAvailable(): bool
 }
 note bottom of Mechanic
     Przechowuje dane personalne pracownika.
@@ -152,58 +148,6 @@ note bottom of Mechanic
       pojazdów z napędem elektrycznym.
 end note
 
-class Equipment implements Resource {
-  -name: string
-}
-
-class ClientRepository {
-  -clients: vector<ClientPtr>
-  +get(index: int): ClientPtr
-  +add(client: ClientPtr): void
-  +remove(client: ClientPtr): void
-  +report(): string
-  +size(): int
-  +findBy(predicate: ClientPredicate): vector<ClientPtr>
-  +findAll(): vector<ClientPtr>
-  +findByPersonalId(id: string): ClientPtr
-}
-note bottom of ClientRepository
-  Repozytorium przechowuje bazę klientów. Metoda findByPersonalId
-  pozwala na szybki dostęp do danych klienta
-  na podstawie jego numeru PESEL (PersonalID).
-end note
-
-class RepairRepository {
-  -repairs: vector<RepairPtr>
-  +get(index: int): RepairPtr
-  +add(repair: RepairPtr): void
-  +remove(repair: RepairPtr): void
-  +report(): string
-  +size(): int
-  +findBy(predicate: RepairPredicate): vector<RepairPtr>
-  +findAll(): vector<RepairPtr>
-  +findById(id: int): RepairPtr
-}
-note bottom of RepairRepository
-  Przechowuje wszystkie zarejestrowane naprawy.
-  Metoda findById służy do odnalezienia konkretnego
-  zlecenia po jego unikalnym numerze ID.
-end note
-
-class ResourceRepository {
-  -resources: vector<ResourcePtr>
-  +get(index: int): ResourcePtr
-  +add(res: ResourcePtr): void
-  +remove(res: ResourcePtr): void
-  +report(): string
-  +size(): int
-  +findBy(predicate: ResourcePredicate): vector<ResourcePtr>
-}
-note bottom of ResourceRepository
-  Repozytorium przechowujące
-  zasoby warsztatu: Mechaników oraz Sprzęt.
-  Zarządza ich dostępnością (isAvailable).
-end note
 
 ' <--- RELACJE --->
 
@@ -220,12 +164,6 @@ TimeBasedService <|-- NewPartReplacement
 TimeBasedService <|-- PartRegeneration
 Service <|-- TimeBasedService
 
-' Relacje z repozytoriami
-ClientRepository o-- Client
-RepairRepository o-- Repair
-ResourceRepository o-- Resource
-
-' Relacja użycia zasobów przez usługi
-Service "0..*" --> "1..*" Resource : wymaga do realizacji
+Repair "0..*" --> "1..*" Mechanic : wymaga do realizacji
 
 @enduml

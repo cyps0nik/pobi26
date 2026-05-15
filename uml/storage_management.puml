@@ -1,0 +1,113 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class LogicContainer {
+-clientManager: ClientManager
+-repairManager: RepairManager
+-resourceManager: ResourceManager
++getClientManager(): ClientManager&
++getRepairManager(): RepairManager&
++getResourceManager(): ResourceManager&
+}
+note right of LogicContainer
+  Kontener z zarządcami.
+end note
+
+class ClientManager {
+-clientRepository: ClientRepository
++registerClient(...): ClientPtr
++unregisterClient(id: string): void
++getClient(id: string): ClientPtr
++findClients(predicate: ClientPredicate): vector<ClientPtr>
+}
+note bottom of ClientManager
+  Zarządza cyklem życia obiektów Client.
+  Odpowiada za walidację danych przed dodaniem
+  klienta do repozytorium.
+end note
+
+class RepairManager {
+-repairRepository: RepairRepository
++getRepair(id: int): RepairPtr
++beginRepair(client: ClientPtr, car: CarPtr, res: vector<ResourcePtr>): RepairPtr
++finishRepair(repair: RepairPtr, time: ptime): void
+}
+note bottom of RepairManager
+  Koordynuje proces naprawy: łączy klienta, pojazd
+  i zasoby. Przy kończeniu naprawy wywołuje
+  obliczanie kosztów końcowych.
+end note
+
+class ResourceManager {
+-resourceRepository: ResourceRepository
++assignMechanicToRepair(mechanic: ResourcePtr, repair: RepairPtr): void
++checkAvailability(res: ResourcePtr, s: ptime, e: ptime): bool
++findAvailableMechanics(...): vector<ResourcePtr>
+}
+note top of ResourceManager
+  Zarządza zasobami warsztatu. Implementuje
+  logikę sprawdzania dostępności poprzez
+  tworzenie odpowiednich predykatów.
+end note
+
+class ClientRepository {
+-clients: vector<ClientPtr>
++add(client: ClientPtr): void
++remove(client: ClientPtr): void
++findBy(predicate: ClientPredicate): vector<ClientPtr>
++findByPersonalId(id: string): ClientPtr
+}
+note bottom of ClientRepository: Repozytorium przechowujące Klientów. Wyszukiwanie m.in. po PESEL.
+
+class RepairRepository {
+-repairs: vector<RepairPtr>
++add(repair: RepairPtr): void
++remove(repair: RepairPtr): void
++findBy(predicate: RepairPredicate): vector<RepairPtr>
++findById(id: int): RepairPtr
+}
+note bottom of RepairRepository: Zarządza zleceniami. Wyszukiwanie po ID.
+
+class ResourceRepository {
+-resources: vector<ResourcePtr>
++add(resource: ResourcePtr): void
++remove(resource: ResourcePtr): void
++findBy(predicate: ResourcePredicate): vector<ResourcePtr>
+}
+note bottom of ResourceRepository: Repozytorium zasobów (Mechanicy/Sprzęt).
+
+class ClientPredicate <<function>>
+class RepairPredicate <<function>>
+class ResourcePredicate <<function>>
+
+ interface Resource{}
+
+' <--- RELACJE --->
+
+LogicContainer *-- ClientManager
+LogicContainer *-- RepairManager
+LogicContainer *-- ResourceManager
+
+ClientManager *-- ClientRepository
+RepairManager *-- RepairRepository
+ResourceManager *-- ResourceRepository
+
+ClientManager ..> ClientPredicate
+RepairManager ..> RepairPredicate
+ResourceManager ..> ResourcePredicate
+ClientRepository ..> ClientPredicate
+RepairRepository ..> RepairPredicate
+ResourceRepository ..> ResourcePredicate
+
+ClientRepository --> Client
+RepairRepository --> Repair
+ResourceRepository --> Resource
+
+RepairManager ..> Client : używa
+RepairManager ..> Repair : tworzy i modyfikuje
+RepairManager ..> Resource : przypisuje do naprawy
+ClientManager ..> Client : rejestruje/tworzy
+ResourceManager ..> Resource : sprawdza dostępność
+
+@enduml
