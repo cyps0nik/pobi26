@@ -31,7 +31,7 @@ end note
 class RepairManager {
 -repairRepository: RepairRepository
 +getRepair(id: int): RepairPtr
-+assignMechanicToRepair(repair: RepairPtr, mechanic: ResourcePtr): void
++assignMechanicToRepair(mechanic: ResourcePtr): void
 +beginRepair(client: ClientPtr, car: CarPtr, res: vector<ResourcePtr>): RepairPtr
 +finishRepair(repair: RepairPtr, time: ptime): void
 +findRepairs(predicate: RepairPredicate): vector<RepairPtr>
