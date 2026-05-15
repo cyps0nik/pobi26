@@ -16,10 +16,11 @@ end note
 
 class ClientManager {
 -clientRepository: ClientRepository
-+registerClient(...): ClientPtr
++registerClient(fName: string, lName: string, pID: string, mail: string, phone: string): ClientPtr
 +unregisterClient(id: string): void
 +getClient(id: string): ClientPtr
 +findClients(predicate: ClientPredicate): vector<ClientPtr>
++findAllClients(): vector<ClientPtr>
 }
 note bottom of ClientManager
   Zarządza cyklem życia obiektów Client.
@@ -32,6 +33,9 @@ class RepairManager {
 +getRepair(id: int): RepairPtr
 +beginRepair(client: ClientPtr, car: CarPtr, res: vector<ResourcePtr>): RepairPtr
 +finishRepair(repair: RepairPtr, time: ptime): void
++findRepairs(predicate: RepairPredicate): vector<RepairPtr>
++findAllRepairs(): vector<RepairPtr>
++getClientRepairs(client: ClientPtr): vector<RepairPtr>
 }
 note bottom of RepairManager
   Koordynuje proces naprawy: łączy klienta, pojazd
@@ -41,9 +45,14 @@ end note
 
 class ResourceManager {
 -resourceRepository: ResourceRepository
-+assignMechanicToRepair(mechanic: ResourcePtr, repair: RepairPtr): void
-+checkAvailability(res: ResourcePtr, s: ptime, e: ptime): bool
-+findAvailableMechanics(...): vector<ResourcePtr>
++getMechanic(mechanic: ResourcePtr): ResourcePtr
++assignMechanicToRepair(mechanic: ResourcePtr): void
++registerMechanic(fName: string, lName: string, hasEV: bool): ResourcePtr
++unregisterMechanic(mechanic: ResourcePtr): void
++checkAvailability(res: ResourcePtr): bool
++findAvailableMechanics(): vector<ResourcePtr>
++findMechanics(predicate: ResourcePredicate): vector<ResourcePtr>
++findAllMechanics(): vector<ResourcePtr>
 }
 note top of ResourceManager
   Zarządza zasobami warsztatu. Implementuje
@@ -53,8 +62,12 @@ end note
 
 class ClientRepository {
 -clients: vector<ClientPtr>
++get(index: int): ClientPtr
 +add(client: ClientPtr): void
 +remove(client: ClientPtr): void
++size(): int
++report(): string
++findAll(): vector<ClientPtr>
 +findBy(predicate: ClientPredicate): vector<ClientPtr>
 +findByPersonalId(id: string): ClientPtr
 }
@@ -62,8 +75,12 @@ note bottom of ClientRepository: Repozytorium przechowujące Klientów. Wyszukiw
 
 class RepairRepository {
 -repairs: vector<RepairPtr>
++get(index: int): RepairPtr
 +add(repair: RepairPtr): void
 +remove(repair: RepairPtr): void
++size(): int
++report(): string
++findAll(): vector<RepairPtr>
 +findBy(predicate: RepairPredicate): vector<RepairPtr>
 +findById(id: int): RepairPtr
 }
@@ -71,17 +88,20 @@ note bottom of RepairRepository: Zarządza zleceniami. Wyszukiwanie po ID.
 
 class ResourceRepository {
 -resources: vector<ResourcePtr>
++get(index: int): ResourcePtr
 +add(resource: ResourcePtr): void
 +remove(resource: ResourcePtr): void
++size(): int
++report(): string
++findAll(): vector<ResourcePtr>
 +findBy(predicate: ResourcePredicate): vector<ResourcePtr>
 }
-note bottom of ResourceRepository: Repozytorium zasobów (Mechanicy/Sprzęt).
+note bottom of ResourceRepository: Repozytorium zasobów (Mechaników).
 
 class ClientPredicate <<function>>
 class RepairPredicate <<function>>
 class ResourcePredicate <<function>>
 
- interface Resource{}
 
 ' <--- RELACJE --->
 
@@ -102,12 +122,12 @@ ResourceRepository ..> ResourcePredicate
 
 ClientRepository --> Client
 RepairRepository --> Repair
-ResourceRepository --> Resource
+ResourceRepository --> Mechanic
 
 RepairManager ..> Client : używa
 RepairManager ..> Repair : tworzy i modyfikuje
-RepairManager ..> Resource : przypisuje do naprawy
+RepairManager ..> Mechanic : przypisuje do naprawy
 ClientManager ..> Client : rejestruje/tworzy
-ResourceManager ..> Resource : sprawdza dostępność
+ResourceManager ..> Mechanic : sprawdza dostępność
 
 @enduml
