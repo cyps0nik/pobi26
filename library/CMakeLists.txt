@@ -7,6 +7,8 @@ set(SOURCE_FILES
         include/typedefs.h
         src/model/Car.cpp
         include/model/Car.h
+        src/model/PoweredBy.cpp
+        include/model/PoweredBy.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł

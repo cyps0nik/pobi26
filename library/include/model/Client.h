@@ -12,12 +12,20 @@ private:
     std::string email;
     std::string personalID;
     std::vector<CarPtr> cars;
+
 public:
-    const std::string& getFirstName();
-    const std::string& getLastName();
-    const std::string& getPhoneNumber();
-    const std::string& getEmail();
-    const std::string& getPersonalID();
+    Client(std::string& _firstName, std::string& _lastName, std::string& _phoneNumber, std::string& _email,
+           std::string& _personalID);
+
+    const std::string &getFirstName();
+
+    const std::string &getLastName();
+
+    const std::string &getPhoneNumber();
+
+    const std::string &getEmail();
+
+    const std::string &getPersonalID();
 };
 
 
