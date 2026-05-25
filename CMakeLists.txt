@@ -1,5 +1,5 @@
 # Minimalna wersja cmake konieczna do zbudowania tego projektu
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.5)
 
 # Parametry konfiguracyjne platformy programistycznej i flagi kompilatora
 set(CMAKE_CXX_COMPILER g++) # g++ jako kompilator C++

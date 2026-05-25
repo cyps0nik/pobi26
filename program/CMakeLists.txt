@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.4)
+cmake_minimum_required(VERSION 3.5)
 project(Program)
 # Ustaw we własnej zmiennej SOURCE_FILES zbiór plików źródłowych projektu
 set(SOURCE_FILES src/main.cpp)
