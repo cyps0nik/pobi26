@@ -1,5 +1,5 @@
 #include "model/Client.h"
-Client::Client(std::string& _firstName, std::string& _lastName, std::string& _phoneNumber, std::string& _email, std::string &_personalID) : cars(){
+Client::Client(std::string& _firstName, std::string& _lastName, std::string& _phoneNumber, std::string& _email, std::string &_personalID) {
     this->firstName = _firstName;
     this->lastName = _lastName;
     this->phoneNumber = _phoneNumber;

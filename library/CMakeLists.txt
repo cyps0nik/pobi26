@@ -11,6 +11,8 @@ set(SOURCE_FILES
         include/model/PoweredBy.h
         src/model/Engine.cpp
         include/model/Engine.h
+        src/model/Accumulator.cpp
+        include/model/Accumulator.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł

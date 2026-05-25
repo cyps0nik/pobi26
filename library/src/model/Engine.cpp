@@ -1,6 +1,7 @@
 #include "model/Engine.h"
 Engine::Engine(int _engineDisplacement, FuelType _typPaliwa) {
-    this->engineDisplacement = _engineDisplacement;
+    if (_engineDisplacement < 0) return;
+    else this->engineDisplacement = _engineDisplacement;
     this->typPaliwa = _typPaliwa;
 }
 

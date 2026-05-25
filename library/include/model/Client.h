@@ -11,7 +11,6 @@ private:
     std::string phoneNumber;
     std::string email;
     std::string personalID;
-    std::vector<CarPtr> cars;
 
 public:
     Client(std::string& _firstName, std::string& _lastName, std::string& _phoneNumber, std::string& _email,
