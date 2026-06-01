@@ -15,7 +15,7 @@ private:
 public:
     Client(std::string& _firstName, std::string& _lastName, std::string& _phoneNumber, std::string& _email,
            std::string& _personalID);
-
+    ~Client() = default;
     const std::string &getFirstName();
 
     const std::string &getLastName();
@@ -25,6 +25,8 @@ public:
     const std::string &getEmail();
 
     const std::string &getPersonalID();
+    void setPhoneNumber(const std::string& phoneNumber);
+    void setEmail(const std::string& email);
 };
 
 

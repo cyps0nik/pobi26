@@ -11,7 +11,6 @@ private:
     FuelType typPaliwa;
 public:
     Engine(int _engineDisplacement, FuelType _typPaliwa);
-    ~Engine() = default;
     const int& getEngineDisplacement() const;
     const FuelType& getFuelType() const;
     double getMultiplier() const override;

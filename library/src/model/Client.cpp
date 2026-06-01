@@ -18,4 +18,16 @@ const std::string &Client::getPhoneNumber() {
 const std::string &Client::getEmail() {
     return this->email;
 }
+const std::string &Client::getPersonalID() {
+    return this->personalID;
+}
+void Client::setEmail(const std::string &email) {
+    if (email == "") return;
+    else this->email = email;
+}
+void Client::setPhoneNumber(const std::string &phoneNumber) {
+    if (phoneNumber == "") return;
+    else this->phoneNumber = phoneNumber;
+}
+
 

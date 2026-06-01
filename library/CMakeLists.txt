@@ -13,6 +13,10 @@ set(SOURCE_FILES
         include/model/Engine.h
         src/model/Accumulator.cpp
         include/model/Accumulator.h
+        src/model/Repair.cpp
+        include/model/Repair.h
+        src/model/Service.cpp
+        include/model/Service.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł

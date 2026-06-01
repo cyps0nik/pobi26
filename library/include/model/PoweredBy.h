@@ -6,7 +6,7 @@ class PoweredBy {
 private:
 
 public:
-    virtual ~PoweredBy() = 0;
+    virtual ~PoweredBy() = default;
     virtual double getMultiplier() const = 0;
 };
 

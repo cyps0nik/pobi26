@@ -7,7 +7,7 @@ Car::Car(std::string _carBrand, std::string _carModel, std::string _VIN, Powered
     this->powerSupply = (std::move(_power));
     this->owner = _owner;
 }
-Car::~Car() {}
+
 const std::string &Car::getCarBrand() const {
     return this->carBrand;
 }
