@@ -36,6 +36,8 @@ include_directories(
 
 set(SOURCE_TEST_FILES
         test/confi.cpp
+        test/ClientTest.cpp
+        test/CarTest.cpp
 ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTester ${SOURCE_TEST_FILES})

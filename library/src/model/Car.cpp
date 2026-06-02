@@ -1,5 +1,4 @@
 #include "model/Car.h"
-#include "model/Car.h"
 Car::Car(std::string _carBrand, std::string _carModel, std::string _VIN, PoweredUniqPtr _power, ClientPtr _owner) {
     this->carBrand = _carBrand;
     this->carModel = _carModel;

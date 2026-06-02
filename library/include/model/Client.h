@@ -13,8 +13,8 @@ private:
     std::string personalID;
 
 public:
-    Client(std::string& _firstName, std::string& _lastName, std::string& _phoneNumber, std::string& _email,
-           std::string& _personalID);
+    Client(std::string _firstName, std::string _lastName, std::string _phoneNumber, std::string _email,
+           std::string _personalID);
     ~Client() = default;
     const std::string &getFirstName();
 

@@ -23,7 +23,7 @@ int Repair::getServicesAmount() const {
 }
 int Repair::getSingleServiceCost(ServicePtr service) const {
     if (service == nullptr) return 0;
-    else {return service->getServiceCost();}
+    else return 1; //return service->getServiceCost();
 }
 int Repair::calculateTotal() const {
     int calosc = 0;
