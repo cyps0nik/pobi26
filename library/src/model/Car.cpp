@@ -16,9 +16,14 @@ const std::string &Car::getCarModel() const {
 const std::string &Car::getVIN() const {
     return this->VIN;
 }
-const std::unique_ptr<PoweredBy> &Car::getPowerSupply() const {
+
+PoweredUniqPtr Car::getPowerSupply() const {
     return this->powerSupply;
 }
+const ClientPtr &Car::getOwner() const {
+    return this->owner;
+}
+
 
 
 

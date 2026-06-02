@@ -18,7 +18,9 @@ public:
     const std::string& getCarBrand() const;
     const std::string& getCarModel() const;
     const std::string& getVIN() const;
-    const PoweredUniqPtr& getPowerSupply() const; //zeby moc uzyc tu abstrakcyjnej klasy
+
+    PoweredUniqPtr getPowerSupply() const; //zeby moc uzyc tu abstrakcyjnej klasy
+    const ClientPtr& getOwner() const;
     // korzystamy z unique_ptr
     // setterow nie robie bo jak raz stworzy sie auto to z BMW
     // nie zmienia sie na mercedesa z VINem to samo
