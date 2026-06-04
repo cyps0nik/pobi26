@@ -7,7 +7,7 @@ private:
     int capacityKWh;
     int degradationLevel;
 public:
-    Accumulator(int _capacityKWh, int _degradationLevel);
+    Accumulator(const int& _capacityKWh, const int& _degradationLevel);
     const int& getCapacityKWh() const;
     const int& getDegradationLevel() const;
     double getMultiplier() const override;

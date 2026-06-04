@@ -19,12 +19,13 @@ struct TestSuiteCarFixture {
 
 BOOST_FIXTURE_TEST_SUITE(CarTest, TestSuiteCarFixture)
     BOOST_AUTO_TEST_CASE(ConstructorTest) {
-    Car samochod(testCarBrand, testCarModel, testVIN, std::move(testEngine), testOwner);
-    BOOST_TEST(samochod.getCarBrand() == testCarBrand);
-    BOOST_TEST(samochod.getCarModel() == testCarModel);
-    BOOST_TEST(samochod.getVIN() == testVIN);
-    BOOST_TEST(samochod.getPowerSupply() != nullptr);
-    BOOST_TEST(samochod.getPowerSupply()->getMultiplier() == 1.875);
+        Car samochod(testCarBrand, testCarModel, testVIN, std::move(testEngine), testOwner);
+        BOOST_TEST(samochod.getCarBrand() == testCarBrand);
+        BOOST_TEST(samochod.getCarModel() == testCarModel);
+        BOOST_TEST(samochod.getVIN() == testVIN);
+        PoweredBy* naped = samochod.getPowerSource();
+        BOOST_REQUIRE(naped != nullptr);
+        BOOST_TEST(samochod.getPowerSource()->getMultiplier() == 1.875);
     }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -7,8 +7,8 @@
 #include <boost/date_time.hpp>
 #include <vector>
 #include "typedefs.h"
-#include "model/Service.h"
-#include "model/Repair.h"
+#include "Service.h"
+#include "naprawa/Repair.h"
 namespace pt = boost::posix_time;
 class Repair : std::enable_shared_from_this<Repair>{
     int id;

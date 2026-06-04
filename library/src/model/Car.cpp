@@ -1,10 +1,9 @@
 #include "model/Car.h"
-Car::Car(std::string _carBrand, std::string _carModel, std::string _VIN, PoweredUniqPtr _power, ClientPtr _owner) {
-    this->carBrand = _carBrand;
-    this->carModel = _carModel;
-    this->VIN = _VIN;
-    this->powerSupply = (std::move(_power));
-    this->owner = _owner;
+#include "model/PoweredBy.h"
+#include <utility>
+Car::Car(const std::string &_carBrand, const std::string &_carModel, const std::string &_VIN,  PoweredUniqPtr _power
+    , const ClientPtr &_owner) : carBrand(_carBrand), carModel(_carModel), VIN(_VIN), powerSource(std::move(_power)), owner(_owner) {
+
 }
 
 const std::string &Car::getCarBrand() const {
@@ -17,12 +16,10 @@ const std::string &Car::getVIN() const {
     return this->VIN;
 }
 
-PoweredUniqPtr Car::getPowerSupply() const {
-    return this->powerSupply;
+PoweredBy*Car::getPowerSource() const {
+    return this->powerSource.get();
 }
-const ClientPtr &Car::getOwner() const {
-    return this->owner;
-}
+
 
 
 

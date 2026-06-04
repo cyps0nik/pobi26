@@ -1,33 +1,59 @@
 #include "model/Client.h"
-Client::Client(std::string _firstName, std::string _lastName, std::string _phoneNumber, std::string _email, std::string _personalID) {
+
+#include <stdexcept>
+
+Client::Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
+               const std::string &_email, const std::string &_personalID) : cars() {
     this->firstName = _firstName;
     this->lastName = _lastName;
-    this->phoneNumber = _phoneNumber;
-    this->email = _email;
+    if (_phoneNumber.size() > 15) throw std::invalid_argument("PhoneNumber size exceeded");
+    else this->phoneNumber = _phoneNumber;
+    if (_email.find('@') == std::string::npos) throw std::invalid_argument("Invalid email");
+    else this->email = _email;
     this->personalID = _personalID;
 }
-const std::string &Client::getFirstName() {
+
+const std::string &Client::getFirstName() const {
     return this->firstName;
 }
-const std::string &Client::getLastName() {
+
+const std::string &Client::getLastName() const {
     return this->lastName;
 }
-const std::string &Client::getPhoneNumber() {
+
+const std::string &Client::getPhoneNumber() const {
     return this->phoneNumber;
 }
-const std::string &Client::getEmail() {
+
+const std::string &Client::getEmail() const {
     return this->email;
 }
-const std::string &Client::getPersonalID() {
+
+const std::string &Client::getPersonalID() const {
     return this->personalID;
 }
+
 void Client::setEmail(const std::string &email) {
-    if (email == "") return;
+    if (email.empty() || email.find('@') == std::string::npos) return;
     else this->email = email;
 }
+
 void Client::setPhoneNumber(const std::string &phoneNumber) {
-    if (phoneNumber == "") return;
+    if (phoneNumber.empty()) return;
     else this->phoneNumber = phoneNumber;
 }
 
+void Client::add(const CarPtr &car) {
+    if (car == nullptr) return;
+    else cars.push_back(car);
+}
+
+CarPtr Client::get(int index) {
+    if (index < 0 || index >= cars.size()) return nullptr;
+    else return cars[index];
+}
+
+void Client::remove(const CarPtr& car) {
+
+}
 

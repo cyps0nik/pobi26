@@ -4,6 +4,6 @@ using namespace std;
 
 int main() {
     Engine silnik(8000, Diesel);
-    cout << silnik.getFuelType() << endl;
+    cout << silnik.getFuelType() << endl << "działa:D";
     return 0;
 }

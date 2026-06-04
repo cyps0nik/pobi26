@@ -1,5 +1,0 @@
-#include "model/PoweredBy.h"
-
-
-
-

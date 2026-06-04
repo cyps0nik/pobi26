@@ -8,13 +8,9 @@ struct TestSuiteClientFixture {
      std::string testEmail = "jonarbuck@gmail.com";
      std::string testPersonalID = "0123456789";
 
-    TestSuiteClientFixture() {
+    TestSuiteClientFixture() = default;
 
-    }
-
-    ~TestSuiteClientFixture() {
-
-    }
+    ~TestSuiteClientFixture() = default;
 };
 BOOST_FIXTURE_TEST_SUITE(TestClient, TestSuiteClientFixture)
 BOOST_AUTO_TEST_CASE(ConstructorTest) {
@@ -24,5 +20,10 @@ BOOST_AUTO_TEST_CASE(ConstructorTest) {
     BOOST_TEST(klient.getPhoneNumber() == testPhoneNumber);
     BOOST_TEST(klient.getEmail() == testEmail);
     BOOST_TEST(klient.getPersonalID() == testPersonalID);
+
+}
+BOOST_AUTO_TEST_CASE(SetterTest) {
+    Client klient2(testFirstName, testLastName, testPhoneNumber, testEmail, testPersonalID);
+
 }
 BOOST_AUTO_TEST_SUITE_END()

@@ -1,10 +1,14 @@
 #include "model/Accumulator.h"
-Accumulator::Accumulator(int _capacityKWh, int _degradationLevel) {
-    if (_capacityKWh < 0) return;
+#include <stdexcept>//potrzeben do throw
+
+
+Accumulator::Accumulator(const int &_capacityKWh, const int &_degradationLevel) {
+    if (_capacityKWh < 0) throw std::invalid_argument("Pojemnosc akumulatora nie moze byc ujemna");
     else this->capacityKWh = _capacityKWh;
-    if (_degradationLevel < 0 || _degradationLevel > 100) return;
+    if (_degradationLevel < 0 || _degradationLevel > 100) throw std::invalid_argument("Degradacja ma zakres od 0 do 100 %");
     else this->degradationLevel = _degradationLevel;
 }
+
 const int &Accumulator::getCapacityKWh() const {
     return this->capacityKWh;
 }
