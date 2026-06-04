@@ -38,7 +38,7 @@ private:
 public:
     /**
      * @brief Konstruktor domyślny.
-     * @details Inicjalizuje puste repozytorium samochodów.
+     * @details Inicjalizuje puste repozytorium napraw.
      */
     RepairRepository() = default;
 
@@ -72,13 +72,25 @@ public:
      * @return std::string Zbiorcze informacje o obiektach w repozytorium.
      */
     std::string report() const;
+
+    /**
+     * @brief Zwraca aktualną liczbę napraw.
+     * @return int Rozmiar kolekcji.
+     */
     int size() const;
 
+    /**
+     * @brief Metoda wyszukująca obiekty spełniające podane kryterium (predykat).
+     * @param predicate Funkcja lub lambda definiująca warunek wyszukiwania.
+     * @return std::vector<RepairPtr> Wektor wskaźników do znalezionych napraw.
+     */
     std::vector<RepairPtr> findBy(RepairPredicate predicate) const;
+
+    /**
+     * @brief Zwraca wszystkie naprawy znajdujących się w repozytorium.
+     * @return std::vector<RepairPtr> Wektor wszystkich obiektów.
+     */
     std::vector<RepairPtr> findAll() const;
-
-
-    RepairPtr findById(int id) const;
 };
 
 
