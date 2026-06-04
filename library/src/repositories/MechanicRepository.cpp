@@ -30,7 +30,7 @@ void MechanicRepository::remove(MechanicPtr mechanic) {
 std::string MechanicRepository::report() const {
     std::stringstream ss;
     for (MechanicPtr mechanic : mechanics) {
-        if (mechanic != nullptr) ss << "mechanic ID: " << mechanic->getId() << "\n";
+        if (mechanic != nullptr) ss << mechanic->getInfo() << "\n";
     }
     return ss.str();
 }

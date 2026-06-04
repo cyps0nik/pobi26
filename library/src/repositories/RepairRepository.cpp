@@ -30,7 +30,7 @@ void RepairRepository::remove(RepairPtr repair) {
 std::string RepairRepository::report() const {
     std::stringstream ss;
     for (RepairPtr repair : repairs) {
-        if (repair != nullptr) ss << "Repair ID: " << repair->getId() << "\n";
+        if (repair != nullptr) ss << repair->getInfo() << "\n";
     }
     return ss.str();
 }

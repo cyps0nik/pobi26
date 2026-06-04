@@ -1,0 +1,54 @@
+//
+// Created by marek on 4.06.2026.
+//
+
+#include "repositories/ResourceRepository.h"
+#include "model/Resource.h"
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+ResourceRepository::~ResourceRepository() {}
+
+ResourcePtr ResourceRepository::get(int index) const {
+    if (index < 0 || index >= (int)resources.size()) return nullptr;
+    return resources[index];
+}
+
+void ResourceRepository::add(ResourcePtr resource) {
+    if (resource != nullptr) resources.push_back(resource);
+}
+
+void ResourceRepository::remove(ResourcePtr resource) {
+    if (resource != nullptr) {
+        resources.erase(std::remove(resources.begin(), resources.end(), resource), resources.end());
+    }
+}
+
+std::string ResourceRepository::report() const {
+    std::stringstream ss;
+    for (ResourcePtr resource : resources) {
+        if (resource != nullptr) ss << resource->getInfo() << "\n";
+    }
+    return ss.str();
+}
+
+int ResourceRepository::size() const {
+    return (int)resources.size();
+}
+
+std::vector<ResourcePtr> ResourceRepository::findBy(ResourcePredicate predicate) const {
+    std::vector<ResourcePtr> found;
+    for (ResourcePtr resource : resources) {
+        if (resource != nullptr && predicate(resource)) {
+            found.push_back(resource);
+        }
+    }
+    return found;
+}
+
+std::vector<ResourcePtr> ResourceRepository::findAll() const {
+    return findBy([](const ResourcePtr&) { return true; });
+}

@@ -91,6 +91,13 @@ public:
      * @return std::vector<RepairPtr> Wektor wszystkich obiektów.
      */
     std::vector<RepairPtr> findAll() const;
+
+    /**
+     * @brief Wyszukuje naprawę na podstawie id.
+     * @param id stała reprezentująca id naprawy.
+     * @return RepairPtr Wskaźnik do znalezioną naprawę lub nullptr, jeśli nie istnieje.
+     */
+    RepairPtr findById(int id) const;
 };
 
 
