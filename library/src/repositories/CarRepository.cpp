@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file CarRepository.cpp
+ * @brief Implementacja metod zarządzania samochodami.
+ */
 
 #include "repositories/CarRepository.h"
 #include "model/Car.h"

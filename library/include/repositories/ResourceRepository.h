@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+* @file ResourceRepository.h
+ * @brief Definicja klasy ResourceRepository zarządzającej obiektami klasy Resource.
+ */
 
 #ifndef PROJECTPOBI_RESOURCEREPOSITORY_H
 #define PROJECTPOBI_RESOURCEREPOSITORY_H

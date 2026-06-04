@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file MechanicRepository.h
+ * @brief Definicja klasy MechanicRepository zarządzającej obiektami klasy Mechanic.
+ */
 
 #ifndef PROJECTPOBI_MECHANICREPOSITORY_H
 #define PROJECTPOBI_MECHANICREPOSITORY_H

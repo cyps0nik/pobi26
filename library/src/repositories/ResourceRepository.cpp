@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file ResourceRepository.cpp
+ * @brief Implementacja metod zarządzania zasobami.
+ */
 
 #include "repositories/ResourceRepository.h"
 #include "model/Resource.h"

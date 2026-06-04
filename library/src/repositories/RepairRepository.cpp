@@ -1,9 +1,10 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file RepairRepository.cpp
+ * @brief Implementacja metod zarządzania naprawami.
+ */
 
 #include "repositories/RepairRepository.h"
-#include "model/Repair.h"
+#include "model/naprawa/Repair.h"
 #include <sstream>
 #include <iostream>
 #include <algorithm>

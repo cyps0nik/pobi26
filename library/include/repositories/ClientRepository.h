@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file ClientRepository.h
+ * @brief Definicja klasy ClientRepository zarządzającej obiektami klasy Client.
+ */
 
 #ifndef PROJECTPOBI_CLIENTREPOSITORY_H
 #define PROJECTPOBI_CLIENTREPOSITORY_H

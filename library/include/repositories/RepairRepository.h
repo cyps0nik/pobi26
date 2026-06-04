@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file RepairRepository.h
+ * @brief Definicja klasy RepairRepository zarządzającej obiektami klasy Repair.
+ */
 
 #ifndef PROJECTPOBI_REPAIRREPOSITORY_H
 #define PROJECTPOBI_REPAIRREPOSITORY_H

@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file MechanicRepository.cpp
+ * @brief Implementacja metod zarządzania mechanikami.
+ */
 
 #include "repositories/MechanicRepository.h"
 #include "model/Mechanic.h"

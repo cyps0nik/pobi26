@@ -1,6 +1,10 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file ClientRepository.cpp
+ * @brief Implementacja metod klasy ClientRepository.
+ * @details Implementacja wykorzystuje standardowy kontener std::vector do przechowywania
+ * inteligentnych wskaźników oraz algorytmy biblioteki standardowej (std::remove) do
+ * efektywnego zarządzania kolekcją.
+ */
 
 #include "repositories/ClientRepository.h"
 #include "model/Client.h"

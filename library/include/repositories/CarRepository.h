@@ -1,6 +1,7 @@
-//
-// Created by marek on 4.06.2026.
-//
+/**
+ * @file CarRepository.h
+ * @brief Definicja klasy CarRepository zarządzającej obiektami klasy Car.
+ */
 
 #ifndef PROJECTPOBI_CARREPOSITORY_H
 #define PROJECTPOBI_CARREPOSITORY_H
