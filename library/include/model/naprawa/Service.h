@@ -11,6 +11,10 @@ class Service {
     bool repaired;
 public:
     Service(std::string _name);
+    int getServiceCost() const;
+    const std::string &getName() const;
+    const bool &isRepaired() const;
+
 };
 
 

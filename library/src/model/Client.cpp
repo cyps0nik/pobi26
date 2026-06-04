@@ -1,5 +1,5 @@
 #include "model/Client.h"
-
+#include <algorithm>
 #include <stdexcept>
 
 Client::Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
@@ -54,6 +54,9 @@ CarPtr Client::get(int index) {
 }
 
 void Client::remove(const CarPtr& car) {
-
+if (car== nullptr) return;
+    else {
+        cars.erase(std::remove(cars.begin(), cars.end(), car), cars.end());
+    }
 }
 

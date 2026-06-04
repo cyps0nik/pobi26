@@ -28,7 +28,7 @@ private:
         ar & email;   // Zapisujemy/odczytujemy email
         ar & personalID; // Zapisujemy/odczytujemy Pesel
         ar & cars; // Zapisujemy/odczytujemy samochody
-
+    }
 public:
     Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
            const std::string &_email,

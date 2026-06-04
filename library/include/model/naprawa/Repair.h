@@ -8,7 +8,7 @@
 #include <vector>
 #include "typedefs.h"
 #include "Service.h"
-#include "naprawa/Repair.h"
+#include "model/naprawa/Repair.h"
 namespace pt = boost::posix_time;
 class Repair : std::enable_shared_from_this<Repair>{
     int id;
@@ -16,13 +16,13 @@ class Repair : std::enable_shared_from_this<Repair>{
     pt::ptime beginTime;
     pt::ptime endTime;
     std::vector<ServicePtr> services;
-    CarPtr samochod;
+    CarPtr car;
 public:
-    Repair(int _id,  const pt::ptime &_beginTime);
-    int getId() const;
-    pt::ptime getBeginTime() const;
-    pt::ptime getEndTime() const;
-    CarPtr getSamochod() const;
+    Repair(const int& _id,  const pt::ptime &_beginTime,const CarPtr& _car);
+    const int& getId() const;
+    const pt::ptime& getBeginTime() const;
+    const pt::ptime& getEndTime() const;
+    CarPtr getCar() const;
     int getServicesAmount() const;
     int getSingleServiceCost(ServicePtr service) const;
     int calculateTotal() const;

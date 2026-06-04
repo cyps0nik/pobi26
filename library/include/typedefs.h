@@ -1,7 +1,7 @@
 #ifndef CARRENTAL_TYPEDEFS_H
 #define CARRENTAL_TYPEDEFS_H
 #include <memory>
-
+#include <functional>
 class Client;
 class Car;
 class Resource;
