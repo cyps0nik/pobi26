@@ -1,6 +1,5 @@
 #include "model/Client.h"
 #include <algorithm>
-#include <string>
 #include <stdexcept>
 
 Client::Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
@@ -44,26 +43,8 @@ void Client::setPhoneNumber(const std::string &phoneNumber) {
     else this->phoneNumber = phoneNumber;
 }
 
-// void Client::add(const CarPtr &car) {
-//     if (car == nullptr) return;
-//     else cars.push_back(car);
-// }
-//
-// CarPtr Client::get(int index) {
-//     if (index < 0 || index >= cars.size()) return nullptr;
-//     else return cars[index];
-// }
-//
-// void Client::remove(const CarPtr& car) {
-// if (car== nullptr) return;
-//     else {
-//         cars.erase(std::remove(cars.begin(), cars.end(), car), cars.end());
-//     }
-// }
-
 std::string Client::getInfo() const {
     std::string info = "Imie: " + getFirstName() + ", Nazwisko: " + getLastName() + ", PESEL: " + getPersonalID();
     info += ", Numer telefonu: " + getPhoneNumber() + ", Email: " + getEmail();
     return info;
 }
-

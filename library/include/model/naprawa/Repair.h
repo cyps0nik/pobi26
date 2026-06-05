@@ -10,29 +10,37 @@
 #include "Service.h"
 #include "model/naprawa/Repair.h"
 namespace pt = boost::posix_time;
-class Repair : std::enable_shared_from_this<Repair>{
+
+class Repair : std::enable_shared_from_this<Repair> {
     int id;
     int repairCost;
     pt::ptime beginTime;
     pt::ptime endTime;
     std::vector<ServicePtr> services;
     CarPtr car;
+
 public:
-    Repair(const int& _id,  const pt::ptime &_beginTime,const CarPtr& _car);
-    const int& getId() const;
-    const pt::ptime& getBeginTime() const;
-    const pt::ptime& getEndTime() const;
+    Repair(const int &_id, const pt::ptime &_beginTime, const CarPtr &_car);
+
+    const int &getId() const;
+
+    const pt::ptime &getBeginTime() const;
+
+    const pt::ptime &getEndTime() const;
+
     CarPtr getCar() const;
+
     int getServicesAmount() const;
+
     double getSingleServiceCost(const ServicePtr &service) const;
+
     int calculateTotal() const;
 
-    //void add(const ServicePtr& service);
+    void add(const ServicePtr &service);
 
-    //void remove(const ServicePtr& service);
+    void remove(const ServicePtr &service);
 
-    //ServicePtr get(int index);
-
+    ServicePtr get(const ServicePtr &service);
 };
 
 

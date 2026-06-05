@@ -15,19 +15,18 @@ private:
     std::string phoneNumber;
     std::string email;
     std::string personalID;
-    //std::vector<CarPtr> cars;
-
     // Dajemy uprawnienia Boostowi
     friend class boost::serialization::access;
 
     template<class Archive>
-    void serialize(Archive & ar, const unsigned int version) {
-        ar & firstName;  // Zapisujemy/odczytujemy imię
-        ar & lastName;   // Zapisujemy/odczytujemy nazwisko
-        ar & phoneNumber;   // Zapisujemy/odczytujemy numer telefonu
-        ar & email;   // Zapisujemy/odczytujemy email
+    void serialize(Archive &ar, const unsigned int version) {
+        ar & firstName; // Zapisujemy/odczytujemy imię
+        ar & lastName; // Zapisujemy/odczytujemy nazwisko
+        ar & phoneNumber; // Zapisujemy/odczytujemy numer telefonu
+        ar & email; // Zapisujemy/odczytujemy email
         ar & personalID; // Zapisujemy/odczytujemy Pesel
     }
+
 public:
     Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
            const std::string &_email,
@@ -50,8 +49,7 @@ public:
     void setEmail(const std::string &email);
 
 
-
-	/**
+    /**
      * @brief Zwraca podstawowe informacje o kliencie.
      * @return std::string Ciąg znaków: Imię, Nazwisko, PESEL, Numer telefonu, Email.
      */
