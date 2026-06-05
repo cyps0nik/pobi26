@@ -20,20 +20,20 @@ class CarRepository;
  */
 class CarManager {
 private:
-    CarRepository& carRepository; /**<Referencja do repozytorium klientów. */
+    CarRepository& carRepository; /**<Referencja do repozytorium samochodów. */
 public:
     /**
-    * @brief Konstruktor menedżera samochodów.
-    * @param repo Referencja do istniejącego repozytorium aut.
-    */
-    CarManager(CarRepository& repo); // Kostruktor przyjmuje referencję do gotowego repozutorium
+     * @brief Konstruktor menedżera samochodów.
+     * @param repo Referencja do istniejącego repozytorium aut.
+     */
+    CarManager(CarRepository& repo); // Konstruktor przyjmuje referencję do gotowego repozutorium
 
     /** @brief Destruktor domyślny. */
     ~CarManager() = default;
 
     /**
-     * @brief Pobiera samochów na podstawie numeru VIN.
-     * @param vin Unikalny ndmer VIN pojazdu.
+     * @brief Pobiera samochód na podstawie numeru VIN.
+     * @param vin Unikalny numer VIN pojazdu.
      * @return CarPtr Wskaźnik na samochód lub nullptr, jeśli nie znaleziono.
      */
     CarPtr getCar(const std::string& vin) const;

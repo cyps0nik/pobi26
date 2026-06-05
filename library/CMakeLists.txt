@@ -36,6 +36,10 @@ set(SOURCE_FILES
 #        include/managers/CarManager.h
 #        src/managers/MechanicManager.cpp
 #        include/managers/MechanicManager.h
+#        src/managers/ResourceManager.cpp
+#        include/managers/ResourceManager.h
+#        src/managers/RepairManager.cpp
+#        include/managers/RepairManager.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł

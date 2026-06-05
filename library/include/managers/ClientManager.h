@@ -25,10 +25,10 @@ private:
     ClientRepository& clientRepository; /**<Referencja do repozytorium klientów. */
 public:
     /**
-    * @brief Konstruktor menedżera klientów.
-    * @param repo Referencja do istniejącego repozytorium klientów.
-    */
-    ClientManager(ClientRepository& repo); // Kostruktor przyjmuje referencję do gotowego repozutorium
+     * @brief Konstruktor menedżera klientów.
+     * @param repo Referencja do istniejącego repozytorium klientów.
+     */
+    ClientManager(ClientRepository& repo); // Konstruktor przyjmuje referencję do gotowego repozutorium
 
     /** @brief Destruktor domyślny. */
     ~ClientManager() = default;

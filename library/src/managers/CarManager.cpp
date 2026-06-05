@@ -19,12 +19,12 @@ CarPtr CarManager::getCar(const string& vin) const {
 }
 
 CarPtr CarManager::registerCar(const string& brand, const string& model, const string& vin, PoweredUniqPtr power, ClientPtr owner) {
-    // 1. Sprawdzamy czy samochód już istnieje
+    // 1. Sprawdzamy, czy samochód już istnieje
     CarPtr existing = getCar(vin);
     if (existing != nullptr) return existing;
 
     // 2. Jeśli nie istnieje, tworzymy nowy
-    CarPtr newCar = make_shared<Car>(brand, model, vin, power, owner);
+    CarPtr newCar = make_shared<Car>(brand, model, vin, std::move(power), owner);
     // 3. Dodajemy do repozytorium
     carRepository.add(newCar);
     return newCar;

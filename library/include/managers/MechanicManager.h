@@ -22,13 +22,13 @@ class MechanicRepository;
  */
 class MechanicManager {
 private:
-    MechanicRepository& mechanicRepository; /**<Referencja do repozytorium klientów. */
+    MechanicRepository& mechanicRepository; /**<Referencja do repozytorium mechaników. */
 public:
     /**
-    * @brief Konstruktor menedżera mechaników.
-    * @param repo Referencja do istniejącego repozytorium mechaników.
-    */
-    MechanicManager(MechanicRepository& repo);
+     * @brief Konstruktor menedżera mechaników.
+     * @param repo Referencja do istniejącego repozytorium mechaników.
+     */
+    MechanicManager(MechanicRepository& repo); // Konstruktor przyjmuje referencję do gotowego repozutorium
 
     /** @brief Destruktor domyślny. */
     ~MechanicManager() = default;
@@ -45,16 +45,14 @@ public:
      * @details Jeśli mechanik o podanym ID już istnieje, zwraca istniejący obiekt.
      * @param firstName Imię mechanika.
      * @param lastName Nazwisko mechanika.
-     * @param id uniwersalne id mechanika.
-     * @param isBusy stan zajętości/pracy mechanika.
      * @param hasEVCertificate informacja o certyfikacie mechanika.
      * @return MechanicPtr Wskaźnik na nowo zarejestrowanego lub istniejącego mechanika.
      */
-    MechanicPtr registerMechanic(const std::string& firstName, const std::string& lastName, int id, bool isBusy, bool hasEVCertificate);
+    MechanicPtr registerMechanic(const std::string& firstName, const std::string& lastName, bool hasEVCertificate);
 
     /**
      * @brief Wyrejestrowuje mechanika (ustawia flagę archiwizacji).
-     * @param mechanc Wskaźnik na mechanika do usunięcia z aktywnego użytku.
+     * @param mechanic Wskaźnik na mechanika do usunięcia z aktywnego użytku.
      */
     void unregisterMechanic(MechanicPtr mechanic);
 
@@ -67,7 +65,7 @@ public:
 
     /**
      * @brief Pobiera listę wszystkich mechaników w systemie.
-     * @return std::vector<MechanikPtr> Wektor wszystkich obiektów mechaników.
+     * @return std::vector<MechanicPtr> Wektor wszystkich obiektów mechaników.
      */
     std::vector<MechanicPtr> findAllMechanics() const;
 

@@ -37,5 +37,10 @@ double Repair::getSingleServiceCost(const ServicePtr &service) const {
     return 0.0;
 }
 
+bool Repair::isArchive() const {
+    return archive;
+}
 
-
+void Repair::setArchive(bool arch) {
+    archive = arch;
+}

@@ -18,6 +18,7 @@ class Repair : std::enable_shared_from_this<Repair> {
     pt::ptime endTime;
     std::vector<ServicePtr> services;
     CarPtr car;
+    bool archive = false;  /**< Flaga określająca, czy naprawa jest zarchiwizowana. */
 
 public:
     Repair(const int &_id, const pt::ptime &_beginTime, const CarPtr &_car);
@@ -41,6 +42,18 @@ public:
     void remove(const ServicePtr &service);
 
     ServicePtr get(const ServicePtr &service);
+
+    /**
+     * @brief Zwraca informację o statusie archiwalnym naprawy.
+     * @return true jeśli naprawa jest zarchiwizowana, false jeśli jest aktywna.
+     */
+    bool isArchive() const;
+
+    /**
+     * @brief Zmienia status archiwalny naprawy.
+     * @param archive Nowy stan flagi (true dla archiwizacji).
+     */
+    void setArchive(bool archive);
 };
 
 

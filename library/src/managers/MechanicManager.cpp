@@ -18,13 +18,13 @@ MechanicPtr MechanicManager::getMechanic(int id) const {
     return mechanicRepository.findById(id);
 }
 
-MechanicPtr MechanicManager::registerMechanic(const string& firstName, const string& lastName, int id,bool isBusy, bool hasEVCertificate) {
+MechanicPtr MechanicManager::registerMechanic(const string& firstName, const string& lastName, bool hasEVCertificate) {
     // 1. Sprawdzamy czy mechanik już istnieje
     MechanicPtr existing = getMechanic(id);
     if (existing != nullptr) return existing; // Zwracamy istniejący obiekt
 
     // 2. Jeśli nie istnieje, tworzymy nowy
-    MechanicPtr newMechanic = make_shared<Mechanic>(firstName, lastName, id, isBusy, hasEVCertificate);
+    MechanicPtr newMechanic = make_shared<Mechanic>(firstName, lastName, hasEVCertificate);
     // 3. Dodajemy do repozytorium
     mechanicRepository.add(newMechanic);
     return newMechanic;
