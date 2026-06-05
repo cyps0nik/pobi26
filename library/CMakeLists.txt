@@ -16,6 +16,19 @@ set(SOURCE_FILES
         include/model/naprawa/Repair.h
         src/model/naprawa/Service.cpp
         include/model/naprawa/Service.h
+        #Repa
+#        src/StorageContainer.cpp
+#        include/StorageContainer.h
+#        src/repositories/ClientRepository.cpp
+#        include/repositories/ClientRepository.h
+#        src/repositories/CarRepository.cpp
+#        include/repositories/CarRepository.h
+#        src/repositories/MechanicRepository.cpp
+#        include/repositories/MechanicRepository.h
+#        src/repositories/RepairRepository.cpp
+#        include/repositories/RepairRepository.h
+#        src/repositories/ResourceRepository.cpp
+#        include/repositories/ResourceRepository.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
@@ -26,7 +39,7 @@ target_include_directories(Library PUBLIC include)
 enable_testing()
 
 #dodanie biblioteki boost:date_time
-find_package (Boost 1.80.0 COMPONENTS "unit_test_framework" "date_time" REQUIRED)
+find_package (Boost 1.80.0 COMPONENTS "unit_test_framework" "date_time" "serialization" REQUIRED)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -46,6 +59,7 @@ target_link_libraries (LibraryTester
         Library
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         ${Boost_DATE_TIME_LIBRARY}
+        ${Boost_SERIALIZATION_LIBRARY}
 )
 
 #dodaj test LibraryTest. Instrukcji cmake add_test może być wiele.

@@ -1,8 +1,11 @@
 #include "model/Car.h"
 #include "model/PoweredBy.h"
 #include <utility>
+#include <string>
+#include <boost/test/framework.hpp>
+
 Car::Car(const std::string &_carBrand, const std::string &_carModel, const std::string &_VIN,  PoweredUniqPtr _power
-    , const ClientPtr &_owner) : carBrand(_carBrand), carModel(_carModel), VIN(_VIN), powerSource(std::move(_power)), owner(_owner) {
+         , const ClientPtr &_owner) : carBrand(_carBrand), carModel(_carModel), VIN(_VIN), powerSource(std::move(_power)), owner(_owner) {
 
 }
 
@@ -18,6 +21,12 @@ const std::string &Car::getVIN() const {
 
 PoweredBy*Car::getPowerSource() const {
     return this->powerSource.get();
+}
+
+std::string Car::getInfo() const {
+    std::string info = "Marka: " + getCarBrand() + ", Model: " + getCarModel() + ", NumerVIN: " + getVIN();
+    info += ", Napęd: nic, Właściciel: nullptr"; // Do zmiany
+    return info;
 }
 
 
