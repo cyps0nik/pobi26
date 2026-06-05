@@ -16,11 +16,6 @@ set(SOURCE_FILES
         include/model/naprawa/Repair.h
         src/model/naprawa/Service.cpp
         include/model/naprawa/Service.h
-        #Menagerowe
-#        src/managers/ClientMaganer.cpp
-#        include/managers/ClientMaganer.h
-#        src/managers/CarManager.cpp
-#        include/managers/CarManager.h
         #Repa
 #        src/StorageContainer.cpp
 #        include/StorageContainer.h
@@ -34,6 +29,13 @@ set(SOURCE_FILES
 #        include/repositories/RepairRepository.h
 #        src/repositories/ResourceRepository.cpp
 #        include/repositories/ResourceRepository.h
+        #Menagerowe
+#        src/managers/ClientManager.cpp
+#        include/managers/ClientManager.h
+#        src/managers/CarManager.cpp
+#        include/managers/CarManager.h
+#        src/managers/MechanicManager.cpp
+#        include/managers/MechanicManager.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł

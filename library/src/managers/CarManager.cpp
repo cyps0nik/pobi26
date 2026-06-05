@@ -1,5 +1,5 @@
 /**
-* @file ClientManager.cpp
+* @file CarManager.cpp
  * @brief Implementacja logiki zarządzania samochodami.
  * @details Zawiera definicje metod odpowiedzialnych za rejestrację nowych aut,
  * ich wyszukiwanie w repozytorium oraz bezpieczne wyrejestrowywanie (archiwizację).

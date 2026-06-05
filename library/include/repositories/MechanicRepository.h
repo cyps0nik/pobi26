@@ -92,6 +92,13 @@ public:
      * @return std::vector<MechanicPtr> Wektor wszystkich obiektów.
      */
     std::vector<MechanicPtr> findAll() const;
+
+    /**
+     * @brief Wyszukuje mechanika na podstawie unikalnego ID.
+     * @param id Unikalny identyfikator mechanika.
+     * @return MechanicPtr Wskaźnik do mechanika lub nullptr, jeśli nie istnieje.
+     */
+    MechanicPtr findById(int id) const;
 };
 
 

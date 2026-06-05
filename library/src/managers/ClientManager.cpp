@@ -5,7 +5,7 @@
  * ich wyszukiwanie w repozytorium oraz bezpieczne wyrejestrowywanie (archiwizację).
  */
 
-#include "../../include/managers/ClientMaganer.h"
+#include "../../include/managers/ClientManager.h"
 #include "repositories/ClientRepository.h"
 #include "model/Client.h"
 
