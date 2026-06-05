@@ -45,8 +45,8 @@ public:
      * @details Jeśli klient o podanym PESEL-u już istnieje, zwraca istniejący obiekt.
      * @param firstName Imię klienta.
      * @param lastName Nazwisko klienta.
-     * @param phoneNumber Wskaźnik do obiektu adresu.
-     * @param email Typ klienta (domyślnie nullptr - system przypisze typ domyślny).
+     * @param phoneNumber Numer telefonu.
+     * @param email email klienta.
      * @param personalID PESEL klienta.
      * @return ClientPtr Wskaźnik na nowo zarejestrowanego lub istniejącego klienta.
      */

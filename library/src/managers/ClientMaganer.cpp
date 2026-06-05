@@ -1,5 +1,5 @@
 /**
-* @file ClientManager.cpp
+ * @file ClientManager.cpp
  * @brief Implementacja logiki zarządzania klientami.
  * @details Zawiera definicje metod odpowiedzialnych za rejestrację nowych klientów,
  * ich wyszukiwanie w repozytorium oraz bezpieczne wyrejestrowywanie (archiwizację).
@@ -61,4 +61,4 @@ std::vector<ClientPtr> ClientManager::findClients(ClientPredicate predicate) con
 std::vector<ClientPtr> ClientManager::findAllClients() const {
     // findAllClients zwraca wszystkich niezarchiwizowanych + przekazujemy predykat, który dla każdego elementu zwraca true
     return findClients([](const ClientPtr&) { return true; });
-
+}

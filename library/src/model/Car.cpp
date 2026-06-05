@@ -28,3 +28,11 @@ std::string Car::getInfo() const {
     info += ", Napęd: nic, Właściciel: nullptr"; // Do zmiany
     return info;
 }
+
+bool Car::isArchive() const {
+    return archive;
+}
+
+void Car::setArchive(bool arch) {
+    archive = arch;
+}

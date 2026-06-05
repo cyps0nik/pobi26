@@ -12,6 +12,7 @@ private:
     std::string VIN;
     PoweredUniqPtr powerSource;
     ClientPtr owner;
+    bool archive = false;     /**< Flaga określająca, czy samochów jest zarchiwizowany. */
 
 public:
     Car(const std::string &_carBrand, const std::string &_carModel, const std::string &_VIN, PoweredUniqPtr _power,
@@ -36,6 +37,18 @@ public:
      * @return std::string Ciąg znaków: Marka, Model, Numer VIN, Napęd, Właściciel.
      */
     std::string getInfo() const;
+
+    /**
+     * @brief Zwraca informację o statusie archiwalnym auta.
+     * @return true jeśli samochód jest zarchiwizowany, false jeśli jest aktywny.
+     */
+    bool isArchive() const;
+
+    /**
+     * @brief Zmienia status archiwalny samochodu.
+     * @param archive Nowy stan flagi (true dla archiwizacji).
+     */
+    void setArchive(bool archive);
 };
 
 
