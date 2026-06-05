@@ -30,6 +30,12 @@ public:
     // korzystamy z unique_ptr
     // setterow nie robie bo jak raz stworzy sie auto to z BMW
     // nie zmienia sie na mercedesa z VINem to samo
+
+    /**
+     * @brief Zwraca podstawowe informacje o samochodzie.
+     * @return std::string Ciąg znaków: Marka, Model, Numer VIN, Napęd, Właściciel.
+     */
+    std::string getInfo() const;
 };
 
 

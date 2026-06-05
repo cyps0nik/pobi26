@@ -55,6 +55,12 @@ public:
     void remove(const CarPtr& car);
 
     CarPtr get(int index);
+
+	/**
+     * @brief Zwraca podstawowe informacje o kliencie.
+     * @return std::string Ciąg znaków: Imię, Nazwisko, PESEL, Numer telefonu, Email.
+     */
+    std::string getInfo() const;
 };
 
 

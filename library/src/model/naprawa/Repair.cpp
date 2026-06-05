@@ -26,7 +26,7 @@ int Repair::getServicesAmount() const {
 }
 
 int Repair::getSingleServiceCost(ServicePtr service) const {
-
+	return 1; // Do poprawy
 }
 
 
