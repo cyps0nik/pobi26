@@ -29,7 +29,7 @@ public:
     CarManager(CarRepository& repo); // Kostruktor przyjmuje referencję do gotowego repozutorium
 
     /** @brief Destruktor domyślny. */
-    ~CarManager()() = default;
+    ~CarManager() = default;
 
     /**
      * @brief Pobiera samochów na podstawie numeru VIN.
