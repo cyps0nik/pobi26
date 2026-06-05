@@ -56,7 +56,7 @@ std::vector<MechanicPtr> MechanicRepository::findAll() const {
 
 MechanicPtr MechanicRepository::findById(int id) const {
     MechanicPredicate predicate = [id](const MechanicPtr& m) {
-        return m != nullptr && m->getId() == id;
+        return m != nullptr && m->getID() == id;
     };
 
     std::vector<MechanicPtr> found = findBy(predicate);
