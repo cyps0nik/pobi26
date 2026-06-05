@@ -16,6 +16,7 @@ private:
     std::string email;
     std::string personalID;
     // Dajemy uprawnienia Boostowi
+    bool archive = false;               /**< Flaga określająca, czy klient jest zarchiwizowany. */
     friend class boost::serialization::access;
 
     template<class Archive>
@@ -54,6 +55,18 @@ public:
      * @return std::string Ciąg znaków: Imię, Nazwisko, PESEL, Numer telefonu, Email.
      */
     std::string getInfo() const;
+
+    /**
+     * @brief Zwraca informację o statusie archiwalnym klienta.
+     * @return true jeśli klient jest zarchiwizowany, false jeśli jest aktywny.
+     */
+    bool isArchive() const;
+
+    /**
+     * @brief Zmienia status archiwalny klienta.
+     * @param archive Nowy stan flagi (true dla archiwizacji).
+     */
+    void setArchive(bool archive);
 };
 
 

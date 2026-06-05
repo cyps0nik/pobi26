@@ -48,3 +48,11 @@ std::string Client::getInfo() const {
     info += ", Numer telefonu: " + getPhoneNumber() + ", Email: " + getEmail();
     return info;
 }
+
+bool Client::isArchive() const {
+    return archive;
+}
+
+void Client::setArchive(bool arch) {
+    archive = arch;
+}
