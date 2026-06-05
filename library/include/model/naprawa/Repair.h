@@ -27,6 +27,12 @@ public:
     int getSingleServiceCost(ServicePtr service) const;
     int calculateTotal() const;
 
+    //void add(const ServicePtr& service);
+
+    //void remove(const ServicePtr& service);
+
+    //ServicePtr get(int index);
+
 };
 
 

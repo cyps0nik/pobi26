@@ -4,7 +4,7 @@
 #include <stdexcept>
 
 Client::Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
-               const std::string &_email, const std::string &_personalID) : cars() {
+               const std::string &_email, const std::string &_personalID) {
     this->firstName = _firstName;
     this->lastName = _lastName;
     if (_phoneNumber.size() > 15) throw std::invalid_argument("PhoneNumber size exceeded");
@@ -44,22 +44,22 @@ void Client::setPhoneNumber(const std::string &phoneNumber) {
     else this->phoneNumber = phoneNumber;
 }
 
-void Client::add(const CarPtr &car) {
-    if (car == nullptr) return;
-    else cars.push_back(car);
-}
-
-CarPtr Client::get(int index) {
-    if (index < 0 || index >= cars.size()) return nullptr;
-    else return cars[index];
-}
-
-void Client::remove(const CarPtr& car) {
-if (car== nullptr) return;
-    else {
-        cars.erase(std::remove(cars.begin(), cars.end(), car), cars.end());
-    }
-}
+// void Client::add(const CarPtr &car) {
+//     if (car == nullptr) return;
+//     else cars.push_back(car);
+// }
+//
+// CarPtr Client::get(int index) {
+//     if (index < 0 || index >= cars.size()) return nullptr;
+//     else return cars[index];
+// }
+//
+// void Client::remove(const CarPtr& car) {
+// if (car== nullptr) return;
+//     else {
+//         cars.erase(std::remove(cars.begin(), cars.end(), car), cars.end());
+//     }
+// }
 
 std::string Client::getInfo() const {
     std::string info = "Imie: " + getFirstName() + ", Nazwisko: " + getLastName() + ", PESEL: " + getPersonalID();

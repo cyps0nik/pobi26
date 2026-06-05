@@ -15,7 +15,7 @@ private:
     std::string phoneNumber;
     std::string email;
     std::string personalID;
-    std::vector<CarPtr> cars;
+    //std::vector<CarPtr> cars;
 
     // Dajemy uprawnienia Boostowi
     friend class boost::serialization::access;
@@ -27,7 +27,6 @@ private:
         ar & phoneNumber;   // Zapisujemy/odczytujemy numer telefonu
         ar & email;   // Zapisujemy/odczytujemy email
         ar & personalID; // Zapisujemy/odczytujemy Pesel
-        ar & cars; // Zapisujemy/odczytujemy samochody
     }
 public:
     Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
@@ -50,11 +49,7 @@ public:
 
     void setEmail(const std::string &email);
 
-    void add(const CarPtr& car);
 
-    void remove(const CarPtr& car);
-
-    CarPtr get(int index);
 
 	/**
      * @brief Zwraca podstawowe informacje o kliencie.
