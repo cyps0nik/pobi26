@@ -24,7 +24,7 @@ public:
     const pt::ptime& getEndTime() const;
     CarPtr getCar() const;
     int getServicesAmount() const;
-    int getSingleServiceCost(ServicePtr service) const;
+    double getSingleServiceCost(const ServicePtr &service) const;
     int calculateTotal() const;
 
 };
