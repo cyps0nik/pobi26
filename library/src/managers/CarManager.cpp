@@ -43,8 +43,7 @@ void CarManager::unregisterCar(CarPtr car) {
 
 std::vector<CarPtr> CarManager::findCars(CarPredicate predicate) const {
     return carRepository.findBy([predicate](const CarPtr& c) {
-        return c != nullptr && predicate(c)
-        && !c->isArchive();
+        return c != nullptr && predicate(c) && !c->isArchive();
     });
 }
 
