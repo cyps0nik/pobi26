@@ -1,5 +1,5 @@
 /**
-* @file CarManager.cpp
+ * @file CarManager.cpp
  * @brief Implementacja logiki zarządzania samochodami.
  * @details Zawiera definicje metod odpowiedzialnych za rejestrację nowych aut,
  * ich wyszukiwanie w repozytorium oraz bezpieczne wyrejestrowywanie (archiwizację).
@@ -8,6 +8,7 @@
 #include "../../include/managers/CarManager.h"
 #include "repositories/CarRepository.h"
 #include "model/Car.h"
+#include "model/PoweredBy.h"
 
 using namespace std;
 
@@ -42,7 +43,8 @@ void CarManager::unregisterCar(CarPtr car) {
 
 std::vector<CarPtr> CarManager::findCars(CarPredicate predicate) const {
     return carRepository.findBy([predicate](const CarPtr& c) {
-        return c != nullptr && predicate(c) && !c->isArchive();
+        return c != nullptr && predicate(c)
+        && !c->isArchive();
     });
 }
 
