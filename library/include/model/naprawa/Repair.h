@@ -17,8 +17,8 @@ class Repair : std::enable_shared_from_this<Repair> {
     pt::ptime beginTime;
     pt::ptime endTime;
     std::vector<ServicePtr> services;
-    CarPtr car;
-    bool archive = false;  /**< Flaga określająca, czy naprawa jest zarchiwizowana. */
+    CarPtr repairedCar;
+    bool archive = false; /**< Flaga określająca, czy naprawa jest zarchiwizowana. */
 
 public:
     Repair(const int &_id, const pt::ptime &_beginTime, const CarPtr &_car);
@@ -35,7 +35,7 @@ public:
 
     double getSingleServiceCost(const ServicePtr &service) const;
 
-    int calculateTotal() const;
+    double calculateTotal() const;
 
     void add(const ServicePtr &service);
 
