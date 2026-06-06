@@ -9,12 +9,19 @@
 class Service {
     std::string name;
     bool repaired;
+
 public:
-    Service(std::string _name);
-    int getServiceCost() const;
+    Service(const std::string &_name);
+
+    virtual ~Service() = default;
+
     const std::string &getName() const;
+
     const bool &isRepaired() const;
 
+    virtual int getServiceCost() const = 0;
+
+    virtual std::string getInfo() const;
 };
 
 

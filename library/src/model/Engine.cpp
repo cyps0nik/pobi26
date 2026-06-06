@@ -1,10 +1,9 @@
 #include "model/Engine.h"
 #include <stdexcept> //potrzeben do throw
 
-Engine::Engine(const int &_engineDisplacement, FuelType _typPaliwa) {
+Engine::Engine(const int &_engineDisplacement, FuelType _typPaliwa) : typPaliwa(_typPaliwa){
     if (_engineDisplacement < 0) throw std::invalid_argument("Pojemnosc nie moze byc ujemna");
     else this->engineDisplacement = _engineDisplacement;
-    this->typPaliwa = _typPaliwa;
 }
 
 

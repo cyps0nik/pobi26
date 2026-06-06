@@ -16,6 +16,8 @@ set(SOURCE_FILES
         include/model/naprawa/Repair.h
         src/model/naprawa/Service.cpp
         include/model/naprawa/Service.h
+        src/model/naprawa/DiagnosticService.cpp
+        include/model/naprawa/DiagnosticService.h
         #Repa
 #        src/StorageContainer.cpp
 #        include/StorageContainer.h
@@ -61,6 +63,7 @@ set(SOURCE_TEST_FILES
         test/confi.cpp
         test/ClientTest.cpp
         test/CarTest.cpp
+        test/RepositoryTest.cpp
 ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTester ${SOURCE_TEST_FILES})

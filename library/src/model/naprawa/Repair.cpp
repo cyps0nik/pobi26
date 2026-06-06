@@ -8,8 +8,7 @@
 #include "model/PoweredBy.h"
 
 Repair::Repair(const int &_id, const pt::ptime &_beginTime, const CarPtr &_car) : id(_id), beginTime(_beginTime),
-    repairedCar(_car), services() {
-    this->repairCost = 0;
+    repairedCar(_car),repairCost(0), services() {
     if (_beginTime == pt::not_a_date_time) this->beginTime = pt::second_clock::local_time();
 }
 

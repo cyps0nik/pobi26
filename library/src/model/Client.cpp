@@ -3,14 +3,12 @@
 #include <stdexcept>
 
 Client::Client(const std::string &_firstName, const std::string &_lastName, const std::string &_phoneNumber,
-               const std::string &_email, const std::string &_personalID) {
-    this->firstName = _firstName;
-    this->lastName = _lastName;
+               const std::string &_email, const std::string &_personalID) : firstName(_firstName), lastName(_lastName),
+                                                                            personalID(_personalID) {
     if (_phoneNumber.size() > 15) throw std::invalid_argument("PhoneNumber size exceeded");
     else this->phoneNumber = _phoneNumber;
     if (_email.find('@') == std::string::npos) throw std::invalid_argument("Invalid email");
     else this->email = _email;
-    this->personalID = _personalID;
 }
 
 const std::string &Client::getFirstName() const {
