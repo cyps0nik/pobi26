@@ -19,7 +19,7 @@ public:
 
     const bool &isRepaired() const;
 
-    virtual int getServiceCost() const = 0;
+    virtual double getServiceCost() const = 0;
 
     virtual std::string getInfo() const;
 };

@@ -6,7 +6,8 @@ private:
 int fixedPrice;
 public:
     DiagnosticService(const std::string& _name, const int& _price);
-    int getServiceCost() const override;
+
+double getServiceCost() const override;
     std::string getInfo() const override;
 };
 

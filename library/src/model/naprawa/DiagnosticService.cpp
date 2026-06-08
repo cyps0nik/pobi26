@@ -10,6 +10,6 @@ std::string DiagnosticService::getInfo() const {
     return "Diagnostyczny serwis, " + Service::getInfo() + "cena: " + std::to_string(getServiceCost());
 }
 
-int DiagnosticService::getServiceCost() const {
+double DiagnosticService::getServiceCost() const {
     return this->fixedPrice;
 }
