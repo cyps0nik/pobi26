@@ -18,6 +18,10 @@ set(SOURCE_FILES
         include/model/naprawa/Service.h
         src/model/naprawa/DiagnosticService.cpp
         include/model/naprawa/DiagnosticService.h
+        src/model/naprawa/TimeBasedService.cpp
+        include/model/naprawa/TimeBasedService.h
+        src/model/naprawa/PartRegenaration.cpp
+        include/model/naprawa/PartRegenaration.h
         #Repa
 #        src/StorageContainer.cpp
 #        include/StorageContainer.h
