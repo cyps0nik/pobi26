@@ -22,6 +22,8 @@ set(SOURCE_FILES
         include/model/naprawa/TimeBasedService.h
         src/model/naprawa/PartRegenaration.cpp
         include/model/naprawa/PartRegenaration.h
+        src/model/naprawa/NewPartReplacement.cpp
+        include/model/naprawa/NewPartReplacement.h
         #Repa
 #        src/StorageContainer.cpp
 #        include/StorageContainer.h
