@@ -5,13 +5,14 @@
 #ifndef WARSZTATSAMOCHDOWY_SERVICE_H
 #define WARSZTATSAMOCHDOWY_SERVICE_H
 #include <string>
-
+#include "typedefs.h"
 class Service {
     std::string name;
     bool repaired;
-
+    ResourceAbstractionPtr assignedResource;
+    MechanicAbstractionPtr assignedMechanic;
 public:
-    Service(const std::string &_name);
+    Service(const std::string &_name, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic);
 
     virtual ~Service() = default;
 
@@ -19,9 +20,15 @@ public:
 
     const bool &isRepaired() const;
 
+    const ResourceAbstractionPtr &getAssignedResource() const;
+
+    const MechanicAbstractionPtr &getAssignedMechanic() const;
+
     virtual double getServiceCost() const = 0;
 
     virtual std::string getInfo() const;
+
+
 };
 
 

@@ -11,7 +11,7 @@ private:
     pt::ptime endTime;
 
 public:
-    TimeBasedService(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin);
+    TimeBasedService(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic);
 
     virtual ~TimeBasedService() = 0;
 

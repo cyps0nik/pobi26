@@ -1,7 +1,7 @@
 #include "model/naprawa/TimeBasedService.h"
 
 TimeBasedService::TimeBasedService(const std::string &_name, const int &_hourPrice,
-                                   const pt::ptime &_begin) : Service(_name), partHourlyPrice(_hourPrice),
+                                   const pt::ptime &_begin, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic) : Service(_name, _resource, _mechanic), partHourlyPrice(_hourPrice),
                                                               beginTime(_begin) {
     if (_begin == pt::not_a_date_time) {
         this->beginTime = pt::second_clock::local_time();

@@ -7,7 +7,7 @@ private:
     unsigned int newPartPrice;
 
 public:
-    NewPartReplacement(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin, const unsigned int &_partPrice);
+    NewPartReplacement(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin, const unsigned int &_partPrice, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic);
 
     const unsigned int& getNewPartPrice() const;
 

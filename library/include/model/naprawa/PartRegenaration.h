@@ -7,7 +7,7 @@ private:
     int usage;
 
 public:
-    PartRegenaration(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin, const int &_usage);
+    PartRegenaration(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin, const int &_usage, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic);
 
     const int &getUsage() const;
 

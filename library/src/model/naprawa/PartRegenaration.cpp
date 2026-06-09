@@ -1,7 +1,7 @@
 #include "model/naprawa/PartRegenaration.h"
 
 PartRegenaration::PartRegenaration(const std::string &_name, const int &_hourPrice, const pt::ptime &_begin,
-                                   const int &_usage) : TimeBasedService(_name, _hourPrice, _begin) {
+                                   const int &_usage, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic) : TimeBasedService(_name, _hourPrice, _begin, _resource, _mechanic) {
     if (_usage < 0 || _usage > 100) throw std::invalid_argument("Zuzycie czesci ma zakres od 0 do 100 %");
     else this->usage = _usage;
 }

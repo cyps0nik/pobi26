@@ -9,7 +9,8 @@ class Mechanic;
 class Repair;
 class Service;
 class PoweredBy;
-
+class MechanicAbstraction;
+class ResourceAbstraction;
 typedef std::shared_ptr<Client> ClientPtr;
 typedef std::shared_ptr<Car> CarPtr;
 typedef std::shared_ptr<Resource> ResourcePtr;
@@ -17,7 +18,8 @@ typedef std::shared_ptr<Mechanic> MechanicPtr;
 typedef std::shared_ptr<Repair> RepairPtr;
 typedef std::shared_ptr<Service> ServicePtr;
 typedef std::unique_ptr<PoweredBy> PoweredUniqPtr;
-
+typedef std::shared_ptr<MechanicAbstraction> MechanicAbstractionPtr;
+typedef std::shared_ptr<ResourceAbstraction> ResourceAbstractionPtr;
 /**
  * @brief Typ funkcyjny predykatu dla obiektów klasy Client.
  * @details Wykorzystywany w ClientRepository do filtrowania klientów.

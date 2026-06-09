@@ -4,8 +4,16 @@
 
 #include "model/naprawa/Service.h"
 
-Service::Service(const std::string &_name) : name(_name), repaired(false) {
+#include <stdexcept>
+
+Service::Service(const std::string &_name, const ResourceAbstractionPtr &_resource,
+                 const MechanicAbstractionPtr &_mechanic) : name(_name), assignedResource(_resource),
+                                                            assignedMechanic(_mechanic) {
+    if (this->assignedMechanic == nullptr || this->assignedResource == nullptr) {
+        throw std::invalid_argument("Usluga musi miec przypisanego mechanika i zasob!");
+    }
 }
+
 
 const bool &Service::isRepaired() const {
     return this->repaired;
@@ -18,3 +26,11 @@ const std::string &Service::getName() const {
 std::string Service::getInfo() const {
     return "nazwa usługi: " + getName() + ", czy jest naprawione: " + (isRepaired() ? "tak" : "nie") + ", ";
 }
+
+const ResourceAbstractionPtr &Service::getAssignedResource() const {
+    return this->assignedResource;
+}
+const MechanicAbstractionPtr &Service::getAssignedMechanic() const {
+    return this->assignedMechanic;
+}
+
