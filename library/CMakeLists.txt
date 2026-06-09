@@ -24,6 +24,14 @@ set(SOURCE_FILES
         include/model/naprawa/PartRegenaration.h
         src/model/naprawa/NewPartReplacement.cpp
         include/model/naprawa/NewPartReplacement.h
+        src/model/naprawa/MechanicAbstraction.cpp
+        include/model/naprawa/MechanicAbstraction.h
+        src/model/naprawa/ResourceAbstraction.cpp
+        include/model/naprawa/ResourceAbstraction.h
+        src/model/naprawa/Mechanic.cpp
+        include/model/naprawa/Mechanic.h
+        src/model/naprawa/Resource.cpp
+        include/model/naprawa/Resource.h
         #Repa
 #        src/StorageContainer.cpp
 #        include/StorageContainer.h
