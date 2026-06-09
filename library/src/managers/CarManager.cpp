@@ -1,5 +1,5 @@
 /**
-* @file CarManager.cpp
+ * @file CarManager.cpp
  * @brief Implementacja logiki zarządzania samochodami.
  * @details Zawiera definicje metod odpowiedzialnych za rejestrację nowych aut,
  * ich wyszukiwanie w repozytorium oraz bezpieczne wyrejestrowywanie (archiwizację).
@@ -8,6 +8,7 @@
 #include "../../include/managers/CarManager.h"
 #include "repositories/CarRepository.h"
 #include "model/Car.h"
+#include "model/PoweredBy.h"
 
 using namespace std;
 
