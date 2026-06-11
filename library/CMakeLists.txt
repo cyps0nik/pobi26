@@ -33,29 +33,29 @@ set(SOURCE_FILES
         src/model/naprawa/Resource.cpp
         include/model/naprawa/Resource.h
         #Repa
-#        src/StorageContainer.cpp
-#        include/StorageContainer.h
-#        src/repositories/ClientRepository.cpp
-#        include/repositories/ClientRepository.h
-#        src/repositories/CarRepository.cpp
-#        include/repositories/CarRepository.h
-#        src/repositories/MechanicRepository.cpp
-#        include/repositories/MechanicRepository.h
-#        src/repositories/RepairRepository.cpp
-#        include/repositories/RepairRepository.h
-#        src/repositories/ResourceRepository.cpp
-#        include/repositories/ResourceRepository.h
+        src/StorageContainer.cpp
+        include/StorageContainer.h
+        src/repositories/ClientRepository.cpp
+        include/repositories/ClientRepository.h
+        src/repositories/CarRepository.cpp
+        include/repositories/CarRepository.h
+        src/repositories/MechanicRepository.cpp
+        include/repositories/MechanicRepository.h
+        src/repositories/RepairRepository.cpp
+        include/repositories/RepairRepository.h
+        src/repositories/ResourceRepository.cpp
+        include/repositories/ResourceRepository.h
         #Menagerowe
-#        src/managers/ClientManager.cpp
-#        include/managers/ClientManager.h
-#        src/managers/CarManager.cpp
-#        include/managers/CarManager.h
-#        src/managers/MechanicManager.cpp
-#        include/managers/MechanicManager.h
-#        src/managers/ResourceManager.cpp
-#        include/managers/ResourceManager.h
-#        src/managers/RepairManager.cpp
-#        include/managers/RepairManager.h
+        src/managers/ClientManager.cpp
+        include/managers/ClientManager.h
+        src/managers/CarManager.cpp
+        include/managers/CarManager.h
+        src/managers/MechanicManager.cpp
+        include/managers/MechanicManager.h
+        src/managers/ResourceManager.cpp
+        include/managers/ResourceManager.h
+        src/managers/RepairManager.cpp
+        include/managers/RepairManager.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
@@ -78,6 +78,7 @@ set(SOURCE_TEST_FILES
         test/ClientTest.cpp
         test/CarTest.cpp
         test/RepositoryTest.cpp
+        test/ManagerTest.cpp
 ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTester ${SOURCE_TEST_FILES})

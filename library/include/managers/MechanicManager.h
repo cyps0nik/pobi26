@@ -6,7 +6,7 @@
 #ifndef WARSZTATSAMOCHDOWY_MECHANICMANAGER_H
 #define WARSZTATSAMOCHDOWY_MECHANICMANAGER_H
 
-#include "typedefs.h"
+#include "../typedefs.h"
 #include "repositories/MechanicRepository.h"
 #include <string>
 #include <vector>
@@ -23,6 +23,8 @@ class MechanicRepository;
 class MechanicManager {
 private:
     MechanicRepository& mechanicRepository; /**<Referencja do repozytorium mechaników. */
+    unsigned int nextId = 1;                /**< Generator unikalnych numerów ID dla mechaników. */
+
 public:
     /**
      * @brief Konstruktor menedżera mechaników.
@@ -42,7 +44,7 @@ public:
 
     /**
      * @brief Rejestruje nowego mechanika w systemie(zatrudnienie).
-     * @details Jeśli mechanik o podanym ID już istnieje, zwraca istniejący obiekt.
+     * @details Jeśli mechanik o następnym ID już istnieje, zwraca istniejący obiekt.
      * @param firstName Imię mechanika.
      * @param lastName Nazwisko mechanika.
      * @param hasEVCertificate informacja o certyfikacie mechanika.

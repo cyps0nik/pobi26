@@ -53,3 +53,17 @@ std::vector<ResourcePtr> ResourceRepository::findBy(ResourcePredicate predicate)
 std::vector<ResourcePtr> ResourceRepository::findAll() const {
     return findBy([](const ResourcePtr&) { return true; });
 }
+
+ResourcePtr ResourceRepository::findById(int id) const {
+    ResourcePredicate predicate = [id](const ResourcePtr& r) {
+        return r != nullptr && r->getId() == id;
+    };
+
+    std::vector<ResourcePtr> found = findBy(predicate);
+    if (found.empty()) {
+        return nullptr;
+    }
+    else{
+        return found[0];
+    }
+}

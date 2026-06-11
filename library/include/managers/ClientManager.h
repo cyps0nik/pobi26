@@ -6,7 +6,7 @@
 #ifndef WARSZTATSAMOCHDOWY_CLIENTMANAGER_H
 #define WARSZTATSAMOCHDOWY_CLIENTMANAGER_H
 
-#include "typedefs.h"
+#include "../typedefs.h"
 #include "repositories/ClientRepository.h"
 #include <string>
 #include <vector>

@@ -92,6 +92,13 @@ public:
      * @return std::vector<ResourcePtr> Wektor wszystkich obiektów.
      */
     std::vector<ResourcePtr> findAll() const;
+
+    /**
+     * @brief Wyszukuje zasób na podstawie id.
+     * @param id stała reprezentująca id zasobu.
+     * @return ResourcePtr Wskaźnik do znaleziony zasób lub nullptr, jeśli nie istnieje.
+     */
+    ResourcePtr findById(int id) const;
 };
 
 

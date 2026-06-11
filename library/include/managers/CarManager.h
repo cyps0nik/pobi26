@@ -6,7 +6,7 @@
 #ifndef WARSZTATSAMOCHDOWY_CARMANAGER_H
 #define WARSZTATSAMOCHDOWY_CARMANAGER_H
 
-#include "typedefs.h"
+#include "../typedefs.h"
 #include "repositories/CarRepository.h"
 #include <string>
 #include <vector>
