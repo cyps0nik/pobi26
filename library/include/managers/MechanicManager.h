@@ -79,7 +79,35 @@ public:
      */
     std::vector<MechanicPtr> findAvailableMechanics() const;
 
+    /**
+ * @brief Wyszukuje mechaników, którzy mają uprawnienia elektryka.
+ * @return std::vector<MechanicPtr> Lista dostępnych elektryków.
+ */
+    std::vector<MechanicPtr> findElectricianMechanics() const;
 
+    /**
+     * @brief Wyszukuje mechaników specjalizujących się w naprawach silników.
+     * @return std::vector<MechanicPtr> Lista dostępnych mechaników silnikowych.
+     */
+    std::vector<MechanicPtr> findEngineMechanics() const;
+
+    /**
+     * @brief Wyszukuje mechaników będących diagnostami komputerowymi.
+     * @return std::vector<MechanicPtr> Lista dostępnych diagnostów.
+     */
+    std::vector<MechanicPtr> findDiagnosticianMechanics() const;
+
+    /**
+     * @brief Wyszukuje mechaników specjalizujących się w grupie VAG (Volkswagen, Audi, itd.).
+     * @return std::vector<MechanicPtr> Lista dostępnych specjalistów VAG.
+     */
+    std::vector<MechanicPtr> findVAGSpecialistMechanics() const;
+
+    /**
+     * @brief Wyszukuje mechaników posiadających tytuł Master (Głównego Mechanika).
+     * @return std::vector<MechanicPtr> Lista dostępnych głównych mechaników.
+     */
+    std::vector<MechanicPtr> findMasterMechanics() const;
 };
 
 

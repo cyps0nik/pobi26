@@ -52,6 +52,36 @@ std::vector<MechanicPtr> MechanicManager::findAllMechanics() const {
 }
 
 std::vector<MechanicPtr> MechanicManager::findAvailableMechanics() const {
-    return findMechanics([](const MechanicPtr& m) { return !m->isAvailable(); });
+    return findMechanics([](const MechanicPtr& m) { return m->isAvailable(); });
+}
+
+std::vector<MechanicPtr> MechanicManager::findElectricianMechanics() const {
+    return findMechanics([](const MechanicPtr& m) {
+        return m->getSpecialization() == 10 && m->isAvailable();
+    });
+}
+
+std::vector<MechanicPtr> MechanicManager::findEngineMechanics() const {
+    return findMechanics([](const MechanicPtr& m) {
+        return m->getSpecialization() == 20 && m->isAvailable();
+    });
+}
+
+std::vector<MechanicPtr> MechanicManager::findDiagnosticianMechanics() const {
+    return findMechanics([](const MechanicPtr& m) {
+        return m->getSpecialization() == 30 && m->isAvailable();
+    });
+}
+
+std::vector<MechanicPtr> MechanicManager::findVAGSpecialistMechanics() const {
+    return findMechanics([](const MechanicPtr& m) {
+        return m->getSpecialization() == 40 && m->isAvailable();
+    });
+}
+
+std::vector<MechanicPtr> MechanicManager::findMasterMechanics() const {
+    return findMechanics([](const MechanicPtr& m) {
+        return m->getSpecialization() == 50 && m->isAvailable();
+    });
 }
 
