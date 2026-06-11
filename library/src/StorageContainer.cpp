@@ -39,17 +39,24 @@ StorageContainer::StorageContainer() {
     carRepository.add(car2);
 
     // 3. Dodawanie Mechaników
-    // firstName, lastName, isBusy, hasEVCertificate
-    MechanicPtr m1 = std::make_shared<Mechanic>(1, "Marek", "Klucz", Electrician);
-    MechanicPtr m2 = std::make_shared<Mechanic>(2, "Zdzislaw", "Srubka", VAGSpecialist);
+    // id, firstName, lastName, specializations
+
+    Specialization sp2 = Electrician;
+    Specialization sp5 = Master;
+    MechanicPtr m1 = std::make_shared<Mechanic>(1, "Marek", "Klucz", sp2);
+    MechanicPtr m2 = std::make_shared<Mechanic>(2, "Zdzislaw", "Srubka", sp5);
     
     mechanicRepository.add(m1);
     mechanicRepository.add(m2);
 
     // 4. Dodawanie Zasobów
-    // resourceName
-    ResourcePtr res1 = std::make_shared<Resource>(21, "Stanowisko z podnosnikiem nr 1", carLift);
-    ResourcePtr res2 = std::make_shared<Resource>(22, "Skaner diagnostyczny OBD-II", diagnosticComputer);
+    // resourceName, resourceType
+
+    ResourceType t1 = carLift;
+    ResourceType t2 = diagnosticComputer;
+    ResourcePtr res1 = std::make_shared<Resource>(1, "Stanowisko z podnosnikiem nr 1", t1);
+    ResourcePtr res2 = std::make_shared<Resource>(2, "Skaner diagnostyczny OBD-II", t2);
+
     resourceRepository.add(res1);
     resourceRepository.add(res2);
 

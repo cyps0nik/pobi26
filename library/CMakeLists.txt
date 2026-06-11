@@ -45,7 +45,7 @@ set(SOURCE_FILES
         include/repositories/RepairRepository.h
         src/repositories/ResourceRepository.cpp
         include/repositories/ResourceRepository.h
-        #Menagerowe
+        #Managerowe
         src/managers/ClientManager.cpp
         include/managers/ClientManager.h
         src/managers/CarManager.cpp
