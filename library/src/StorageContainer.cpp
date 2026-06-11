@@ -9,9 +9,9 @@
 #include "model/Client.h"
 #include "model/Car.h"
 #include "model/PoweredBy.h"
-#include "model/Mechanic.h"
+#include "model/naprawa/Mechanic.h"
 #include "model/naprawa/Repair.h"
-#include "model/Resource.h"
+#include "model/naprawa/Resource.h"
 
 #include <boost/date_time.hpp>
 

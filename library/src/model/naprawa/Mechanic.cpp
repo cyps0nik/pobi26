@@ -45,3 +45,10 @@ std::string Mechanic::getInfo() const {
     return "Mechanik, specjalizacja: " + result + ", imie: " + getFirstName() + ", nazwisko: " + getLastName() + ", dostepnosc: " +
            _bool;
 }
+void Mechanic::setBusy(const bool &zmiana) {
+    if (zmiana == getBusy()) return;
+    else this->isBusy = zmiana;
+}
+const bool &Mechanic::getBusy() const {
+    return this->isBusy;
+}

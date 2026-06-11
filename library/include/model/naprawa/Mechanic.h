@@ -24,6 +24,11 @@ public:
 
     const std::string &getLastName() const;
 
+    const bool &getBusy() const;
+
+    void setBusy(const bool &zmiana);
+
+
     const Specialization &getSpecialization() const;
 
     bool isAvailable() const;

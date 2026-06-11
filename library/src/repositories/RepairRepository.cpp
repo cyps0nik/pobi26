@@ -11,7 +11,6 @@
 
 using namespace std;
 
-RepairRepository::~RepairRepository() {}
 
 RepairPtr RepairRepository::get(int index) const {
     if (index < 0 || index >= (int)repairs.size()) return nullptr;

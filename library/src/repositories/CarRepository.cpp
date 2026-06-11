@@ -11,7 +11,6 @@
 
 using namespace std;
 
-CarRepository::~CarRepository() {}
 
 CarPtr CarRepository::get(int index) const {
     if (index < 0 || index >= (int)cars.size()) return nullptr;

@@ -4,14 +4,13 @@
  */
 
 #include "repositories/MechanicRepository.h"
-#include "model/Mechanic.h"
+#include "model/naprawa/Mechanic.h"
 #include <sstream>
 #include <iostream>
 #include <algorithm>
 
 using namespace std;
 
-MechanicRepository::~MechanicRepository() {}
 
 MechanicPtr MechanicRepository::get(int index) const {
     if (index < 0 || index >= (int)mechanics.size()) return nullptr;

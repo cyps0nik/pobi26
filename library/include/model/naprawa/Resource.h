@@ -9,16 +9,23 @@ enum ResourceType {
 
 class Resource : public ResourceAbstraction {
 private:
+    int id;
     std::string resourceName;
     ResourceType resourceTyp;
     bool isBusy;
 
 public:
-    Resource(const std::string &name, const ResourceType &res);
+    Resource(const int& ident, const std::string &name, const ResourceType &res);
+
+    const int& getId() const;
 
     const std::string &getResourceName() const;
 
     const ResourceType &getResourceType() const;
+
+    const bool &getBusy() const;
+
+    void setBusy(const bool &zmiana);
 
     bool isAvailable() const;
 

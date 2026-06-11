@@ -4,14 +4,13 @@
  */
 
 #include "repositories/ResourceRepository.h"
-#include "model/Resource.h"
+#include "model/naprawa/Resource.h"
 #include <sstream>
 #include <iostream>
 #include <algorithm>
 
 using namespace std;
 
-ResourceRepository::~ResourceRepository() {}
 
 ResourcePtr ResourceRepository::get(int index) const {
     if (index < 0 || index >= (int)resources.size()) return nullptr;

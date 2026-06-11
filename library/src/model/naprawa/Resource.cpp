@@ -1,5 +1,5 @@
 #include "model/naprawa/Resource.h"
-Resource::Resource(const std::string &name, const ResourceType &res) : resourceName(name), resourceTyp(res), isBusy(false) {}
+Resource::Resource(const int& ident, const std::string &name, const ResourceType &res) : id(ident), resourceName(name), resourceTyp(res), isBusy(false) {}
 const std::string &Resource::getResourceName() const {
     return this->resourceName;
 }
@@ -25,6 +25,11 @@ std::string Resource::getInfo() const {
     else boolson = "niedostepne";
     return "Zasob, rodzaj zasobu: " + enumik + ", nazwa tego zasobu: " + getResourceName() + ", dostepnosc: " + boolson;
 }
-
-
+const bool &Resource::getBusy() const {
+    return this->isBusy;
+}
+void Resource::setBusy(const bool &zmiana) {
+    if (zmiana == getBusy()) return;
+    else this->isBusy = zmiana;
+}
 
