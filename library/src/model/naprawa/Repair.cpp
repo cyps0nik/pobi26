@@ -8,7 +8,7 @@
 #include "model/PoweredBy.h"
 
 Repair::Repair(const int &_id, const pt::ptime &_beginTime, const CarPtr &_car) : id(_id), beginTime(_beginTime),
-    repairedCar(_car),repairCost(0), services() {
+    repairedCar(_car), repairCost(0), services() {
     if (_beginTime == pt::not_a_date_time) this->beginTime = pt::second_clock::local_time();
 }
 
@@ -49,22 +49,30 @@ void Repair::setArchive(bool arch) {
     archive = arch;
 }
 
-double Repair::calculateTotal() const {
+double Repair::calculateTotal() {
     double suma = 0;
     for (int i = 0; i < services.size(); i++) {
         suma += getSingleServiceCost(services[i]);
     }
+    this->repairCost = suma;
     return suma;
 }
 
 void Repair::add(const ServicePtr &service) {
-    if (service == nullptr) return;
-    else services.push_back(service);
+    if (service != nullptr) {
+        auto it = std::find(services.begin(), services.end(), service);
+        if (it == services.end()) {
+            services.push_back(service);
+        }
+    }
 }
 
 void Repair::remove(const ServicePtr &service) {
     if (service != nullptr) {
-        services.erase(std::remove(services.begin(), services.end(), service), services.end());
+        auto it = std::find(services.begin(), services.end(), service);
+        if (it != services.end()) {
+            services.erase(it);
+        }
     }
 }
 
@@ -75,4 +83,30 @@ ServicePtr Repair::get(const ServicePtr &service) {
         }
     }
     return nullptr;
+}
+
+std::string Repair::getInfo() const {
+    std::string tym = "";
+    std::stringstream ss;
+    ss << "Poczatek repair: " << getBeginTime() << ", koniec repair: " << getEndTime();
+    for (int i = 0; i < services.size(); i++) {
+        tym += services[i]->getInfo();
+    }
+    return "Identyfikator: " + std::to_string(getId()) + ", Cena za calosc z mnoznikiem: " +
+           std::to_string(getRepairCost()) + ", " + ss.str();
+}
+
+const double &Repair::getRepairCost() const {
+    return this->repairCost;
+}
+std::string Repair::getSingleServiceInfo(const ServicePtr &service) const {
+    for (int i = 0; i < services.size(); i++) {
+        if (service == services[i]) {
+            return services[i]->getInfo();
+        }
+    }
+    return "";
+}
+std::string Repair::getRepairedCarInfo() const {
+    return getCar()->getInfo();
 }

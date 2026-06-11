@@ -13,7 +13,7 @@ namespace pt = boost::posix_time;
 
 class Repair : std::enable_shared_from_this<Repair> {
     int id;
-    int repairCost;
+    double repairCost;
     pt::ptime beginTime;
     pt::ptime endTime;
     std::vector<ServicePtr> services;
@@ -25,6 +25,8 @@ public:
 
     const int &getId() const;
 
+    const double& getRepairCost() const;
+
     const pt::ptime &getBeginTime() const;
 
     const pt::ptime &getEndTime() const;
@@ -35,7 +37,7 @@ public:
 
     double getSingleServiceCost(const ServicePtr &service) const;
 
-    double calculateTotal() const;
+    double calculateTotal();
 
     void add(const ServicePtr &service);
 
@@ -43,6 +45,11 @@ public:
 
     ServicePtr get(const ServicePtr &service);
 
+    std::string getInfo() const;
+
+    std::string getSingleServiceInfo(const ServicePtr& service) const;
+
+    std::string getRepairedCarInfo() const;
     /**
      * @brief Zwraca informację o statusie archiwalnym naprawy.
      * @return true jeśli naprawa jest zarchiwizowana, false jeśli jest aktywna.
