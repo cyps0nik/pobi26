@@ -18,14 +18,14 @@ MechanicPtr MechanicManager::getMechanic(int id) const {
     return mechanicRepository.findById(id);
 }
 
-MechanicPtr MechanicManager::registerMechanic(const std::string& firstName, const std::string& lastName, bool hasEVCertificate) {
+MechanicPtr MechanicManager::registerMechanic(const std::string& firstName, const std::string& lastName, const Specialization &spec) {
     // 1. Dynamicznie szukamy pierwszego wolnego ID mechanika
-    while (getMechanic(nextId) != nullptr) {
+    while (getMechanic((int)nextId) != nullptr) {
         nextId++;
     }
 
     // 2. Tworzymy nowego mechanika i od razu inkrementujemy licznik
-    MechanicPtr newMechanic = make_shared<Mechanic>(nextId++, firstName, lastName, hasEVCertificate);
+    MechanicPtr newMechanic = make_shared<Mechanic>(nextId++, firstName, lastName, spec);
     // 3. Dodajemy do repozytorium
     mechanicRepository.add(newMechanic);
     return newMechanic;
@@ -36,14 +36,14 @@ void MechanicManager::unregisterMechanic(MechanicPtr mechanic) {
         // Sprawdzamy, czy mechanik jest w repozytorium
         MechanicPtr found = getMechanic(mechanic->getId());
         if (found != nullptr) {
-            found->setArchive(true);
+            found->setBusy(true);
         }
     }
 }
 
 std::vector<MechanicPtr> MechanicManager::findMechanics(MechanicPredicate predicate) const {
     return mechanicRepository.findBy([predicate](const MechanicPtr& m) {
-        return m != nullptr && predicate(m) && !m->isArchive();
+        return m != nullptr && predicate(m);
     });
 }
 
@@ -55,6 +55,3 @@ std::vector<MechanicPtr> MechanicManager::findAvailableMechanics() const {
     return findMechanics([](const MechanicPtr& m) { return !m->isAvailable(); });
 }
 
-std::vector<MechanicPtr> MechanicManager::findMechanicsWithEVCertificate() const {
-    return findMechanics([](const MechanicPtr& m) { return m->HasEVCertificate(); });
-}

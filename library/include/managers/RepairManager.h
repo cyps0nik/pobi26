@@ -55,7 +55,7 @@ public:
      * @brief Wyrejestrowuje naprawę (ustawia flagę archiwizacji).
      * @param repair Wskaźnik na naprawę do usunięcia.
      */
-    void unregisterRepair(RepairPtr repair);
+    void unregisterRepair(RepairPtr repair) const;
 
     /**
      * @brief Wyszukuje naprawy spełniające określone kryterium podane w predykacie.
