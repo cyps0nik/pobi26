@@ -6,7 +6,7 @@
 #ifndef WARSZTATSAMOCHDOWY_REPAIRMANAGER_H
 #define WARSZTATSAMOCHDOWY_REPAIRMANAGER_H
 
-#include "typedefs.h"
+#include "../typedefs.h"
 #include "repositories/RepairRepository.h"
 #include <boost/date_time.hpp>
 #include <string>
@@ -24,6 +24,7 @@ class RepairRepository;
 class RepairManager {
 private:
     RepairRepository& repairRepository; /**< Referencja do repozytorium napraw. */
+    unsigned int nextId = 1;            /**< Generator unikalnych numerów ID dla napraw. */
 public:
     /**
      * @brief Konstruktor menedżera napraw.
@@ -43,19 +44,18 @@ public:
 
     /**
      * @brief Tworzy nową naprawę w warsztacie.
-     * @details Jeśli naprawa o podanym ID już istnieje, metoda zwraca istniejący obiekt.
-     * @param id Unikalny identyfikator nowej naprawy.
+     * @details Jeśli naprawa o następnym ID już istnieje, metoda zwraca istniejący obiekt.
      * @param beginTime Czas rozpoczęcia naprawy (zgodny z boost::posix_time::ptime).
      * @param car Wskaźnik na samochód, którego dotyczy naprawa.
      * @return RepairPtr Wskaźnik na utworzoną lub istniejącą już naprawę.
      */
-    RepairPtr createRepair(int id, const boost::posix_time::ptime& beginTime, const CarPtr& car);
+    RepairPtr registerRepair(const boost::posix_time::ptime& beginTime, const CarPtr& car);
 
     /**
      * @brief Wyrejestrowuje naprawę (ustawia flagę archiwizacji).
      * @param repair Wskaźnik na naprawę do usunięcia.
      */
-    void deleteRapair(RepairPtr repair);
+    void unregisterRepair(RepairPtr repair);
 
     /**
      * @brief Wyszukuje naprawy spełniające określone kryterium podane w predykacie.

@@ -7,7 +7,7 @@
 
 #include "../../include/managers/MechanicManager.h"
 #include "repositories/MechanicRepository.h"
-#include "model/Mechanic.h"
+#include "model/naprawa/Mechanic.h"
 
 using namespace std;
 
@@ -18,13 +18,14 @@ MechanicPtr MechanicManager::getMechanic(int id) const {
     return mechanicRepository.findById(id);
 }
 
-MechanicPtr MechanicManager::registerMechanic(const string& firstName, const string& lastName, bool hasEVCertificate) {
-    // 1. Sprawdzamy czy mechanik już istnieje
-    MechanicPtr existing = getMechanic(id);
-    if (existing != nullptr) return existing; // Zwracamy istniejący obiekt
+MechanicPtr MechanicManager::registerMechanic(const std::string& firstName, const std::string& lastName, bool hasEVCertificate) {
+    // 1. Dynamicznie szukamy pierwszego wolnego ID mechanika
+    while (getMechanic(nextId) != nullptr) {
+        nextId++;
+    }
 
-    // 2. Jeśli nie istnieje, tworzymy nowy
-    MechanicPtr newMechanic = make_shared<Mechanic>(firstName, lastName, hasEVCertificate);
+    // 2. Tworzymy nowego mechanika i od razu inkrementujemy licznik
+    MechanicPtr newMechanic = make_shared<Mechanic>(nextId++, firstName, lastName, hasEVCertificate);
     // 3. Dodajemy do repozytorium
     mechanicRepository.add(newMechanic);
     return newMechanic;
@@ -33,7 +34,7 @@ MechanicPtr MechanicManager::registerMechanic(const string& firstName, const str
 void MechanicManager::unregisterMechanic(MechanicPtr mechanic) {
     if (mechanic != nullptr) {
         // Sprawdzamy, czy mechanik jest w repozytorium
-        MechanicPtr found = getMechanic(mechanic->getID());
+        MechanicPtr found = getMechanic(mechanic->getId());
         if (found != nullptr) {
             found->setArchive(true);
         }
@@ -51,9 +52,9 @@ std::vector<MechanicPtr> MechanicManager::findAllMechanics() const {
 }
 
 std::vector<MechanicPtr> MechanicManager::findAvailableMechanics() const {
-    return findMechanics([](const MechanicPtr& m) { return !m->isBusy(); });
+    return findMechanics([](const MechanicPtr& m) { return !m->isAvailable(); });
 }
 
 std::vector<MechanicPtr> MechanicManager::findMechanicsWithEVCertificate() const {
-    return findMechanics([](const MechanicPtr& m) { return m->getHasEVCertificate(); });
+    return findMechanics([](const MechanicPtr& m) { return m->HasEVCertificate(); });
 }

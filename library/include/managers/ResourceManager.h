@@ -6,8 +6,9 @@
 #ifndef WARSZTATSAMOCHDOWY_RESOURCEMANAGER_H
 #define WARSZTATSAMOCHDOWY_RESOURCEMANAGER_H
 
-#include "typedefs.h"
+#include "../typedefs.h"
 #include "repositories/ResourceRepository.h"
+#include <boost/date_time.hpp>
 #include <string>
 #include <vector>
 
@@ -23,6 +24,7 @@ class ResourceRepository;
 class ResourceManager {
 private:
     ResourceRepository& resourceRepository; /**< Referencja do repozytorium zasobów. */
+    unsigned int nextId = 1;                /**< Generator unikalnych numerów ID dla zasobów. */
 public:
     /**
      * @brief Konstruktor menedżera zasobów.
@@ -38,16 +40,15 @@ public:
      * @param id Identyfikator wyszukiwanego zasobu.
      * @return ResourcePtr Wskaźnik na zasób lub nullptr, jeśli nie znaleziono.
      */
-    //ResourcePtr getResource(int id) const;
+    ResourcePtr getResource(int id) const;
 
     /**
      * @brief Rejestruje nowy zasób w systemie.
-     * @details Jeśli zasób o podanym ID już istnieje, zwraca istniejący obiekt.
-     * @param id Unikalny identyfikator zasobu.
-     * @param name Nazwa lub opis zasobu (np. "Stanowisko podnośnikowe 1").
+     * @param resourceName Nazwa lub opis zasobu.
+     * @param reservedTime Czas rezerwacji (zgodny z boost::posix_time::ptime).
      * @return ResourcePtr Wskaźnik na nowo zarejestrowany lub istniejący zasób.
      */
-    //ResourcePtr registerResource(int id, const std::string& name);
+    ResourcePtr registerResource(const std::string& resourceName, const boost::posix_time::ptime& reservedTime);
 
     /**
      * @brief Wyrejestrowuje zasób (ustawia flagę archiwizacji).
