@@ -20,14 +20,14 @@ ResourcePtr ResourceManager::getResource(int id) const {
     return resourceRepository.findById(id);
 }
 
-ResourcePtr ResourceManager::registerResource(const std::string& resourceName, const boost::posix_time::ptime& reservedTime) {
+ResourcePtr ResourceManager::registerResource(const std::string& resourceName, const ResourceType &res) {
     // 1. Dynamicznie szukamy pierwszego wolnego ID zasobu
-    while (getResource(nextId) != nullptr) {
+    while (getResource((int)nextId) != nullptr) {
         nextId++;
     }
 
     // 2. Tworzymy nowy zasób i od razu inkrementujemy licznik
-    ResourcePtr newResource = make_shared<Resource>(nextId++, resourceName, reservedTime);
+    ResourcePtr newResource = make_shared<Resource>(nextId++, resourceName, res);
 
     // 3. Dodajemy do repozytorium
     resourceRepository.add(newResource);
@@ -40,14 +40,14 @@ void ResourceManager::unregisterResource(ResourcePtr resource) {
         // Sprawdzamy, czy klient jest w repozytorium
         ResourcePtr found = getResource(resource->getId());
         if (found != nullptr) {
-            found->setArchive(true);
+            found->setBusy(true);
         }
     }
 }
 
 vector<ResourcePtr> ResourceManager::findResources(ResourcePredicate predicate) const {
     return resourceRepository.findBy([predicate](const ResourcePtr& r) {
-        return r != nullptr && predicate(r) && !r->isArchive();
+        return r != nullptr && predicate(r);
     });
 }
 
@@ -57,6 +57,6 @@ vector<ResourcePtr> ResourceManager::findAllResources() const {
 
 vector<ResourcePtr> ResourceManager::findAvailableResources() const {
     return findResources([](const ResourcePtr& r) {
-        return r->checkResourcesAvailability() == true;
+        return r->isAvailable() == true;
     });
 }

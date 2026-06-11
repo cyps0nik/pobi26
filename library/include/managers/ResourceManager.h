@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+#include "model/naprawa/Resource.h"
+
 // Forward declaration
 class ResourceRepository;
 
@@ -45,10 +47,10 @@ public:
     /**
      * @brief Rejestruje nowy zasób w systemie.
      * @param resourceName Nazwa lub opis zasobu.
-     * @param reservedTime Czas rezerwacji (zgodny z boost::posix_time::ptime).
+     * @param res typ zasobu (komputer diagnostyczny, podnośnik, kompresor...).
      * @return ResourcePtr Wskaźnik na nowo zarejestrowany lub istniejący zasób.
      */
-    ResourcePtr registerResource(const std::string& resourceName, const boost::posix_time::ptime& reservedTime);
+    ResourcePtr registerResource(const std::string& resourceName, const ResourceType &res);
 
     /**
      * @brief Wyrejestrowuje zasób (ustawia flagę archiwizacji).

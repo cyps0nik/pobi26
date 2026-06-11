@@ -4,7 +4,7 @@
  */
 
 #include "repositories/MechanicRepository.h"
-#include "model/Mechanic.h"
+#include "model/naprawa/Mechanic.h"
 #include <sstream>
 #include <iostream>
 #include <algorithm>

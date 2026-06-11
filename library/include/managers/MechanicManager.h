@@ -11,6 +11,8 @@
 #include <string>
 #include <vector>
 
+#include "model/naprawa/Mechanic.h"
+
 // Forward declaration
 class MechanicRepository;
 
@@ -47,10 +49,10 @@ public:
      * @details Jeśli mechanik o następnym ID już istnieje, zwraca istniejący obiekt.
      * @param firstName Imię mechanika.
      * @param lastName Nazwisko mechanika.
-     * @param hasEVCertificate informacja o certyfikacie mechanika.
+     * @param spec informacja o specyfikacji mechanika (elektryk, diagnosta...).
      * @return MechanicPtr Wskaźnik na nowo zarejestrowanego lub istniejącego mechanika.
      */
-    MechanicPtr registerMechanic(const std::string& firstName, const std::string& lastName, bool hasEVCertificate);
+    MechanicPtr registerMechanic(const std::string& firstName, const std::string& lastName, const Specialization &spec);
 
     /**
      * @brief Wyrejestrowuje mechanika (ustawia flagę archiwizacji).
@@ -77,11 +79,7 @@ public:
      */
     std::vector<MechanicPtr> findAvailableMechanics() const;
 
-    /**
-     * @brief Wyszukuje mechaników posiadających certyfikat do obsługi pojazdów elektrycznych.
-     * @return std::vector<MechanicPtr> Lista certyfikowanych mechaników.
-     */
-    std::vector<MechanicPtr> findMechanicsWithEVCertificate() const;
+
 };
 
 

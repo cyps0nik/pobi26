@@ -21,7 +21,7 @@ RepairPtr RepairManager::getRepair(int id) const {
 
 RepairPtr RepairManager::registerRepair(const pt::ptime& beginTime, const CarPtr& car) {
     // 1. Dynamicznie szukamy pierwszego wolnego ID naprawy
-    while (getRepair(nextId) != nullptr) {
+    while (getRepair((int)nextId) != nullptr) {
         nextId++;
     }
 
@@ -34,7 +34,7 @@ RepairPtr RepairManager::registerRepair(const pt::ptime& beginTime, const CarPtr
     return newRepair;
 }
 
-void RepairManager::unregisterRepair(RepairPtr repair) {
+void RepairManager::unregisterRepair(RepairPtr repair) const{
     if (repair != nullptr) {
         // Sprawdzamy, czy klient jest w repozytorium
         RepairPtr found = getRepair(repair->getId());
