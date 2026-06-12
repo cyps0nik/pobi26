@@ -1,5 +1,5 @@
 /**
-* @file DataSeeder.cpp
+ * @file DataSeeder.cpp
  * @brief Implementacja klasy DataSeeder.
  */
 

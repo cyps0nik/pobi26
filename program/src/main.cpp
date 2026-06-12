@@ -4,6 +4,7 @@
 #include "DataSeeder.h"
 #include "LogicContainer.h"
 #include "StorageContainer.h"
+#include "UserInterface.h"
 #include "model/Client.h"
 #include "model/Car.h"
 #include "model/naprawa/Repair.h"
@@ -42,15 +43,18 @@ int main() {
 
     cout << endl << "--- TEST ZAPISU I ODCZYTU (dla LogicContainer) ---" << endl;
 
-    LogicContainer app;
+    LogicContainer appa;
     LogicContainer tests;
 
-    DataSeeder::prepareSystem(*app.getStorage(), "warsztat_data.txt");
+    DataSeeder::prepareSystem(*appa.getStorage(), "warsztat_data.txt");
     DataSeeder::prepareSystem(*tests.getStorage(), "tests_data.txt");
 
     cout << "System gotowy do pracy!" << endl;
 
     std::remove("tests_data.txt");
+
+    /* <------------------------- PROGRAM -------------------------> */
+
 
 
     return 0;

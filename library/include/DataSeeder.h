@@ -1,5 +1,5 @@
 /**
-* @file DataSeeder.h
+ * @file DataSeeder.h
  * @brief Klasa pomocnicza odpowiedzialna za wypełnianie magazynu danych obiektami testowymi.
  * @details Zgodnie z zasadą Single Responsibility Principle, klasa ta jest jedynym miejscem,
  * w którym znajduje się logika tworzenia danych początkowych (seedowania).
