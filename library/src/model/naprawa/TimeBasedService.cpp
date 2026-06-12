@@ -48,12 +48,12 @@ double TimeBasedService::getServiceCost() const {
 }
 
 int TimeBasedService::getHours() const {
-    if (getEndTime() == pt::not_a_date_time) {
-        return 0;
-    }
-    pt::time_period rent_time(getBeginTime(), getEndTime());
-    if (rent_time.length().minutes() == 0 && rent_time.length().hours() == 0) return 0;
-    return std::ceil(rent_time.length().total_nanoseconds() / 3599999999999.0);
+        if (getEndTime() == pt::not_a_date_time) {
+            return 0;
+        }
+        pt::time_period rent_time(getBeginTime(), getEndTime());
+        if (rent_time.length().minutes() == 0 && rent_time.length().hours() == 0) return 0;
+        return std::ceil(rent_time.length().total_nanoseconds() / 3600000000000.0);
 }
 
 #include <boost/serialization/export.hpp>

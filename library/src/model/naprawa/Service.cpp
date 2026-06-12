@@ -8,7 +8,7 @@
 
 Service::Service(const std::string &_name, const ResourceAbstractionPtr &_resource,
                  const MechanicAbstractionPtr &_mechanic) : name(_name), assignedResource(_resource),
-                                                            assignedMechanic(_mechanic) {
+                                                            assignedMechanic(_mechanic), repaired(false) {
     if (this->assignedMechanic == nullptr || this->assignedResource == nullptr) {
         throw std::invalid_argument("Usluga musi miec przypisanego mechanika i zasob!");
     }

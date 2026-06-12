@@ -83,6 +83,15 @@ set(SOURCE_TEST_FILES
         test/CarTest.cpp
         test/RepositoryTest.cpp
         test/ManagerTest.cpp
+        test/AccumulatorTest.cpp
+        test/EngineTest.cpp
+        test/DiagnosticServiceTest.cpp
+        test/MechanicTest.cpp
+        test/NewPartReplacementTest.cpp
+        test/PartRegenerationTest.cpp
+        test/RepairTest.cpp
+        test/ResourceTest.cpp
+        test/DataSeederTest.cpp
 ) # tu w przyszłości będą dodawane pliki źródłowe testów
 
 add_executable (LibraryTester ${SOURCE_TEST_FILES})
