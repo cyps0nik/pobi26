@@ -56,6 +56,10 @@ set(SOURCE_FILES
         include/managers/ResourceManager.h
         src/managers/RepairManager.cpp
         include/managers/RepairManager.h
+        src/LogicContainer.cpp
+        include/LogicContainer.h
+        src/DataSeeder.cpp
+        include/DataSeeder.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
@@ -89,6 +93,12 @@ target_link_libraries (LibraryTester
         ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
         ${Boost_DATE_TIME_LIBRARY}
         ${Boost_SERIALIZATION_LIBRARY}
+)
+
+target_link_libraries(Library
+        PUBLIC
+        ${Boost_SERIALIZATION_LIBRARY}
+        ${Boost_DATE_TIME_LIBRARY}
 )
 
 #dodaj test LibraryTest. Instrukcji cmake add_test może być wiele.

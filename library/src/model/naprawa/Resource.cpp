@@ -1,5 +1,11 @@
 #include "model/naprawa/Resource.h"
 Resource::Resource(const int& ident, const std::string &name, const ResourceType &res) : id(ident), resourceName(name), resourceTyp(res), isBusy(false) {}
+
+const int& Resource::getId() const
+{
+    return id;
+}
+
 const std::string &Resource::getResourceName() const {
     return this->resourceName;
 }
