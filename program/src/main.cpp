@@ -42,21 +42,15 @@ int main() {
 
     cout << endl << "--- TEST ZAPISU I ODCZYTU (dla LogicContainer) ---" << endl;
 
-    // 1. Inicjalizacja kontenera logiki (tworzy pusty StorageContainer i Managerów)
     LogicContainer app;
+    LogicContainer tests;
 
-    // 2. Wybór trybu pracy
-    bool trybTestowy = true;
+    DataSeeder::prepareSystem(*app.getStorage(), "warsztat_data.txt");
+    DataSeeder::prepareSystem(*tests.getStorage(), "tests_data.txt");
 
-    if (trybTestowy) {
-        cout << "[INFO] Uruchamianie w trybie testowym..." << endl;
-        // Używamy naszego Seedera, aby wypełnić repozytoria
-        DataSeeder::seed(*app.getStorage());
-    } else {
-        std::cout << "[INFO] Wczytywanie danych z pliku..." << std::endl;
-        app.getStorage()->loadFromFile("warsztat_data.txt");
-    }
     cout << "System gotowy do pracy!" << endl;
+
+    std::remove("tests_data.txt");
 
 
     return 0;

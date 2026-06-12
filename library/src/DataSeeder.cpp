@@ -12,6 +12,22 @@
 #include "model/naprawa/Resource.h"
 #include <iostream>
 
+void DataSeeder::prepareSystem(StorageContainer& storage, const std::string& filename) {
+    std::ifstream file(filename);
+
+    if (file.good()) {
+        file.close();
+        std::cout << "[DataSeeder] Znaleziono plik danych '" << filename << "'. Wczytywanie..." << std::endl;
+        storage.loadFromFile(filename);
+    } else {
+        std::cout << "[DataSeeder] Plik '" << filename << "' nie istnieje. Inicjalizacja danymi testowymi..." << std::endl;
+        seed(storage);
+
+        // Zapisujemy od razu, żeby zaoszczędzić czas przy następnym uruchomieniu
+        storage.saveToFile(filename);
+    }
+}
+
 void DataSeeder::seed(StorageContainer& storage) {
     // Pobranie repozytoriów
     ClientRepository& clientRepo = storage.getClientRepository();
