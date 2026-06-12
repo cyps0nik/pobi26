@@ -53,9 +53,3 @@ vector<RepairPtr> RepairManager::findRepairs(RepairPredicate predicate) const {
 vector<RepairPtr> RepairManager::findAllRepairs() const {
     return findRepairs([](const RepairPtr&) { return true; });
 }
-
-vector<RepairPtr> RepairManager::findCurrentRepairs() const {
-    return findRepairs([](const RepairPtr& r) {
-        return r->getEndTime() == pt::not_a_date_time && r->isArchive() == false;
-    });
-}

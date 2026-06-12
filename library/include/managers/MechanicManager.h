@@ -61,7 +61,7 @@ public:
     void unregisterMechanic(MechanicPtr mechanic);
 
     /**
-     * @brief Wyszukuje mechaników spełniających określone kryterium.
+     * @brief Wyszukuje mechaników spełniających określone kryterium oraz tych, którzy nie są obecnie zajęci naprawą.
      * @param predicate Funkcja (lambda) definiująca warunek wyszukiwania.
      * @return std::vector<MechanicPtr> Lista znalezionych Mechaników (niezarchiwizowanych).
      */
@@ -74,15 +74,9 @@ public:
     std::vector<MechanicPtr> findAllMechanics() const;
 
     /**
-     * @brief Wyszukuje mechaników, którzy nie są obecnie zajęci naprawą.
-     * @return std::vector<MechanicPtr> Lista dostępnych mechaników.
-     */
-    std::vector<MechanicPtr> findAvailableMechanics() const;
-
-    /**
- * @brief Wyszukuje mechaników, którzy mają uprawnienia elektryka.
- * @return std::vector<MechanicPtr> Lista dostępnych elektryków.
- */
+    * @brief Wyszukuje mechaników, którzy mają uprawnienia elektryka.
+    * @return std::vector<MechanicPtr> Lista dostępnych elektryków.
+    */
     std::vector<MechanicPtr> findElectricianMechanics() const;
 
     /**

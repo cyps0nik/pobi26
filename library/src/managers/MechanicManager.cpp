@@ -43,7 +43,7 @@ void MechanicManager::unregisterMechanic(MechanicPtr mechanic) {
 
 std::vector<MechanicPtr> MechanicManager::findMechanics(MechanicPredicate predicate) const {
     return mechanicRepository.findBy([predicate](const MechanicPtr& m) {
-        return m != nullptr && predicate(m);
+        return m != nullptr && predicate(m) && m->isAvailable();
     });
 }
 
@@ -51,37 +51,33 @@ std::vector<MechanicPtr> MechanicManager::findAllMechanics() const {
     return findMechanics([](const MechanicPtr&) { return true; });
 }
 
-std::vector<MechanicPtr> MechanicManager::findAvailableMechanics() const {
-    return findMechanics([](const MechanicPtr& m) { return m->isAvailable(); });
-}
-
 std::vector<MechanicPtr> MechanicManager::findElectricianMechanics() const {
     return findMechanics([](const MechanicPtr& m) {
-        return m->getSpecialization() == 10 && m->isAvailable();
+        return m->getSpecialization() == 10;
     });
 }
 
 std::vector<MechanicPtr> MechanicManager::findEngineMechanics() const {
     return findMechanics([](const MechanicPtr& m) {
-        return m->getSpecialization() == 20 && m->isAvailable();
+        return m->getSpecialization() == 20;
     });
 }
 
 std::vector<MechanicPtr> MechanicManager::findDiagnosticianMechanics() const {
     return findMechanics([](const MechanicPtr& m) {
-        return m->getSpecialization() == 30 && m->isAvailable();
+        return m->getSpecialization() == 30;
     });
 }
 
 std::vector<MechanicPtr> MechanicManager::findVAGSpecialistMechanics() const {
     return findMechanics([](const MechanicPtr& m) {
-        return m->getSpecialization() == 40 && m->isAvailable();
+        return m->getSpecialization() == 40;
     });
 }
 
 std::vector<MechanicPtr> MechanicManager::findMasterMechanics() const {
     return findMechanics([](const MechanicPtr& m) {
-        return m->getSpecialization() == 50 && m->isAvailable();
+        return m->getSpecialization() == 50;
     });
 }
 

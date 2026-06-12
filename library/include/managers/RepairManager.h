@@ -69,12 +69,6 @@ public:
      * @return std::vector<RepairPtr> Wektor wszystkich obiektów napraw.
      */
     std::vector<RepairPtr> findAllRepairs() const;
-
-    /**
-     * @brief Wyszukuje aktywne naprawy, które są obecnie w toku (nie zostały zakończone).
-     * @return std::vector<RepairPtr> Lista napraw, które aktualnie trwają w warsztacie.
-     */
-    std::vector<RepairPtr> findCurrentRepairs() const;
 };
 
 

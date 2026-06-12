@@ -59,7 +59,7 @@ public:
     void unregisterResource(ResourcePtr resource);
 
     /**
-     * @brief Wyszukuje zasoby spełniające określone kryterium.
+     * @brief Wyszukuje zasoby spełniające określone kryteriumi tych, które są obecnie wolne i gotowe do użycia.
      * @param predicate Funkcja (lambda) definiująca warunek wyszukiwania.
      * @return std::vector<ResourcePtr> Lista znalezionych zasobów (niezarchiwizowanych).
      */
@@ -70,12 +70,6 @@ public:
      * @return std::vector<ResourcePtr> Wektor wszystkich aktywnych obiektów zasobów.
      */
     std::vector<ResourcePtr> findAllResources() const;
-
-    /**
-     * @brief Wyszukuje zasoby, które są obecnie wolne i gotowe do użycia.
-     * @return std::vector<ResourcePtr> Lista dostępnych (niezajętych) zasobów.
-     */
-    std::vector<ResourcePtr> findAvailableResources() const;
 };
 
 

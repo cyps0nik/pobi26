@@ -47,16 +47,10 @@ void ResourceManager::unregisterResource(ResourcePtr resource) {
 
 vector<ResourcePtr> ResourceManager::findResources(ResourcePredicate predicate) const {
     return resourceRepository.findBy([predicate](const ResourcePtr& r) {
-        return r != nullptr && predicate(r);
+        return r != nullptr && predicate(r) && r->isAvailable();
     });
 }
 
 vector<ResourcePtr> ResourceManager::findAllResources() const {
     return findResources([](const ResourcePtr&) { return true; });
-}
-
-vector<ResourcePtr> ResourceManager::findAvailableResources() const {
-    return findResources([](const ResourcePtr& r) {
-        return r->isAvailable() == true;
-    });
 }
