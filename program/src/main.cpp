@@ -1,5 +1,8 @@
 #include <iostream>
 #include <model/Engine.h>
+
+#include "DataSeeder.h"
+#include "LogicContainer.h"
 #include "StorageContainer.h"
 #include "model/Client.h"
 #include "model/Car.h"
@@ -11,7 +14,7 @@ int main() {
     cout << silnik.getFuelType() << endl << "działa:D";
     cout << endl << "Siema" << endl;
 
-    cout << "--- TEST ZAPISU I ODCZYTU ---" << endl;
+    cout << endl << "--- TEST ZAPISU I ODCZYTU (dla StorageContainer) ---" << endl;
 
     // 1. Tworzymy kontener
     StorageContainer storage;
@@ -27,9 +30,7 @@ int main() {
     cout << "Liczba klientow po dodaniu: " << rozmiarPo << endl;
 
     // 4. Usuwamy klienta
-    ClientPtr c = storage.getClientRepository().get(2);
-    storage.getClientRepository().remove(c);
-
+    storage.getClientRepository().remove(testClient);
     int rozmiarPoPo = storage.getClientRepository().size();
     cout << "Liczba klientow po odjęciu: " << rozmiarPoPo << endl;
 
@@ -38,6 +39,25 @@ int main() {
 
     //Usuanie zawartości pliku "project_data.txt"
     //std::remove("project_data.txt");
+
+    cout << endl << "--- TEST ZAPISU I ODCZYTU (dla LogicContainer) ---" << endl;
+
+    // 1. Inicjalizacja kontenera logiki (tworzy pusty StorageContainer i Managerów)
+    LogicContainer app;
+
+    // 2. Wybór trybu pracy
+    bool trybTestowy = true;
+
+    if (trybTestowy) {
+        cout << "[INFO] Uruchamianie w trybie testowym..." << endl;
+        // Używamy naszego Seedera, aby wypełnić repozytoria
+        DataSeeder::seed(*app.getStorage());
+    } else {
+        std::cout << "[INFO] Wczytywanie danych z pliku..." << std::endl;
+        app.getStorage()->loadFromFile("warsztat_data.txt");
+    }
+    cout << "System gotowy do pracy!" << endl;
+
 
     return 0;
 }

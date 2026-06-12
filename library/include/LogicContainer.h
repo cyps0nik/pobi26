@@ -89,6 +89,12 @@ public:
      * @param filename Nazwa lub ścieżka pliku, do którego mają zostać zapisane dane.
      */
     void saveSystem(const std::string& filename) const;
+
+    /**
+     * @brief Zwraca wskaźnik do kontenera z danymi.
+     * @return std::shared_ptr<StorageContainer>
+     */
+    std::shared_ptr<StorageContainer> getStorage() const;
 };
 
 

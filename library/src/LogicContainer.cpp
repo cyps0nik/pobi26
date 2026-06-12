@@ -16,10 +16,10 @@
 using namespace std;
 
 LogicContainer::LogicContainer() {
-    // Najpierw tworzymy magazyn z pewnymi gotoqwymi danymi
+    // Najpierw tworzymy czysty magazyn (z pustymi repozytoriami)
     storage = std::make_shared<StorageContainer>();
 
-    // Inicjalizujemy zarządców
+    // Inicjalizujemy managerów (wstrzykujemy im odpowiednie repozytoria)
     clientManager = std::make_shared<ClientManager>(storage->getClientRepository());
     carManager = std::make_shared<CarManager>(storage->getCarRepository());
     mechanicManager = std::make_shared<MechanicManager>(storage->getMechanicRepository());
@@ -35,6 +35,10 @@ CarManagerPtr LogicContainer::getCarManager() const { return carManager; }
 MechanicManagerPtr LogicContainer::getMechanicManager() const { return mechanicManager; }
 RepairManagerPtr LogicContainer::getRepairManager() const { return repairManager; }
 ResourceManagerPtr LogicContainer::getResourceManager() const { return resourceManager; }
+
+std::shared_ptr<StorageContainer> LogicContainer::getStorage() const {
+    return storage;
+}
 
 // Metoda zapisywania stanu systemu
 void LogicContainer::saveSystem(const std::string& filename) const {

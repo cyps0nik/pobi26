@@ -58,6 +58,8 @@ set(SOURCE_FILES
         include/managers/RepairManager.h
         src/LogicContainer.cpp
         include/LogicContainer.h
+        src/DataSeeder.cpp
+        include/DataSeeder.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
