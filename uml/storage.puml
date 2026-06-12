@@ -1,95 +1,79 @@
 @startuml
-'https://plantuml.com/class-diagram
 skinparam classAttributeIconSize 0
 
-class StorageContainer {
--clientRepository: ClientRepository
--repairRepository: RepairRepository
--resourceRepository: ResourceRepository
-+getClientRepository(): ClientRepository&
-+getRepairRepository(): RepairRepository&
-+getResourceRepository(): ResourceRepository&
-}
-note bottom of StorageContainer
-  Klasa narzędziowa:
-  - tworzy repozytoria (kompozycja)
-  - wypełnia je danymi testowymi
-  - upraszcza testy i dostęp z poziomu main()
-end note
-
 class ClientRepository {
--clients: vector<ClientPtr>
-+get(index: int): ClientPtr
-+add(client: ClientPtr): void
-+remove(client: ClientPtr): void
-+size(): int
-+report(): string
-+findAll(): vector<ClientPtr>
-+findBy(predicate: ClientPredicate): vector<ClientPtr>
-+findByPersonalId(id: string): ClientPtr
+    - clients : std::vector<ClientPtr>
 }
 note bottom of ClientRepository
   Repozytorium przechowuje klientów.
-  - findByPersonalId wyszukuje po PESEL
+end note
+
+class CarRepository {
+    - cars : std::vector<CarPtr>
+}
+note bottom of CarRepository
+  Repozytorium przechowuje samochody.
+end note
+
+class MechanicRepository {
+    - mechanics : std::vector<MechanicPtr>
+}
+note bottom of MechanicRepository
+  Repozytorium przechowuje mechaników.
 end note
 
 class RepairRepository {
--repairs: vector<RepairPtr>
-+get(index: int): RepairPtr
-+add(repair: RepairPtr): void
-+remove(repair: RepairPtr): void
-+size(): int
-+report(): string
-+findAll(): vector<RepairPtr>
-+findBy(predicate: RepairPredicate): vector<RepairPtr>
-+findById(id: int): RepairPtr
+    - repairs : std::vector<RepairPtr>
 }
 note bottom of RepairRepository
   Repozytorium przechowuje naprawy.
-  - findById wyszukuje po id serwisu
 end note
 
 class ResourceRepository {
--resources: vector<ResourcePtr>
-+get(index: int): ResourcePtr
-+add(resource: ResourcePtr): void
-+remove(resource: ResourcePtr): void
-+size(): int
-+report(): string
-+findAll(): vector<ResourcePtr>
-+findBy(predicate: ResourcePredicate): vector<ResourcePtr>
+    - resources : std::vector<ResourcePtr>
 }
 note bottom of ResourceRepository
-  Przechowuje zasoby warsztatu (Mechaników).
+  Przechowuje zasoby warsztatu.
 end note
 
-class ClientPredicate <<function>>
-class RepairPredicate <<function>>
-class ResourcePredicate <<function>>
+class StorageContainer {
+    - clientRepository : ClientRepository
+    - carRepository : CarRepository
+    - mechanicRepository : MechanicRepository
+    - repairRepository : RepairRepository
+    - resourceRepository : ResourceRepository
+}
+note left of StorageContainer
+  Klasa bazy danych:
+  - tworzy repozytoria
+  - wypełnia je danymi (z pliku lub testowymi)
+end note
 
+class ClientPredicate <<typedef std::function>>
+class CarPredicate <<typedef std::function>>
+class MechanicPredicate <<typedef std::function>>
+class RepairPredicate <<typedef std::function>>
+class ResourcePredicate <<typedef std::function>>
+
+' Agregacja repozytoriów w kontenerze danych
 StorageContainer "1" *-- "1" ClientRepository
+StorageContainer "1" *-- "1" CarRepository
+StorageContainer "1" *-- "1" MechanicRepository
 StorageContainer "1" *-- "1" RepairRepository
 StorageContainer "1" *-- "1" ResourceRepository
 
+ClientRepository "1" --> "0..*" Client
+RepairRepository "1" --> "0..*" Repair
+ResourceRepository "1" --> "0..*" Resource
+CarRepository "1" --> "0..*" Car
+MechanicRepository "1" --> "0..*" Mechanic
+
+' Użycie predykatów funkcyjnych
 ClientRepository ..> ClientPredicate
+CarRepository ..> CarPredicate
+MechanicRepository ..> MechanicPredicate
 RepairRepository ..> RepairPredicate
 ResourceRepository ..> ResourcePredicate
 
-ClientRepository "1" --> "0..*" Client
-RepairRepository "1" --> "0..*" Repair
-ResourceRepository "1" --> "0..*" Mechanic
-
-note as RepoDetails
-  <b>Repozytoria:</b>
-  * Przechowują obiekty korzystając z szablonu klasy vector.
-  * Metody add/remove ignorują nullptr.
-  * get() zwraca nullptr dla złego indeksu.
-  * findAll() zwraca kopię kolekcji.
-  * Lista wskaźników zawiera wskaźniki typu <b>shared_ptr</b>.
-end note
-
-RepoDetails .. ClientRepository
-RepoDetails .. RepairRepository
-RepoDetails .. ResourceRepository
-
+note bottom of StorageContainer : Odpowiada za bezpośredni zapis i odczyt\nwszystkich repozytoriów przy użyciu boost::archive
 @enduml
