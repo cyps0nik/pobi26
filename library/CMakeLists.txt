@@ -60,6 +60,8 @@ set(SOURCE_FILES
         include/LogicContainer.h
         src/DataSeeder.cpp
         include/DataSeeder.h
+        src/UserInterface.cpp
+        include/UserInterface.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
