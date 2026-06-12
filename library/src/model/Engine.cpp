@@ -29,6 +29,14 @@ double Engine::getMultiplier() const {
     if (this->typPaliwa == Diesel) mnoznik *= this->typPaliwa/10.0;
     return mnoznik;
 }
+std::string Engine::getInfo() const {
+    if (this->typPaliwa == Petrol) {
+        return "benzyna";
+    } else if (this->typPaliwa == Diesel) {
+        return "diesel";
+    }
+    return "nieznany";
+}
 
 #include <boost/serialization/export.hpp>
 BOOST_CLASS_EXPORT(Engine)

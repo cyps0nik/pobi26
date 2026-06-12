@@ -2,6 +2,8 @@
 #include "model/PoweredBy.h"
 #include <utility>
 
+#include "model/Client.h"
+
 Car::Car(const std::string &_carBrand, const std::string &_carModel, const std::string &_VIN, PoweredUniqPtr _power
          , const ClientPtr &_owner) : carBrand(_carBrand), carModel(_carModel), VIN(_VIN),
                                       powerSource(std::move(_power)), owner(_owner) {
@@ -23,10 +25,14 @@ PoweredBy *Car::getPowerSource() const {
     return this->powerSource.get();
 }
 
+const ClientPtr &Car::getOwner() const {
+    return this->owner;
+}
+
+
 std::string Car::getInfo() const {
-    std::string info = "Marka: " + getCarBrand() + ", Model: " + getCarModel() + ", NumerVIN: " + getVIN();
-    info += ", Napęd: nic, Właściciel: nullptr"; // Do zmiany
-    return info;
+    std::string clientInfo = getOwner()->getFirstName() + " " + getOwner()->getLastName();
+    return "Marka: " + getCarBrand() + ", Model: " + getCarModel() + ", NumerVIN: " + getVIN() + ", naped: " + getPowerSource()->getInfo() + ", wlasciciel: " + clientInfo;
 }
 
 bool Car::isArchive() const {

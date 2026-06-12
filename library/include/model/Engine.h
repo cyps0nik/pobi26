@@ -32,6 +32,7 @@ public:
     const int& getEngineDisplacement() const;
     const FuelType& getFuelType() const;
     double getMultiplier() const override;
+    std::string getInfo() const override;
 };
 
 

@@ -2,7 +2,7 @@
 #define CARRENTAL_POWEREDBY_H
 
 #include <boost/serialization/access.hpp>
-
+#include <string>
 class PoweredBy {
 private:
     friend class boost::serialization::access;
@@ -14,6 +14,7 @@ private:
 public:
     virtual ~PoweredBy() = default;
     virtual double getMultiplier() const = 0;
+    virtual std::string getInfo() const = 0;
 };
 
 

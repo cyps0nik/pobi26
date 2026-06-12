@@ -25,6 +25,9 @@ double Accumulator::getMultiplier() const {
     if (this->degradationLevel > 20) mnoznik += 0.3;
     return mnoznik;
 }
+std::string Accumulator::getInfo() const {
+    return "akumulator";
+}
 
 #include <boost/serialization/export.hpp>
 BOOST_CLASS_EXPORT(Accumulator)

@@ -27,6 +27,7 @@ public:
     const int& getCapacityKWh() const;
     const int& getDegradationLevel() const;
     double getMultiplier() const override;
+    std::string getInfo() const override;
 };
 
 

@@ -27,9 +27,9 @@ std::string Resource::getInfo() const {
             break;
         default: enumik = "narzedzie";
     }
-    if (isAvailable()) boolson = "dostpene";
+    if (isAvailable()) boolson = "dostepne";
     else boolson = "niedostepne";
-    return "Zasob, rodzaj zasobu: " + enumik + ", nazwa tego zasobu: " + getResourceName() + ", dostepnosc: " + boolson;
+    return "Zasob, identyfikator: " + std::to_string(getId()) + ", rodzaj zasobu: " + enumik + ", nazwa tego zasobu: " + getResourceName() + ", dostepnosc: " + boolson;
 }
 const bool &Resource::getBusy() const {
     return this->isBusy;

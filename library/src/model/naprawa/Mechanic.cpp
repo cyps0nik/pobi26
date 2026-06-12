@@ -42,7 +42,7 @@ std::string Mechanic::getInfo() const {
     }
     if (isAvailable()) _bool = "dostepny";
     else _bool = "niedostepny";
-    return "Mechanik, specjalizacja: " + result + ", imie: " + getFirstName() + ", nazwisko: " + getLastName() + ", dostepnosc: " +
+    return "Mechanik, identyfikator: " + std::to_string(getId()) + ", specjalizacja: " + result + ", imie: " + getFirstName() + ", nazwisko: " + getLastName() + ", dostepnosc: " +
            _bool;
 }
 void Mechanic::setBusy(const bool &zmiana) {

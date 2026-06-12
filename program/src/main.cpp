@@ -54,6 +54,11 @@ int main() {
     std::remove("tests_data.txt");
 
     /* <------------------------- PROGRAM -------------------------> */
+    LogicContainerPtr appLogic = make_shared<LogicContainer>();
+    DataSeeder::prepareSystem(*appLogic->getStorage(), "warsztat_data.txt");
+
+    UserInterface ui(appLogic);
+    ui.run();
 
 
 
