@@ -21,21 +21,23 @@ int main() {
     cout << "Liczba klientow na starcie: " << rozmiarPrzed << endl;
 
     // 3. Dodajemy nowego klienta
-    //ClientPtr testClient = make_shared<Client>("Test", "Testowy", "111222333", "test@mail.com", "00000000000");
-    //storage.getClientRepository().add(testClient);
-
+    ClientPtr testClient = make_shared<Client>("Test", "Testowy", "111222333", "test@mail.com", "00000000000");
+    storage.getClientRepository().add(testClient);
+    int rozmiarPo = storage.getClientRepository().size();
+    cout << "Liczba klientow po dodaniu: " << rozmiarPo << endl;
 
     // 4. Usuwamy klienta
     ClientPtr c = storage.getClientRepository().get(2);
     storage.getClientRepository().remove(c);
 
-    int rozmiarPo = storage.getClientRepository().size();
-    cout << "Liczba klientow po odjęciu: " << rozmiarPo << endl;
+    int rozmiarPoPo = storage.getClientRepository().size();
+    cout << "Liczba klientow po odjęciu: " << rozmiarPoPo << endl;
 
-    // 5. Wymuszamy zapis całego warsztatu do pliku
-    storage.saveToFile("warsztat_data.txt");
+    // 5. Wymuszamy zapis całego projektu do pliku
+    storage.saveToFile("project_data.txt");
 
-    //std::remove("warsztat_data.txt");
+    //Usuanie zawartości pliku "project_data.txt"
+    //std::remove("project_data.txt");
 
     return 0;
 }

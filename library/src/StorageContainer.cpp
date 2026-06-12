@@ -25,7 +25,7 @@ namespace pt = boost::posix_time;
 using namespace std;
 
 StorageContainer::StorageContainer() {
-    std::string defaultFilename = "warsztat_data.txt";
+    std::string defaultFilename = "project_data.txt";
     std::ifstream checkFile(defaultFilename);
 
     if (checkFile.is_open()) {

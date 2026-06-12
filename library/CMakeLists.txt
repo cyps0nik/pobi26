@@ -56,6 +56,8 @@ set(SOURCE_FILES
         include/managers/ResourceManager.h
         src/managers/RepairManager.cpp
         include/managers/RepairManager.h
+        src/LogicContainer.cpp
+        include/LogicContainer.h
 )
 
 # Utwórz bibliotekę typu STATIC, SHARED albo MODULE ze wskazanych źródeł
