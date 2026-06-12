@@ -30,4 +30,7 @@ double Engine::getMultiplier() const {
     return mnoznik;
 }
 
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(Engine)
+
 

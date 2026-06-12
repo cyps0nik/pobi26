@@ -33,3 +33,5 @@ void Resource::setBusy(const bool &zmiana) {
     else this->isBusy = zmiana;
 }
 
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(Resource)

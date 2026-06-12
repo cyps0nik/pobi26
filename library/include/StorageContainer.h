@@ -93,6 +93,23 @@ public:
      * @return ResourceRepository& Referencja do oryginalnej instancji repozytorium.
      */
     ResourceRepository& getResourceRepository();
+
+
+
+    /*     <-----Ładowanie i zczytywanie z/do pliku----->     */
+
+
+    /**
+     * @brief Zapisuje cały stan warsztatu (wszystkie repozytoria) do jednego pliku.
+     * @param filename Nazwa pliku (np. "warsztat_data.txt").
+     */
+    void saveToFile(const std::string& filename) const;
+
+    /**
+     * @brief Wczytuje cały stan warsztatu z pliku.
+     * @param filename Nazwa pliku.
+     */
+    void loadFromFile(const std::string& filename);
 };
 
 

@@ -17,3 +17,6 @@ std::string NewPartReplacement::getInfo() const {
     return "Wymiana czesci, " + TimeBasedService::getInfo() + ", cena nowej czesci: " + std::to_string(
                getNewPartPrice());
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(NewPartReplacement)

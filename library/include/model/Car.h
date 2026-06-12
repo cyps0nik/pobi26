@@ -5,7 +5,13 @@
 
 #include "typedefs.h"
 
-class Car {
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/string.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/serialization/unique_ptr.hpp> // Ważne dla PoweredUniqPtr!
+
+class Car
+{
 private:
     std::string carBrand;
     std::string carModel;
@@ -14,6 +20,19 @@ private:
     ClientPtr owner;
     bool archive = false;     /**< Flaga określająca, czy samochów jest zarchiwizowany. */
 
+    // Dodajemy uprawnienia BOOSTOWI
+    Car() = default;
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        ar & carBrand;
+        ar & carModel;
+        ar & VIN;
+        ar & powerSource;
+        ar & owner;
+        ar & archive;
+    }
 public:
     Car(const std::string &_carBrand, const std::string &_carModel, const std::string &_VIN, PoweredUniqPtr _power,
         const ClientPtr &_owner);

@@ -9,6 +9,12 @@
 #include "typedefs.h"
 #include "Service.h"
 #include "model/naprawa/Repair.h"
+
+#include <boost/serialization/access.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/shared_ptr.hpp>
+#include <boost/date_time/posix_time/time_serialize.hpp> // Niezbędne dla pt::ptime!
+
 namespace pt = boost::posix_time;
 
 class Repair : std::enable_shared_from_this<Repair> {
@@ -19,6 +25,21 @@ class Repair : std::enable_shared_from_this<Repair> {
     std::vector<ServicePtr> services;
     CarPtr repairedCar;
     bool archive = false; /**< Flaga określająca, czy naprawa jest zarchiwizowana. */
+
+    // Dodajemy uprawnienia BOOSTOWI
+    Repair() = default;
+    friend class boost::serialization::access;
+
+    template<class Archive>
+    void serialize(Archive &ar, const unsigned int version) {
+        ar & id;
+        ar & repairCost;
+        ar & beginTime;
+        ar & endTime;
+        ar & services;
+        ar & repairedCar;
+        ar & archive;
+    }
 
 public:
     Repair(const int &_id, const pt::ptime &_beginTime, const CarPtr &_car);

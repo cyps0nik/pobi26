@@ -55,3 +55,6 @@ int TimeBasedService::getHours() const {
     if (rent_time.length().minutes() == 0 && rent_time.length().hours() == 0) return 0;
     return std::ceil(rent_time.length().total_nanoseconds() / 3599999999999.0);
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(TimeBasedService)

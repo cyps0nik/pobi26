@@ -52,3 +52,6 @@ void Mechanic::setBusy(const bool &zmiana) {
 const bool &Mechanic::getBusy() const {
     return this->isBusy;
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(Mechanic)

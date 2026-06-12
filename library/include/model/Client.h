@@ -15,8 +15,10 @@ private:
     std::string phoneNumber;
     std::string email;
     std::string personalID;
-    // Dajemy uprawnienia Boostowi
     bool archive = false;               /**< Flaga określająca, czy klient jest zarchiwizowany. */
+
+    // Dajemy uprawnienia BOOSTOWI
+    Client() = default;
     friend class boost::serialization::access;
 
     template<class Archive>
@@ -26,6 +28,7 @@ private:
         ar & phoneNumber; // Zapisujemy/odczytujemy numer telefonu
         ar & email; // Zapisujemy/odczytujemy email
         ar & personalID; // Zapisujemy/odczytujemy Pesel
+        ar & archive;
     }
 
 public:

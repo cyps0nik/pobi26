@@ -16,3 +16,6 @@ std::string DiagnosticService::getInfo() const {
 double DiagnosticService::getServiceCost() const {
     return this->fixedPrice;
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(DiagnosticService)

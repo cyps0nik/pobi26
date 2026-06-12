@@ -24,3 +24,6 @@ double PartRegenaration::getServiceCost() const {
     }
     return TimeBasedService::getServiceCost() * mnoznik;
 }
+
+#include <boost/serialization/export.hpp>
+BOOST_CLASS_EXPORT(PartRegenaration)
