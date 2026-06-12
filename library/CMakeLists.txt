@@ -91,6 +91,12 @@ target_link_libraries (LibraryTester
         ${Boost_SERIALIZATION_LIBRARY}
 )
 
+target_link_libraries(Library
+        PUBLIC
+        ${Boost_SERIALIZATION_LIBRARY}
+        ${Boost_DATE_TIME_LIBRARY}
+)
+
 #dodaj test LibraryTest. Instrukcji cmake add_test może być wiele.
 #Dodatkowe parametry wpływają na szczegółowość generowanego raportu. Standardowo znajduje się on w Testing/Temporary.
 add_test(LibraryTest LibraryTester
