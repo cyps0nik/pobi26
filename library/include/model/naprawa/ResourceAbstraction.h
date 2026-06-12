@@ -2,7 +2,7 @@
 #define WARSZTATSAMOCHODOWY_RESOURCEABSTRACTION_H
 
 #include <boost/serialization/access.hpp>
-
+#include <string>
 class ResourceAbstraction {
 private:
     friend class boost::serialization::access;
@@ -12,6 +12,9 @@ private:
         // ale TA metoda musi istnieć!
     }
 public:
+    virtual ~ResourceAbstraction() = default;
+    virtual bool isAvailable() const = 0;
+    virtual std::string getInfo() const = 0;
 };
 
 

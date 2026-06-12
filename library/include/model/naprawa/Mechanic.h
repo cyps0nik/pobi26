@@ -1,7 +1,6 @@
 #ifndef WARSZTATSAMOCHODOWY_MECHANIC_H
 #define WARSZTATSAMOCHODOWY_MECHANIC_H
 #include "MechanicAbstraction.h"
-#include <string>
 
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/string.hpp>
@@ -50,9 +49,9 @@ public:
 
     const Specialization &getSpecialization() const;
 
-    bool isAvailable() const;
+    bool isAvailable() const override;
 
-    std::string getInfo() const;
+    std::string getInfo() const override;
 };
 
 

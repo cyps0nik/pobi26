@@ -1,7 +1,6 @@
 #ifndef WARSZTATSAMOCHODOWY_RESOURCE_H
 #define WARSZTATSAMOCHODOWY_RESOURCE_H
 #include "ResourceAbstraction.h"
-#include <string>
 
 #include <boost/serialization/access.hpp>
 #include <boost/serialization/string.hpp>
@@ -44,9 +43,9 @@ public:
 
     void setBusy(const bool &zmiana);
 
-    bool isAvailable() const;
+    bool isAvailable() const override;
 
-    std::string getInfo() const;
+    std::string getInfo() const override;
 };
 
 
