@@ -71,7 +71,7 @@ void UserInterface::run() {
                 manageRepairs();
                 break;
             case 3:
-                manageResourcesAndPersonnel();
+                manageResourcesAndPersonel();
                 break;
             case 0:
                 cout << "Zamykanie systemu i bezpieczne odpinanie struktur bazy danych...\n";
@@ -400,7 +400,7 @@ void UserInterface::manageServicesForRepair(RepairPtr repair) {
     }
 }
 
-void UserInterface::manageResourcesAndPersonnel() {
+void UserInterface::manageResourcesAndPersonel() {
     bool back = false;
     while (!back) {
         cout << "\n--- ZARZADZANIE ZASOBAMI TECHNICZNYMI I KADRAMI (CRUD) ---\n";

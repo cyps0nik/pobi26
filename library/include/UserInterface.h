@@ -64,7 +64,7 @@ private:
      * @brief Obsługa podmenu zarządzania zasobami technicznymi i personelem warsztatu.
      * @details Implementuje zaawansowane filtry wyszukiwania mechaników według specjalizacji i zasobów sprzętowych.
      */
-    void manageResourcesAndPersonnel();
+    void manageResourcesAndPersonel();
 
 public:
     /**

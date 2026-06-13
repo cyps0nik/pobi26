@@ -1,133 +1,162 @@
 @startuml
-'https://plantuml.com/class-diagram
 skinparam classAttributeIconSize 0
+skinparam linetype ortho
 
-class LogicContainer {
--clientManager: ClientManager
--repairManager: RepairManager
--resourceManager: ResourceManager
-+getClientManager(): ClientManager&
-+getRepairManager(): RepairManager&
-+getResourceManager(): ResourceManager&
-}
-note right of LogicContainer
-  Kontener z zarządcami.
-end note
+class UserInterface {
+        - logic: std::shared_ptr<LogicContainer>
+        - clearInputBuffer() const: void
+        - readInt(prompt: std::string) const: int
+        - readString(prompt: std::string) const: std::string
+        - manageClientsAndCars(): void
+        - manageRepairs(): void
+        - manageServicesForRepair(repair: std::shared_ptr<Repair>): void
+        - manageResourcesAndPersonel(): void
+        + UserInterface(logicContainer: std::shared_ptr<LogicContainer>)
+        + run(): void
+    }
+    note left of UserInterface
+        Interfejs użytkownika.
+    end note
 
-class ClientManager {
--clientRepository: ClientRepository
-+registerClient(fName: string, lName: string, pID: string, mail: string, phone: string): ClientPtr
-+unregisterClient(id: string): void
-+getClient(id: string): ClientPtr
-+findClients(predicate: ClientPredicate): vector<ClientPtr>
-+findAllClients(): vector<ClientPtr>
-}
-note bottom of ClientManager
-  Zarządza cyklem życia obiektów Client.
-  Odpowiada za walidację danych przed dodaniem
-  klienta do repozytorium.
-end note
+    class LogicContainer {
+        - storage: std::shared_ptr<StorageContainer>
+        - clientManager: std::shared_ptr<ClientManager>
+        - carManager: std::shared_ptr<CarManager>
+        - mechanicManager: std::shared_ptr<MechanicManager>
+        - resourceManager: std::shared_ptr<ResourceManager>
+        - repairManager: std::shared_ptr<RepairManager>
+        + LogicContainer()
+        + ~LogicContainer()
+        + getClientManager() const: std::shared_ptr<ClientManager>
+        + getCarManager() const: std::shared_ptr<CarManager>
+        + getMechanicManager() const: std::shared_ptr<MechanicManager>
+        + getResourceManager() const: std::shared_ptr<ResourceManager>
+        + getRepairManager() const: std::shared_ptr<RepairManager>
+        + getStorage() const: std::shared_ptr<StorageContainer>
+        + saveSystem(filename: std::string) const: void
+    }
+    note left of LogicContainer
+      Kontener z zarządcami i storage constainer.
+    end note
 
-class RepairManager {
--repairRepository: RepairRepository
-+getRepair(id: int): RepairPtr
-+assignMechanicToRepair(mechanic: ResourcePtr): void
-+beginRepair(client: ClientPtr, car: CarPtr, res: vector<ResourcePtr>): RepairPtr
-+finishRepair(repair: RepairPtr, time: ptime): void
-+findRepairs(predicate: RepairPredicate): vector<RepairPtr>
-+findAllRepairs(): vector<RepairPtr>
-+getClientRepairs(client: ClientPtr): vector<RepairPtr>
-}
-note bottom of RepairManager
-  Koordynuje proces naprawy: łączy klienta, pojazd
-  i zasoby. Przy kończeniu naprawy wywołuje
-  obliczanie kosztów końcowych.
-end note
+    class DataSeeder {
+        + prepareSystem(storage: StorageContainer&, filename: std::string): void
+        + seed(storage: StorageContainer&): void
+    }
+    note right of DataSeeder
+        W zależności od istnienia pliku ładuje repozytoria odpowiednimi danymi.
+        Jeśli plik o podanej nazwie istnieje, deleguje metodę zczytania danych z tego pliku do storageContainer.
+        Jeśli plik nie istnieje, ładuje dane testowe(przykładowe).
+    end note
 
-class ResourceManager {
--resourceRepository: ResourceRepository
-+getMechanic(lastName: string): ResourcePtr
-+registerMechanic(fName: string, lName: string, hasEV: bool): ResourcePtr
-+unregisterMechanic(mechanic: ResourcePtr): void
-+checkAvailability(res: ResourcePtr): bool
-+findAvailableMechanics(): vector<ResourcePtr>
-+findMechanics(predicate: ResourcePredicate): vector<ResourcePtr>
-+findAllMechanics(): vector<ResourcePtr>
-}
-note top of ResourceManager
-  Zarządza zasobami warsztatu. Implementuje
-  logikę sprawdzania dostępności poprzez
-  tworzenie odpowiednich predykatów.
-end note
+    class ClientManager {
+        - clientRepository: ClientRepository&
+        + ClientManager(repository: ClientRepository&)
+        + getClient(personalId: std::string) const: std::shared_ptr<Client>
+        + registerClient(firstName: std::string, lastName: std::string, phoneNumber: std::string, email: std::string, personalId: std::string): std::shared_ptr<Client>
+        + unregisterClient(client: std::shared_ptr<Client>): void
+        + findClients(predicate: ClientPredicate) const: std::vector<std::shared_ptr<Client>>
+        + findAllClients() const: std::vector<std::shared_ptr<Client>>
+    }
+    note bottom of ClientManager
+        Zarządza klientami systemu. Odpowiada za rejestrację nowych osób,
+        bezpieczną archiwizację (wyrejestrowanie) oraz filtrowanie za pomocą predykatów.
+    end note
 
-class ClientRepository {
--clients: vector<ClientPtr>
-+get(index: int): ClientPtr
-+add(client: ClientPtr): void
-+remove(client: ClientPtr): void
-+size(): int
-+report(): string
-+findAll(): vector<ClientPtr>
-+findBy(predicate: ClientPredicate): vector<ClientPtr>
-+findByPersonalId(id: string): ClientPtr
-}
-note bottom of ClientRepository: Repozytorium przechowujące Klientów. Wyszukiwanie m.in. po PESEL.
+    class CarManager {
+        - carRepository: CarRepository&
+        + CarManager(repo: CarRepository&)
+        + getCar(vin: std::string) const: std::shared_ptr<Car>
+        + registerCar(brand: std::string, model: std::string, vin: std::string, power: std::unique_ptr<PoweredBy>, owner: std::shared_ptr<Client>): std::shared_ptr<Car>
+        + unregisterCar(car: std::shared_ptr<Car>): void
+        + findCars(predicate: CarPredicate) const: std::vector<std::shared_ptr<Car>>
+    }
+    note bottom of CarManager
+        Zarządza flotą pojazdów. Odpowiada za rejestrację nowych samochodów,
+        walidację unikalności numerów VIN oraz ich wyrejestrowywanie.
+    end note
 
-class RepairRepository {
--repairs: vector<RepairPtr>
-+get(index: int): RepairPtr
-+add(repair: RepairPtr): void
-+remove(repair: RepairPtr): void
-+size(): int
-+report(): string
-+findAll(): vector<RepairPtr>
-+findBy(predicate: RepairPredicate): vector<RepairPtr>
-+findById(id: int): RepairPtr
-}
-note bottom of RepairRepository: Zarządza zleceniami. Wyszukiwanie po ID.
+    class MechanicManager {
+        - mechanicRepository: MechanicRepository&
+        - nextId: size_t
+        + MechanicManager(repo: MechanicRepository&)
+        + getMechanic(id: int) const: std::shared_ptr<Mechanic>
+        + registerMechanic(firstName: std::string, lastName: std::string, spec: Specialization): std::shared_ptr<Mechanic>
+        + unregisterMechanic(mechanic: std::shared_ptr<Mechanic>): void
+        + findMechanics(predicate: MechanicPredicate) const: std::vector<std::shared_ptr<Mechanic>>
+        + findAllMechanics() const: std::vector<std::shared_ptr<Mechanic>>
+        + findElectricianMechanics() const: std::vector<std::shared_ptr<Mechanic>>
+        + findEngineMechanics() const: std::vector<std::shared_ptr<Mechanic>>
+        + findDiagnosticianMechanics() const: std::vector<std::shared_ptr<Mechanic>>
+        + findVAGSpecialistMechanics() const: std::vector<std::shared_ptr<Mechanic>>
+        + findMasterMechanics() const: std::vector<std::shared_ptr<Mechanic>>
+    }
+    note bottom of MechanicManager
+        Zarządza personelem warsztatu. Przydziela unikalne identyfikatory ID,
+        kontroluje stan dostępności mechaników oraz filtruje kadrę według specjalizacji.
+    end note
 
-class ResourceRepository {
--resources: vector<ResourcePtr>
-+get(index: int): ResourcePtr
-+add(resource: ResourcePtr): void
-+remove(resource: ResourcePtr): void
-+size(): int
-+report(): string
-+findAll(): vector<ResourcePtr>
-+findBy(predicate: ResourcePredicate): vector<ResourcePtr>
-}
-note bottom of ResourceRepository: Repozytorium zasobów (Mechaników).
+    class RepairManager {
+        - repairRepository: RepairRepository&
+        - nextId: size_t
+        + RepairManager(repo: RepairRepository&)
+        + getRepair(id: int) const: std::shared_ptr<Repair>
+        + registerRepair(beginTime: boost::posix_time::ptime, car: std::shared_ptr<Car>): std::shared_ptr<Repair>
+        + unregisterRepair(repair: std::shared_ptr<Repair>) const: void
+        + findRepairs(predicate: RepairPredicate) const: std::vector<std::shared_ptr<Repair>>
+        + findAllRepairs() const: std::vector<std::shared_ptr<Repair>>
+    }
+    note bottom of RepairManager
+        Zarządza procesami i zleceniami naprawczymi. Tworzy nowe zlecenia, przypisuje im
+        automatycznie generowane ID i koordynuje status naprawy pojazdu.
+    end note
 
-class ClientPredicate <<function>>
-class RepairPredicate <<function>>
-class ResourcePredicate <<function>>
+    class ResourceManager {
+        - resourceRepository: ResourceRepository&
+        - nextId: size_t
+        + ResourceManager(repo: ResourceRepository&)
+        + getResource(id: int) const: std::shared_ptr<Resource>
+        + registerResource(resourceName: std::string, res: ResourceType): std::shared_ptr<Resource>
+        + unregisterResource(resource: std::shared_ptr<Resource>): void
+        + findResources(predicate: ResourcePredicate) const: std::vector<std::shared_ptr<Resource>>
+        + findAllResources() const: std::vector<std::shared_ptr<Resource>>
+    }
+    note bottom of ResourceManager
+        Zarządza zasobami technicznymi (podnośniki, kompresory, komputery diagnostyczne).
+        Kontroluje zajętość infrastruktury warsztatowej przed dopisaniem nowej usługi.
+    end note
 
 
-' <--- RELACJE --->
+    class StorageContainer <<Storage>>
+    class ClientRepository <<Repository>>
+    class CarRepository <<Repository>>
+    class MechanicRepository <<Repository>>
+    class RepairRepository <<Repository>>
+    class ResourceRepository <<Repository>>
 
-LogicContainer *-- ClientManager
-LogicContainer *-- RepairManager
-LogicContainer *-- ResourceManager
+' <--- RELACJE I POWIĄZANIA --->
 
-ClientManager *-- ClientRepository
-RepairManager *-- RepairRepository
-ResourceManager *-- ResourceRepository
+' UI korzysta z logiki
+UserInterface "1" --> "1" LogicContainer : Wydaje polecenia / Steruje logiką
 
-ClientManager ..> ClientPredicate
-RepairManager ..> RepairPredicate
-ResourceManager ..> ResourcePredicate
-ClientRepository ..> ClientPredicate
-RepairRepository ..> RepairPredicate
-ResourceRepository ..> ResourcePredicate
+' DataSeeder komunikuje się ze StorageContainer w celu początkowej inicjalizacji danych
+DataSeeder ..> StorageContainer
 
-ClientRepository --> Client
-RepairRepository --> Repair
-ResourceRepository --> Mechanic
+' LogicContainer zawiera w sobie Managerów (Kompozycja)
+LogicContainer "1" *-- "1" ClientManager
+LogicContainer "1" *-- "1" CarManager
+LogicContainer "1" *-- "1" MechanicManager
+LogicContainer "1" *-- "1" RepairManager
+LogicContainer "1" *-- "1" ResourceManager
 
-RepairManager ..> Client : używa
-RepairManager ..> Repair : tworzy i modyfikuje
-RepairManager ..> Mechanic : przypisuje do naprawy
-ClientManager ..> Client : rejestruje/tworzy
-ResourceManager ..> Mechanic : sprawdza dostępność
+' LogicContainer ma też wskaźnik na Storage (do zapisu stanu z poziomu aplikacji)
+LogicContainer "1" --> "1" StorageContainer : Inicjuje magazyn i zarządza zapisem
+
+' Managerowie delegują zadania i komunikują się z wstrzykniętymi Repozytoriami
+ClientManager --> ClientRepository : Zapis/Odczyt danych
+CarManager --> CarRepository : Zapis/Odczyt danych
+MechanicManager --> MechanicRepository : Zapis/Odczyt danych
+RepairManager --> RepairRepository : Zapis/Odczyt danych
+ResourceManager --> ResourceRepository : Zapis/Odczyt danych
 
 @enduml
