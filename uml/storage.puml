@@ -3,6 +3,11 @@ skinparam classAttributeIconSize 0
 
 class ClientRepository {
     - clients : std::vector<ClientPtr>
+    + get(index: int): ClientPtr
+            + add(client: ClientPtr): void
+            + remove(client: ClientPtr): void
+            + size(): int
+            + findByPersonalId(id: string): ClientPtr
 }
 note bottom of ClientRepository
   Repozytorium przechowuje klientów.
@@ -10,6 +15,12 @@ end note
 
 class CarRepository {
     - cars : std::vector<CarPtr>
+    + get(index: int): std::shared_ptr<Car>
+            + add(car: std::shared_ptr<Car>): void
+            + remove(car: std::shared_ptr<Car>): void
+            + size(): int
+            + findByVin(vin: string): std::shared_ptr<Car>
+
 }
 note bottom of CarRepository
   Repozytorium przechowuje samochody.
@@ -17,6 +28,11 @@ end note
 
 class MechanicRepository {
     - mechanics : std::vector<MechanicPtr>
+    + get(index: int): std::shared_ptr<Mechanic>
+            + add(m: std::shared_ptr<Mechanic>): void
+            + remove(m: std::shared_ptr<Mechanic>): void
+            + size(): int
+            + findById(id: int): std::shared_ptr<Mechanic>
 }
 note bottom of MechanicRepository
   Repozytorium przechowuje mechaników.
@@ -24,6 +40,11 @@ end note
 
 class RepairRepository {
     - repairs : std::vector<RepairPtr>
+    + get(index: int): RepairPtr
+            + add(repair: RepairPtr): void
+            + remove(repair: RepairPtr): void
+            + size(): int
+            + findById(id: int): RepairPtr
 }
 note bottom of RepairRepository
   Repozytorium przechowuje naprawy.
@@ -31,6 +52,10 @@ end note
 
 class ResourceRepository {
     - resources : std::vector<ResourcePtr>
+    + get(index: int): std::shared_ptr<Resource>
+            + add(r: std::shared_ptr<Resource>): void
+            + remove(r: std::shared_ptr<Resource>): void
+            + size(): int
 }
 note bottom of ResourceRepository
   Przechowuje zasoby warsztatu.
@@ -42,6 +67,13 @@ class StorageContainer {
     - mechanicRepository : MechanicRepository
     - repairRepository : RepairRepository
     - resourceRepository : ResourceRepository
+    + getClientRepository(): ClientRepository&
+            + getCarRepository(): CarRepository&
+            + getRepairRepository(): RepairRepository&
+            + getMechanicRepository(): MechanicRepository&
+            + getResourceRepository(): ResourceRepository&
+            + saveToFile(filePath: string): void
+            + loadFromFile(filePath: string): void
 }
 note left of StorageContainer
   Klasa bazy danych:
