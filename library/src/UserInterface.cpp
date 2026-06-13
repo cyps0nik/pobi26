@@ -408,7 +408,7 @@ void UserInterface::manageResourcesAndPersonel() {
         cout << "2. Zwolnienie/Wyrejestrowanie mechanika (Delete)\n";
         cout << "3. Dodaj nowe stanowisko/narzedzie na stan warsztatu (Create)\n";
         cout << "4. Usun/Wyrejestruj wyposazenie z parku technicznego (Delete)\n";
-        cout << "5. Przegladaj personal (Read - Filtry Specjalistyczne)\n";
+        cout << "5. Przegladaj personel (Read - Filtry Specjalistyczne)\n";
         cout << "6. Przegladaj pelny stan wyposazenia technicznego (Read)\n";
         cout << "0. Powrot do menu glownego\n";
 
@@ -473,7 +473,7 @@ void UserInterface::manageResourcesAndPersonel() {
                 else if (fType == 4) list = logic->getMechanicManager()->findDiagnosticianMechanics();
                 else if (fType == 5) list = logic->getMechanicManager()->findVAGSpecialistMechanics();
                 else if (fType == 6) list = logic->getMechanicManager()->findMasterMechanics();
-                else list = logic->getMechanicManager()->findAllMechanics();
+                else if (fType == 1) list = logic->getMechanicManager()->findAllMechanics();
 
                 if (list.empty()) {
                     cout << "Brak zarejestrowanego personelu odpowiadajacego kryteriom.\n";
