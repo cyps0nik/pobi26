@@ -473,7 +473,7 @@ void UserInterface::manageResourcesAndPersonnel() {
                 else if (fType == 4) list = logic->getMechanicManager()->findDiagnosticianMechanics();
                 else if (fType == 5) list = logic->getMechanicManager()->findVAGSpecialistMechanics();
                 else if (fType == 6) list = logic->getMechanicManager()->findMasterMechanics();
-                else list = logic->getMechanicManager()->findAllMechanics();
+                else if (fType == 1) list = logic->getMechanicManager()->findAllMechanics();
 
                 if (list.empty()) {
                     cout << "Brak zarejestrowanego personelu odpowiadajacego kryteriom.\n";
