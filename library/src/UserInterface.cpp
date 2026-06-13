@@ -408,7 +408,7 @@ void UserInterface::manageResourcesAndPersonnel() {
         cout << "2. Zwolnienie/Wyrejestrowanie mechanika (Delete)\n";
         cout << "3. Dodaj nowe stanowisko/narzedzie na stan warsztatu (Create)\n";
         cout << "4. Usun/Wyrejestruj wyposazenie z parku technicznego (Delete)\n";
-        cout << "5. Przegladaj personal (Read - Filtry Specjalistyczne)\n";
+        cout << "5. Przegladaj personel (Read - Filtry Specjalistyczne)\n";
         cout << "6. Przegladaj pelny stan wyposazenia technicznego (Read)\n";
         cout << "0. Powrot do menu glownego\n";
 
