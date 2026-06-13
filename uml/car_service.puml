@@ -5,7 +5,9 @@ skinparam classAttributeIconSize 0
 class Car {
 - carBrand:string
 - carModel:string
+- archive:bool
 - VIN:string
++ getInfo():string
 }
 
 class Client {
@@ -14,7 +16,9 @@ class Client {
 - phoneNumber:string
 - email:string
 - PersonalID:string
+- archive:bool
 + getPersonalID():string
++ getInfo():string
 }
 
 abstract class Service {
@@ -23,7 +27,7 @@ abstract class Service {
   +getServiceCost():int
   +getInfo():string
 }
-note right of Service
+note left of Service
 getServiceCost() zwraca koszt wykonania pojedynczej
 uslugi poniewaz naprawa moze dotyczec wielu usług
 np. 1h wymiana tarcz hamulcowych, geometria kol badz
@@ -37,6 +41,8 @@ abstract class TimeBasedService {
   -beginTime:ptime
   -endTime:ptime
   +endService(endTime:ptime):void
+  +getHours():int
+  + getInfo():string
 }
 
 class DiagnosticService {
@@ -73,23 +79,32 @@ end note
 class Repair {
 -id:int
 -repairCost:int
-+getId():int
+-beginTime:ptime
+-endTime:ptime
+-archive:bool
 +calculateTotal():int
 +getServicesAmount():int
 +getSingleServiceCost(serwis:Service):int
++add(service:Service): void
++remove(service:Service): void
++get(service:Service): Service
 }
 note right of Repair
 calculateTotal() oblicza repairCost, czyli ile ma zapłacić klient
 za wykonaną naprawę. Sumę wszystkich usług.
 getSingleServiceCost() zwraca getServiceCost() pomnożony
-przez mnożnik pozyskany z getMultiplier
+przez mnożnik pozyskany z getMultiplier,
+pole archive sprawdza czy stworzony obiekt jest zarchiwizowany
 end note
-
+note left of Client
+pole archive sprawdza czy stworzony obiekt jest zarchiwizowany
+end note
 abstract class PoweredBy {
 +getMultiplier():double
++getInfo():string
 }
 note left of PoweredBy
-getMultiplier() jest czysto wirtualny
+getMultiplier() oraz getInfo() jest czysto wirtualny
 zwraca okreslony mnoznik
 - dla benzyny 1.0
 - dla Diesla 1.2
@@ -99,10 +114,24 @@ end note
 class Engine {
 -engineDisplacement:int
 +getMultiplier():double
++getInfo():string
 }
 enum FuelType {
 Petrol
 Diesel
+}
+enum Specialization{
+    Electrician
+    engineMechanic
+    Diagnostician
+    VAGSpecialist
+    Master
+}
+enum ResourceType{
+    carLift
+    diagnosticComputer
+    airCompressor
+    tools
 }
 note bottom of Engine
 getMultiplier() dla klasy Engine jest zalezny rowniez od jego pojemnosci
@@ -119,6 +148,7 @@ class Accumulator {
 -capacityKWh:int
 -degradationLevel:int
 +getMultiplier():double
++getInfo():string
 }
 note bottom of Accumulator
 getMultiplier() dla klasy Accumulator jest zalezne od pojemnosc akumulatora
@@ -132,21 +162,49 @@ Dodatkowo, jeśli degradationLevel > 20
 wynik powiększany jest o stałą wartość +0.3 (ryzyko zawodowe).
 degradationLevel nie moze przekroczyc 100.
 end note
+abstract MechanicAbstraction{
+    +isAvailable(): bool
 
+}
+abstract ResourceAbstraction{
+    +isAvailable(): bool
+}
+note right of ResourceAbstraction
+    isAvailable() jest czysto wirtualne
+end note
+note top of MechanicAbstraction
+    isAvailable() jest czysto wirtualne
+end note
 class Mechanic {
+  -id:int
   -firstName:string
   -lastName:string
   -isBusy:bool
-  -hasEVCertificate:bool
   +isAvailable(): bool
+  + getInfo():string
+}
+class Resource{
+  -id:int
+  -resourceName:string
+  -isBusy:bool
+  +isAvailable(): bool
+  + getInfo():string
 }
 note bottom of Mechanic
     Przechowuje dane personalne pracownika.
     - isBusy: określa, czy mechanik jest aktualnie przypisany do naprawy.
-    - hasEVCertificate: flaga wymagana przy serwisowaniu
-      pojazdów z napędem elektrycznym.
 end note
-
+note bottom of Mechanic
+    gdy isBusy() zwraca true,
+    to isAvailable() zwraca fałsz i odwrotnie
+end note
+note bottom of Resource
+    gdy isBusy() zwraca true,
+    to isAvailable() zwraca fałsz i odwrotnie
+end note
+note left of Car
+pole archive sprawdza czy stworzony obiekt jest zarchiwizowany
+end note
 
 ' <--- RELACJE --->
 
@@ -157,12 +215,15 @@ Car "1" *-- "1" PoweredBy
 PoweredBy <|-- Engine
 PoweredBy <|-- Accumulator
 FuelType "1 typ paliwa" <-- Engine
-
+Specialization "1 specjalizacja" <-- Mechanic
+ResourceType "1 typ zasobu" <-- Resource
 Service <|-- DiagnosticService
 TimeBasedService <|-- NewPartReplacement
 TimeBasedService <|-- PartRegeneration
 Service <|-- TimeBasedService
-
-Repair "0..*" --> "1..*" Mechanic : wymaga do realizacji
+Service o-- ResourceAbstraction
+Service o-- MechanicAbstraction
+MechanicAbstraction <|-- Mechanic
+ResourceAbstraction <|-- Resource
 
 @enduml
