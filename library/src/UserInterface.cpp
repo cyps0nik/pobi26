@@ -75,6 +75,8 @@ void UserInterface::run() {
                 break;
             case 0:
                 cout << "Zamykanie systemu i bezpieczne odpinanie struktur bazy danych...\n";
+                cout << "Trwa zapisywanie stanu systemu do pliku...\n";
+                logic->saveSystem("project_data.txt");
                 running = false;
                 break;
             default:
