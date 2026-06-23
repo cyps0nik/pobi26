@@ -266,7 +266,7 @@ void UserInterface::manageRepairs() {
                 int id = readInt("Podaj ID zlecenia do ostatecznego zamkniecia: ");
                 RepairPtr repair = logic->getRepairManager()->getRepair(id);
                 if (repair && !repair->isArchive()) {
-                    repair->endRepair(pt::second_clock::local_time());
+                    repair->endRepair();
                     double total = repair->calculateTotal();
                     cout << "\n=========================================\n";
                     cout << "       FAKTURA ROZLICZENIOWA KONCOWA     \n";

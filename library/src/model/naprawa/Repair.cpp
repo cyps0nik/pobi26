@@ -111,17 +111,13 @@ std::string Repair::getRepairedCarInfo() const {
     return getCar()->getInfo();
 }
 
-void Repair::endRepair(pt::ptime time) {
-    if (endTime.is_not_a_date_time()) {
-        if (time.is_not_a_date_time()) {
-            endTime = pt::second_clock::local_time();
+void Repair::endRepair() {
+    if (endTime.is_not_a_date_time())
+    {
+        for (int i = 0; i < services.size(); i++)
+        {
+            if (!services[i]->isRepaired()) return;
         }
-        else if(time < beginTime){
-            endTime = beginTime;
-        }
-
-        else {
-            endTime = time;
-        }
+        endTime = pt::second_clock::local_time();
     }
 }

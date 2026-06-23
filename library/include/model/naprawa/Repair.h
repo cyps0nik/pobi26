@@ -83,7 +83,7 @@ public:
      */
     void setArchive(bool archive);
 
-    void endRepair(pt::ptime time);
+    void endRepair();
 };
 
 

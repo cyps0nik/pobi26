@@ -15,6 +15,9 @@ public:
     virtual ~ResourceAbstraction() = default;
     virtual bool isAvailable() const = 0;
     virtual std::string getInfo() const = 0;
+    virtual bool &getBusy() const = 0;
+
+    virtual void setBusy(const bool &zmiana) const = 0;
 };
 
 
