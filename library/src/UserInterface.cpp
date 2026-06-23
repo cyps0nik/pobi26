@@ -266,15 +266,17 @@ void UserInterface::manageRepairs() {
                 int id = readInt("Podaj ID zlecenia do ostatecznego zamkniecia: ");
                 RepairPtr repair = logic->getRepairManager()->getRepair(id);
                 if (repair && !repair->isArchive()) {
+                    repair->endRepair(pt::second_clock::local_time());
                     double total = repair->calculateTotal();
                     cout << "\n=========================================\n";
-                    cout << "       FAKTURA ROZLICZENIOWA KRACOWA     \n";
+                    cout << "       FAKTURA ROZLICZENIOWA KONCOWA     \n";
                     cout << "=========================================\n";
                     cout << repair->getInfo() << "\n";
                     cout << "Do zaplaty brutto (z uwzglednieniem mnoznika napedu): " << total << " PLN\n";
 
                     logic->getRepairManager()->unregisterRepair(repair); // Usunięcie ze zleceń aktywnych
                     cout << "[Sukces] Zlecenie zostalo zamkniete, zasoby moga zostac zwolnione.\n";
+                    // Zwalnianie zasobów po zakończeniu naprawy
                 } else {
                     cout << "[Blad] Zlecenie jest juz archiwalne lub nie istnieje.\n";
                 }
@@ -395,8 +397,8 @@ void UserInterface::manageServicesForRepair(RepairPtr repair) {
 
     if (newService) {
         // Blokowanie zasobów w systemie na czas trwania operacji
-        mechanic->setBusy(true);
-        resource->setBusy(true);
+        // mechanic->setBusy(true);
+        // resource->setBusy(true);
         repair->add(newService);
         cout << "[Sukces] Usluga zostala zwalidowana, zarezerwowana i podpieta pod zlecenie.\n";
     }

@@ -1,8 +1,10 @@
 #include "model/naprawa/TimeBasedService.h"
 
+#include "model/naprawa/MechanicAbstraction.h"
+
 TimeBasedService::TimeBasedService(const std::string &_name, const int &_hourPrice,
                                    const pt::ptime &_begin, const ResourceAbstractionPtr& _resource, const MechanicAbstractionPtr& _mechanic) : Service(_name, _resource, _mechanic), partHourlyPrice(_hourPrice),
-                                                              beginTime(_begin) {
+                                                                                                                                                beginTime(_begin) {
     if (_begin == pt::not_a_date_time) {
         this->beginTime = pt::second_clock::local_time();
     }
@@ -28,11 +30,15 @@ void TimeBasedService::endService(const pt::ptime &_endTime) {
         return;
     } else if (_endTime == pt::not_a_date_time) {
         this->endTime = pt::second_clock::local_time();
+
     } else if ((_endTime < getBeginTime()) != 0) {
         this->endTime = this->beginTime;
     } else {
         this->endTime = _endTime;
     }
+
+    //MechanicAbstractionPtr mechanic = getAssignedMechanic();
+    //mechanic->setBusy(false);
 }
 
 std::string TimeBasedService::getInfo() const {

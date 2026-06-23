@@ -82,6 +82,8 @@ public:
      * @param archive Nowy stan flagi (true dla archiwizacji).
      */
     void setArchive(bool archive);
+
+    void endRepair(pt::ptime time);
 };
 
 

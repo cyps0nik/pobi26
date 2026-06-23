@@ -110,3 +110,18 @@ std::string Repair::getSingleServiceInfo(const ServicePtr &service) const {
 std::string Repair::getRepairedCarInfo() const {
     return getCar()->getInfo();
 }
+
+void Repair::endRepair(pt::ptime time) {
+    if (endTime.is_not_a_date_time()) {
+        if (time.is_not_a_date_time()) {
+            endTime = pt::second_clock::local_time();
+        }
+        else if(time < beginTime){
+            endTime = beginTime;
+        }
+
+        else {
+            endTime = time;
+        }
+    }
+}
