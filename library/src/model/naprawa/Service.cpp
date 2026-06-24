@@ -33,4 +33,8 @@ const ResourceAbstractionPtr &Service::getAssignedResource() const {
 const MechanicAbstractionPtr &Service::getAssignedMechanic() const {
     return this->assignedMechanic;
 }
+void Service::setRepaired(const bool &value) {
+    if (this->repaired == value) return;
+    else this->repaired = value;
+}
 

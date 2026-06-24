@@ -40,6 +40,7 @@ void TimeBasedService::endService(const pt::ptime &_endTime) {
     _mechanic->setBusy(false);
     ResourceAbstractionPtr _resource = getAssignedResource();
     _resource->setBusy(false);
+    this->setRepaired(true);
 }
 
 std::string TimeBasedService::getInfo() const {

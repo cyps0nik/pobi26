@@ -44,6 +44,7 @@ public:
 
     virtual std::string getInfo() const;
 
+    void setRepaired(const bool& value);
 
 };
 
