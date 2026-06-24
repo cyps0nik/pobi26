@@ -21,6 +21,7 @@
 
 using namespace std;
 namespace pt = boost::posix_time;
+std::vector<std::shared_ptr<TimeBasedService>> activeTimeServices;
 
 UserInterface::UserInterface(LogicContainerPtr logicContainer) : logic(logicContainer) {}
 
@@ -96,6 +97,7 @@ void UserInterface::manageClientsAndCars() {
         cout << "5. Rejestracja nowego pojazdu klienta (Create)\n";
         cout << "6. Wyszukiwanie pojazdu po numerze VIN (Read)\n";
         cout << "7. Wyrejestrowanie/Archiwizacja pojazdu z systemu (Delete)\n";
+        cout << "8. Wyswietl wszystkie aktywne pojazdy (Read)\n";
         cout << "0. Powrot do menu glownego\n";
 
         int choice = readInt("Wybierz opcje: ");
@@ -206,6 +208,19 @@ void UserInterface::manageClientsAndCars() {
                 }
                 break;
             }
+            case 8: {
+                auto cars = logic->getCarManager()->findCars([](const CarPtr& c) { return true; });
+
+                if (cars.empty()) {
+                    cout << "Baza pojazdow jest pusta lub wszystkie auta sa zarchiwizowane.\n";
+                } else {
+                    cout << "\n--- LISTA ZAREJESTROWANYCH POJAZDOW ---\n";
+                    for (const auto& car : cars) {
+                        cout << car->getInfo() << "\n";
+                    }
+                }
+                break;
+            }
             case 0:
                 back = true;
                 break;
@@ -225,6 +240,7 @@ void UserInterface::manageRepairs() {
         cout << "4. Zamknij i rozlicz finansowo zlecenie (Update/Delete)\n";
         cout << "5. Wykaz wszystkich aktywnych zlecen (Read)\n";
         cout << "6. Wyszukaj zarchiwizowane zlecenie po ID (Read)\n";
+        cout << "7. Zglos ukonczenie trwajacej uslugi czasowej (Odblokuj zasoby)\n";
         cout << "0. Powrot do menu glownego\n";
 
         int choice = readInt("Wybierz opcje: ");
@@ -267,16 +283,19 @@ void UserInterface::manageRepairs() {
                 RepairPtr repair = logic->getRepairManager()->getRepair(id);
                 if (repair && !repair->isArchive()) {
                     repair->endRepair();
-                    double total = repair->calculateTotal();
-                    cout << "\n=========================================\n";
-                    cout << "       FAKTURA ROZLICZENIOWA KONCOWA     \n";
-                    cout << "=========================================\n";
-                    cout << repair->getInfo() << "\n";
-                    cout << "Do zaplaty brutto (z uwzglednieniem mnoznika napedu): " << total << " PLN\n";
-
-                    logic->getRepairManager()->unregisterRepair(repair); // Usunięcie ze zleceń aktywnych
-                    cout << "[Sukces] Zlecenie zostalo zamkniete, zasoby moga zostac zwolnione.\n";
-                    // Zwalnianie zasobów po zakończeniu naprawy
+                    if (repair->getEndTime().is_not_a_date_time()) {
+                        cout << "[Blad] Nie mozna zamknac zlecenia. Nie wszystkie uslugi zostaly ukonczone!\n";
+                    } else {
+                        double total = repair->calculateTotal();
+                        cout << "\n=========================================\n";
+                        cout << "       FAKTURA ROZLICZENIOWA KONCOWA     \n";
+                        cout << "=========================================\n";
+                        cout << repair->getInfo() << "\n";
+                        cout << "Do zaplaty brutto (z uwzglednieniem mnoznika napedu): " << total << " PLN\n";
+                        logic->getRepairManager()->unregisterRepair(repair); // Usunięcie ze zleceń aktywnych
+                        cout << "[Sukces] Zlecenie zostalo zamkniete, zasoby pomyslnie zwolnione.\n";
+                        // Zwalnianie zasobów po zakończeniu naprawy
+                    }
                 } else {
                     cout << "[Blad] Zlecenie jest juz archiwalne lub nie istnieje.\n";
                 }
@@ -303,6 +322,31 @@ void UserInterface::manageRepairs() {
                     cout << "[Info] Zlecenie o nr ID " << id << " jest nadal w toku. Otworz je uzywajac opcji nr 3.\n";
                 } else {
                     cout << "[Blad] Zlecenie o takim numerze identyfikacyjnym nie widnieje w bazie danych.\n";
+                }
+                break;
+            }
+            case 7: {
+                if (activeTimeServices.empty()) {
+                    cout << "[Info] Brak trwajacych uslug czasowych do zakonczenia.\n";
+                    break;
+                }
+                cout << "\n--- TRWAJACE USLUGI CZASOWE ---\n";
+                for (size_t i = 0; i < activeTimeServices.size(); ++i) {
+                    cout << i + 1 << ". " << activeTimeServices[i]->getInfo() << "\n";
+                }
+
+                int idx = readInt("Wybierz numer uslugi, ktora wlasnie ukonczono: ") - 1;
+
+                if (idx >= 0 && idx < activeTimeServices.size()) {
+                    int hours = readInt("Podaj faktyczny czas trwania pracy (w pelnych godzinach): ");
+
+                    activeTimeServices[idx]->endService(pt::second_clock::local_time() + pt::hours(hours));
+
+                    cout << "[Sukces] Usluga zakonczona! Sprzet i pracownik sa teraz wolni.\n";
+
+                    activeTimeServices.erase(activeTimeServices.begin() + idx);
+                } else {
+                    cout << "[Blad] Niepoprawny numer z listy.\n";
                 }
                 break;
             }
@@ -369,36 +413,41 @@ void UserInterface::manageServicesForRepair(RepairPtr repair) {
     string sName = readString("Wprowadz opis/nazwe operacji naprawczej: ");
     ServicePtr newService = nullptr;
 
+    // Najpierw blokujemy zasoby
+    mechanic->setBusy(true);
+    resource->setBusy(true);
+
     try {
         if (sType == 1) {
             int price = readInt("Podaj stala kwote ryczaltu diagnostycznego (PLN): ");
             newService = make_shared<DiagnosticService>(sName, price, resource, mechanic);
+            mechanic->setBusy(false);
+            resource->setBusy(false);
         } else if (sType == 2) {
             int hPrice = readInt("Podaj stawke roboczogodziny (PLN): ");
             int partPrice = readInt("Podaj koszt fabryczny nowej czesci (PLN): ");
 
             auto npr = make_shared<NewPartReplacement>(sName, hPrice, pt::second_clock::local_time(), partPrice, resource, mechanic);
-            int hours = readInt("Podaj faktyczny czas trwania wymiany (w pelnych godzinach): ");
-            npr->endService(pt::second_clock::local_time() + pt::hours(hours));
             newService = npr;
-        } else if (sType == 3) { // ZINTEGROWANY TYP REGENERACJI CZESCI
+            activeTimeServices.push_back(npr);
+
+        } else if (sType == 3) {
             int hPrice = readInt("Podaj stawke za roboczogodzine (PLN): ");
             int usage = readInt("Wprowadz poczatkowy procent zuzycia podzespolu (0-100%): ");
 
             auto pr = make_shared<PartRegenaration>(sName, hPrice, pt::second_clock::local_time(), usage, resource, mechanic);
-            int hours = readInt("Podaj czas trwania procesu regeneracji komponentu (w godzinach): ");
-            pr->endService(pt::second_clock::local_time() + pt::hours(hours));
             newService = pr;
+            activeTimeServices.push_back(pr);
         }
     } catch (const invalid_argument& e) {
+        // Jeśli poleci błąd tworzenia usługi, wycofujemy blokadę
+        mechanic->setBusy(false);
+        resource->setBusy(false);
         cout << "[Blad Wyjatku Domeny] Walidacja odrzucona: " << e.what() << "\n";
         return;
     }
 
     if (newService) {
-        // Blokowanie zasobów w systemie na czas trwania operacji
-        // mechanic->setBusy(true);
-        // resource->setBusy(true);
         repair->add(newService);
         cout << "[Sukces] Usluga zostala zwalidowana, zarezerwowana i podpieta pod zlecenie.\n";
     }

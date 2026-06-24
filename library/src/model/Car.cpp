@@ -31,8 +31,17 @@ const ClientPtr &Car::getOwner() const {
 
 
 std::string Car::getInfo() const {
-    std::string clientInfo = getOwner()->getFirstName() + " " + getOwner()->getLastName();
-    return "Marka: " + getCarBrand() + ", Model: " + getCarModel() + ", NumerVIN: " + getVIN() + ", naped: " + getPowerSource()->getInfo() + ", wlasciciel: " + clientInfo;
+    std::string clientInfo = "Brak (nullptr)";
+    if (getOwner() != nullptr) {
+        clientInfo = getOwner()->getFirstName() + " " + getOwner()->getLastName();
+    }
+
+    std::string powerInfo = "Brak (nullptr)";
+    if (this->powerSource != nullptr) {
+        powerInfo = this->powerSource->getInfo();
+    }
+
+    return "Marka: " + getCarBrand() + ", Model: " + getCarModel() + ", NumerVIN: " + getVIN() + ", naped: " + powerInfo + ", wlasciciel: " + clientInfo;
 }
 
 bool Car::isArchive() const {
