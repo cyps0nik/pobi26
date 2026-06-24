@@ -42,10 +42,9 @@ public:
 
     const std::string &getLastName() const;
 
-    const bool &getBusy() const;
+    const bool &getBusy() const override;
 
-    void setBusy(const bool &zmiana);
-
+    void setBusy(const bool &zmiana) override;
 
     const Specialization &getSpecialization() const;
 

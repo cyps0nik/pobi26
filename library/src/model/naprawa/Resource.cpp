@@ -34,10 +34,13 @@ std::string Resource::getInfo() const {
 const bool &Resource::getBusy() const {
     return this->isBusy;
 }
+
+
 void Resource::setBusy(const bool &zmiana) {
     if (zmiana == getBusy()) return;
     else this->isBusy = zmiana;
 }
+
 
 #include <boost/serialization/export.hpp>
 BOOST_CLASS_EXPORT(Resource)

@@ -39,9 +39,9 @@ public:
 
     const ResourceType &getResourceType() const;
 
-    const bool &getBusy() const;
+    const bool &getBusy() const override;
 
-    void setBusy(const bool &zmiana);
+    void setBusy(const bool &zmiana) override;
 
     bool isAvailable() const override;
 
