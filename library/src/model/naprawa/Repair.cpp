@@ -34,8 +34,12 @@ int Repair::getServicesAmount() const {
 
 double Repair::getSingleServiceCost(const ServicePtr &service) const {
     for (int i = 0; i < services.size(); i++) {
-        if (service == services[i]) {
-            return services[i]->getServiceCost() * repairedCar->getPowerSource()->getMultiplier();
+        if (service == nullptr) return 0.0;
+        else
+        {
+            if (service == services[i]) {
+                return services[i]->getServiceCost() * repairedCar->getPowerSource()->getMultiplier();
+            }
         }
     }
     return 0.0;
@@ -52,7 +56,14 @@ void Repair::setArchive(bool arch) {
 double Repair::calculateTotal() {
     double suma = 0;
     for (int i = 0; i < services.size(); i++) {
-        suma += getSingleServiceCost(services[i]);
+        if (services[i] != nullptr)
+        {
+            suma += getSingleServiceCost(services[i]);
+        }
+        else
+        {
+            suma += 0;
+        }
     }
     this->repairCost = suma;
     return suma;
@@ -78,9 +89,10 @@ void Repair::remove(const ServicePtr &service) {
 
 ServicePtr Repair::get(const ServicePtr &service) {
     for (int i = 0; i < services.size(); i++) {
-        if (service == services[i]) {
+        if (service == services[i] && services[i] != nullptr && service != nullptr) {
             return services[i];
         }
+        else return nullptr;
     }
     return nullptr;
 }
@@ -90,7 +102,13 @@ std::string Repair::getInfo() const {
     std::stringstream ss;
     ss << "Poczatek repair: " << getBeginTime() << ", koniec repair: " << getEndTime();
     for (int i = 0; i < services.size(); i++) {
-        tym += services[i]->getInfo();
+       if (services[i] != nullptr) {
+            tym += services[i]->getInfo();
+        }
+        else
+        {
+            tym += "";
+        }
     }
     return "Identyfikator: " + std::to_string(getId()) + ", Cena za calosc z mnoznikiem: " +
            std::to_string(getRepairCost()) + ", " + ss.str();
@@ -116,7 +134,8 @@ void Repair::endRepair() {
     {
         for (int i = 0; i < services.size(); i++)
         {
-            if (!services[i]->isRepaired()) return;
+            if (services[i] == nullptr) continue;
+            if (services[i]->isRepaired() == false) return;
         }
         endTime = pt::second_clock::local_time();
     }

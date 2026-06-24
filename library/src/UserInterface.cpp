@@ -342,6 +342,8 @@ void UserInterface::manageRepairs() {
 
                     activeTimeServices[idx]->endService(pt::second_clock::local_time() + pt::hours(hours));
 
+                    activeTimeServices[idx]->setRepaired(true);
+
                     cout << "[Sukces] Usluga zakonczona! Sprzet i pracownik sa teraz wolni.\n";
 
                     activeTimeServices.erase(activeTimeServices.begin() + idx);
@@ -421,6 +423,7 @@ void UserInterface::manageServicesForRepair(RepairPtr repair) {
         if (sType == 1) {
             int price = readInt("Podaj stala kwote ryczaltu diagnostycznego (PLN): ");
             newService = make_shared<DiagnosticService>(sName, price, resource, mechanic);
+            newService->setRepaired(true);
             mechanic->setBusy(false);
             resource->setBusy(false);
         } else if (sType == 2) {

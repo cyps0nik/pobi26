@@ -51,8 +51,8 @@ void DataSeeder::seed(StorageContainer& storage) {
 
         // 2. Dodawanie Samochodów
         // carBrand, carModel, VIN, power, owner
-        CarPtr car1 = std::make_shared<Car>("Toyota", "Yaris", "VIN111111111", nullptr, c1);
-        CarPtr car2 = std::make_shared<Car>("Honda", "Civic", "VIN222222222", nullptr, c2);
+        CarPtr car1 = std::make_shared<Car>("Toyota", "Yaris", "111111111", nullptr, c1);
+        CarPtr car2 = std::make_shared<Car>("Honda", "Civic", "222222222", nullptr, c2);
 
         carRepo.add(car1);
         carRepo.add(car2);

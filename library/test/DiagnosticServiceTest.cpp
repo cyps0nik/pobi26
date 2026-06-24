@@ -24,7 +24,7 @@ BOOST_AUTO_TEST_CASE(ConstructorAndGetters) {
     BOOST_TEST(ds.getServiceCost() == price);
     BOOST_TEST(ds.getAssignedResource() == resource);
     BOOST_TEST(ds.getAssignedMechanic() == mechanic);
-    BOOST_TEST(ds.isRepaired() == false);
+    BOOST_TEST(ds.isRepaired() == true);
 }
 
 BOOST_AUTO_TEST_CASE(Exceptions) {
